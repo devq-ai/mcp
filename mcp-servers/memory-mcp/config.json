@@ -1,0 +1,13 @@
+{
+  "name": "memory-mcp",
+  "repository": "https://github.com/mem0ai/mem0-mcp",
+  "description": "Persistent memory management with contextual recall and learning",
+  "enabled": false,
+  "local_installed": false,
+  "configuration": {
+    "host": "localhost",
+    "port": 8080,
+    "api_key": "your_api_key_here",
+    "timeout_ms": 5000
+  }
+}

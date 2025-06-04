@@ -1,0 +1,13 @@
+{
+  "name": "solver-z3-mcp",
+  "repository": "https://github.com/szeider/mcp-solver",
+  "description": "Z3 theorem prover for formal verification and constraint solving",
+  "enabled": false,
+  "local_installed": false,
+  "configuration": {
+    "host": "localhost",
+    "port": 8080,
+    "api_key": "your_api_key_here",
+    "timeout_ms": 5000
+  }
+}

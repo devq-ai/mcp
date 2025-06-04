@@ -1,0 +1,16 @@
+github_username: devq-ai
+github_remote: https://github.com/devq-ai/
+repo:
+    name: mcp
+    description: "registry service for Model Context Protocol (MCP) servers"
+    active: true
+    spec: false
+    env: false
+    config: false
+    rules: false
+    context: false
+    complete: false
+    prod: false
+    remote: mcp
+    local: /Users/dionedge/devqai/mcp
+    reference: https://github.com/modelcontextprotocol/registry

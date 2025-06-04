@@ -1,0 +1,13 @@
+{
+  "name": "solver-pysat-mcp",
+  "repository": "https://github.com/szeider/mcp-solver",
+  "description": "PySAT Boolean satisfiability problem solver with advanced algorithms",
+  "enabled": false,
+  "local_installed": false,
+  "configuration": {
+    "host": "localhost",
+    "port": 8080,
+    "api_key": "your_api_key_here",
+    "timeout_ms": 5000
+  }
+}

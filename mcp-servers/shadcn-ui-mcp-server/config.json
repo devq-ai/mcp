@@ -1,0 +1,13 @@
+{
+  "name": "shadcn-ui-mcp-server",
+  "repository": "https://github.com/ymadd/shadcn-ui-mcp-server",
+  "description": "shadcn/ui component library integration for React development",
+  "enabled": false,
+  "local_installed": false,
+  "configuration": {
+    "host": "localhost",
+    "port": 8080,
+    "api_key": "your_api_key_here",
+    "timeout_ms": 5000
+  }
+}

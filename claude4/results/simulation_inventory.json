@@ -1,0 +1,447 @@
+{
+  "model_info": {
+    "name": "TestModel (simulating Claude 4 Sonnet)",
+    "model_system": "anthropic",
+    "model_name": "claude-4-sonnet-20250522",
+    "timestamp": "2025-05-26T23:54:55.718035",
+    "total_tools": 8,
+    "context_window": 200000,
+    "max_output_tokens": 64000
+  },
+  "tools": [
+    {
+      "name": "get_current_time",
+      "description": "Get the current timestamp.",
+      "tool_type": "simple",
+      "strict_mode": null,
+      "parameters_schema": {
+        "type": "object",
+        "properties": {},
+        "required": [],
+        "additionalProperties": false
+      },
+      "parameter_analysis": {
+        "total_count": 0,
+        "required_params": [],
+        "optional_params": [],
+        "parameter_details": {}
+      }
+    },
+    {
+      "name": "calculate_math",
+      "description": "Calculate a mathematical expression safely.",
+      "tool_type": "simple",
+      "strict_mode": null,
+      "parameters_schema": {
+        "type": "object",
+        "properties": {
+          "expression": {
+            "type": "string",
+            "description": "Mathematical expression to evaluate"
+          }
+        },
+        "required": [
+          "expression"
+        ],
+        "additionalProperties": false
+      },
+      "parameter_analysis": {
+        "total_count": 1,
+        "required_params": [
+          "expression"
+        ],
+        "optional_params": [],
+        "parameter_details": {
+          "expression": {
+            "type": "string",
+            "description": "Mathematical expression to evaluate",
+            "default": null,
+            "required": true
+          }
+        }
+      }
+    },
+    {
+      "name": "get_weather_data",
+      "description": "Get structured weather data for a location.",
+      "tool_type": "simple",
+      "strict_mode": null,
+      "parameters_schema": {
+        "type": "object",
+        "properties": {
+          "location": {
+            "type": "string",
+            "description": "Location to get weather for"
+          },
+          "units": {
+            "type": "string",
+            "description": "Temperature units",
+            "default": "celsius"
+          }
+        },
+        "required": [
+          "location"
+        ],
+        "additionalProperties": false
+      },
+      "parameter_analysis": {
+        "total_count": 2,
+        "required_params": [
+          "location"
+        ],
+        "optional_params": [
+          "units"
+        ],
+        "parameter_details": {
+          "location": {
+            "type": "string",
+            "description": "Location to get weather for",
+            "default": null,
+            "required": true
+          },
+          "units": {
+            "type": "string",
+            "description": "Temperature units",
+            "default": "celsius",
+            "required": false
+          }
+        }
+      }
+    },
+    {
+      "name": "search_web",
+      "description": "Search the web with various options.",
+      "tool_type": "simple",
+      "strict_mode": null,
+      "parameters_schema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "Search query"
+          },
+          "max_results": {
+            "type": "integer",
+            "description": "Maximum number of results",
+            "default": 10
+          },
+          "search_type": {
+            "type": "string",
+            "description": "Type of search",
+            "default": "general"
+          },
+          "include_images": {
+            "type": "boolean",
+            "description": "Include image results",
+            "default": false
+          }
+        },
+        "required": [
+          "query"
+        ],
+        "additionalProperties": false
+      },
+      "parameter_analysis": {
+        "total_count": 4,
+        "required_params": [
+          "query"
+        ],
+        "optional_params": [
+          "max_results",
+          "search_type",
+          "include_images"
+        ],
+        "parameter_details": {
+          "query": {
+            "type": "string",
+            "description": "Search query",
+            "default": null,
+            "required": true
+          },
+          "max_results": {
+            "type": "integer",
+            "description": "Maximum number of results",
+            "default": 10,
+            "required": false
+          },
+          "search_type": {
+            "type": "string",
+            "description": "Type of search",
+            "default": "general",
+            "required": false
+          },
+          "include_images": {
+            "type": "boolean",
+            "description": "Include image results",
+            "default": false,
+            "required": false
+          }
+        }
+      }
+    },
+    {
+      "name": "get_user_profile",
+      "description": "Get user profile using injected dependencies.",
+      "tool_type": "context_aware",
+      "strict_mode": null,
+      "parameters_schema": {
+        "type": "object",
+        "properties": {
+          "user_id": {
+            "type": "string",
+            "description": "User ID to look up",
+            "default": null
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "parameter_analysis": {
+        "total_count": 1,
+        "required_params": [],
+        "optional_params": [
+          "user_id"
+        ],
+        "parameter_details": {
+          "user_id": {
+            "type": "string",
+            "description": "User ID to look up",
+            "default": null,
+            "required": false
+          }
+        }
+      }
+    },
+    {
+      "name": "execute_database_query",
+      "description": "Execute a database query with context and safety checks.",
+      "tool_type": "context_aware",
+      "strict_mode": null,
+      "parameters_schema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "SQL query to execute"
+          },
+          "table": {
+            "type": "string",
+            "description": "Database table name"
+          },
+          "limit": {
+            "type": "integer",
+            "description": "Result limit",
+            "default": 100
+          },
+          "safe_mode": {
+            "type": "boolean",
+            "description": "Enable safety checks",
+            "default": true
+          }
+        },
+        "required": [
+          "query",
+          "table"
+        ],
+        "additionalProperties": false
+      },
+      "parameter_analysis": {
+        "total_count": 4,
+        "required_params": [
+          "query",
+          "table"
+        ],
+        "optional_params": [
+          "limit",
+          "safe_mode"
+        ],
+        "parameter_details": {
+          "query": {
+            "type": "string",
+            "description": "SQL query to execute",
+            "default": null,
+            "required": true
+          },
+          "table": {
+            "type": "string",
+            "description": "Database table name",
+            "default": null,
+            "required": true
+          },
+          "limit": {
+            "type": "integer",
+            "description": "Result limit",
+            "default": 100,
+            "required": false
+          },
+          "safe_mode": {
+            "type": "boolean",
+            "description": "Enable safety checks",
+            "default": true,
+            "required": false
+          }
+        }
+      }
+    },
+    {
+      "name": "process_file",
+      "description": "Process files with various operations.",
+      "tool_type": "simple",
+      "strict_mode": null,
+      "parameters_schema": {
+        "type": "object",
+        "properties": {
+          "file_path": {
+            "type": "string",
+            "description": "Path to the file"
+          },
+          "operation": {
+            "type": "string",
+            "description": "File operation to perform",
+            "default": "read"
+          },
+          "encoding": {
+            "type": "string",
+            "description": "File encoding",
+            "default": "utf-8"
+          },
+          "backup": {
+            "type": "boolean",
+            "description": "Create backup before operation",
+            "default": true
+          }
+        },
+        "required": [
+          "file_path"
+        ],
+        "additionalProperties": false
+      },
+      "parameter_analysis": {
+        "total_count": 4,
+        "required_params": [
+          "file_path"
+        ],
+        "optional_params": [
+          "operation",
+          "encoding",
+          "backup"
+        ],
+        "parameter_details": {
+          "file_path": {
+            "type": "string",
+            "description": "Path to the file",
+            "default": null,
+            "required": true
+          },
+          "operation": {
+            "type": "string",
+            "description": "File operation to perform",
+            "default": "read",
+            "required": false
+          },
+          "encoding": {
+            "type": "string",
+            "description": "File encoding",
+            "default": "utf-8",
+            "required": false
+          },
+          "backup": {
+            "type": "boolean",
+            "description": "Create backup before operation",
+            "default": true,
+            "required": false
+          }
+        }
+      }
+    },
+    {
+      "name": "code_execution",
+      "description": "Execute Python code safely (Claude 4 Sonnet built-in capability).",
+      "tool_type": "builtin",
+      "strict_mode": true,
+      "parameters_schema": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "Python code to execute"
+          },
+          "timeout": {
+            "type": "integer",
+            "description": "Execution timeout in seconds",
+            "default": 30
+          },
+          "isolated": {
+            "type": "boolean",
+            "description": "Run in isolated environment",
+            "default": true
+          }
+        },
+        "required": [
+          "code"
+        ],
+        "additionalProperties": false
+      },
+      "parameter_analysis": {
+        "total_count": 3,
+        "required_params": [
+          "code"
+        ],
+        "optional_params": [
+          "timeout",
+          "isolated"
+        ],
+        "parameter_details": {
+          "code": {
+            "type": "string",
+            "description": "Python code to execute",
+            "default": null,
+            "required": true
+          },
+          "timeout": {
+            "type": "integer",
+            "description": "Execution timeout in seconds",
+            "default": 30,
+            "required": false
+          },
+          "isolated": {
+            "type": "boolean",
+            "description": "Run in isolated environment",
+            "default": true,
+            "required": false
+          }
+        }
+      }
+    }
+  ],
+  "statistics": {
+    "simple_tools": 5,
+    "context_tools": 2,
+    "builtin_tools": 1,
+    "total_parameters": 21,
+    "required_parameters": 8,
+    "optional_parameters": 13,
+    "tools_with_descriptions": 8,
+    "tools_with_defaults": 6
+  },
+  "claude_4_features": {
+    "extended_thinking": true,
+    "parallel_tool_use": true,
+    "tool_use_in_reasoning": true,
+    "memory_capabilities": true,
+    "web_search_builtin": true,
+    "code_execution_builtin": true,
+    "file_api_access": true,
+    "mcp_connector": true
+  },
+  "execution_info": {
+    "model_request_parameters": {
+      "temperature": 0.0,
+      "max_tokens": 4096,
+      "function_tools_count": 8,
+      "allow_text_output": true,
+      "stream": false
+    },
+    "test_result": "success (8 tools available)"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "name": "registry-mcp",
+  "repository": "https://github.com/modelcontextprotocol/registry",
+  "description": "Official MCP server registry with discovery and installation tools",
+  "enabled": false,
+  "local_installed": false,
+  "configuration": {
+    "host": "localhost",
+    "port": 8080,
+    "api_key": "your_api_key_here",
+    "timeout_ms": 5000
+  }
+}

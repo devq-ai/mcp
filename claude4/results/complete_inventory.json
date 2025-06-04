@@ -1,0 +1,307 @@
+{
+  "extraction_info": {
+    "model_name": "TestModel (simulating Claude 4 Sonnet)",
+    "timestamp": "2025-05-27T00:12:05.740907",
+    "method": "TestModel.last_model_request_parameters"
+  },
+  "tools": [
+    {
+      "name": "get_timestamp",
+      "description": "Get current timestamp in ISO format.",
+      "tool_type": "simple",
+      "strict_mode": null,
+      "parameter_count": 0,
+      "required_parameters": [],
+      "optional_parameters": [],
+      "parameters_schema": {
+        "additionalProperties": false,
+        "properties": {},
+        "type": "object"
+      },
+      "parameter_details": {}
+    },
+    {
+      "name": "calculate_math",
+      "description": "Calculate mathematical expressions safely.",
+      "tool_type": "simple",
+      "strict_mode": null,
+      "parameter_count": 1,
+      "required_parameters": [
+        "expression"
+      ],
+      "optional_parameters": [],
+      "parameters_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "expression": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "expression"
+        ],
+        "type": "object"
+      },
+      "parameter_details": {
+        "expression": {
+          "type": "string",
+          "description": "",
+          "default": null,
+          "required": true
+        }
+      }
+    },
+    {
+      "name": "get_weather",
+      "description": "Get weather data for a location.",
+      "tool_type": "simple",
+      "strict_mode": null,
+      "parameter_count": 2,
+      "required_parameters": [
+        "location"
+      ],
+      "optional_parameters": [
+        "units"
+      ],
+      "parameters_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "location": {
+            "type": "string"
+          },
+          "units": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "location"
+        ],
+        "type": "object"
+      },
+      "parameter_details": {
+        "location": {
+          "type": "string",
+          "description": "",
+          "default": null,
+          "required": true
+        },
+        "units": {
+          "type": "string",
+          "description": "",
+          "default": null,
+          "required": false
+        }
+      }
+    },
+    {
+      "name": "web_search",
+      "description": "Search the web with options.",
+      "tool_type": "simple",
+      "strict_mode": null,
+      "parameter_count": 4,
+      "required_parameters": [
+        "query"
+      ],
+      "optional_parameters": [
+        "max_results",
+        "search_type",
+        "include_images"
+      ],
+      "parameters_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "query": {
+            "type": "string"
+          },
+          "max_results": {
+            "type": "integer"
+          },
+          "search_type": {
+            "type": "string"
+          },
+          "include_images": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "query"
+        ],
+        "type": "object"
+      },
+      "parameter_details": {
+        "query": {
+          "type": "string",
+          "description": "",
+          "default": null,
+          "required": true
+        },
+        "max_results": {
+          "type": "integer",
+          "description": "",
+          "default": null,
+          "required": false
+        },
+        "search_type": {
+          "type": "string",
+          "description": "",
+          "default": null,
+          "required": false
+        },
+        "include_images": {
+          "type": "boolean",
+          "description": "",
+          "default": null,
+          "required": false
+        }
+      }
+    },
+    {
+      "name": "process_text",
+      "description": "Process text with various operations.",
+      "tool_type": "simple",
+      "strict_mode": null,
+      "parameter_count": 3,
+      "required_parameters": [
+        "text"
+      ],
+      "optional_parameters": [
+        "operation",
+        "format_output"
+      ],
+      "parameters_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "text": {
+            "type": "string"
+          },
+          "operation": {
+            "type": "string"
+          },
+          "format_output": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "text"
+        ],
+        "type": "object"
+      },
+      "parameter_details": {
+        "text": {
+          "type": "string",
+          "description": "",
+          "default": null,
+          "required": true
+        },
+        "operation": {
+          "type": "string",
+          "description": "",
+          "default": null,
+          "required": false
+        },
+        "format_output": {
+          "type": "boolean",
+          "description": "",
+          "default": null,
+          "required": false
+        }
+      }
+    },
+    {
+      "name": "get_user_data",
+      "description": "Get user data using context.",
+      "tool_type": "simple",
+      "strict_mode": null,
+      "parameter_count": 1,
+      "required_parameters": [],
+      "optional_parameters": [
+        "target_user"
+      ],
+      "parameters_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "target_user": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object"
+      },
+      "parameter_details": {
+        "target_user": {
+          "type": "unknown",
+          "description": "",
+          "default": null,
+          "required": false
+        }
+      }
+    },
+    {
+      "name": "execute_query",
+      "description": "Execute database query.",
+      "tool_type": "simple",
+      "strict_mode": null,
+      "parameter_count": 3,
+      "required_parameters": [
+        "query",
+        "table"
+      ],
+      "optional_parameters": [
+        "limit"
+      ],
+      "parameters_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "query": {
+            "type": "string"
+          },
+          "table": {
+            "type": "string"
+          },
+          "limit": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "query",
+          "table"
+        ],
+        "type": "object"
+      },
+      "parameter_details": {
+        "query": {
+          "type": "string",
+          "description": "",
+          "default": null,
+          "required": true
+        },
+        "table": {
+          "type": "string",
+          "description": "",
+          "default": null,
+          "required": true
+        },
+        "limit": {
+          "type": "integer",
+          "description": "",
+          "default": null,
+          "required": false
+        }
+      }
+    }
+  ],
+  "summary": {
+    "total_tools": 7,
+    "simple_tools": 7,
+    "context_aware_tools": 0,
+    "total_parameters": 14,
+    "required_parameters": 6,
+    "optional_parameters": 8
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "name": "context7-mcp",
+  "repository": "https://github.com/upstash/context7",
+  "description": "Advanced context management and semantic search with vector embeddings",
+  "enabled": false,
+  "local_installed": false,
+  "configuration": {
+    "host": "localhost",
+    "port": 8080,
+    "api_key": "your_api_key_here",
+    "timeout_ms": 5000
+  }
+}

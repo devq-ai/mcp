@@ -1,0 +1,13 @@
+{
+  "name": "solver-mzn-mcp",
+  "repository": "https://github.com/szeider/mcp-solver",
+  "description": "MiniZinc constraint satisfaction and optimization solver",
+  "enabled": false,
+  "local_installed": false,
+  "configuration": {
+    "host": "localhost",
+    "port": 8080,
+    "api_key": "your_api_key_here",
+    "timeout_ms": 5000
+  }
+}

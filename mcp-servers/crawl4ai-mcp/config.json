@@ -1,0 +1,13 @@
+{
+  "name": "crawl4ai-mcp",
+  "repository": "https://github.com/wyattowalsh/crawl4ai-mcp",
+  "description": "Intelligent web crawling with AI-powered content extraction and analysis",
+  "enabled": false,
+  "local_installed": false,
+  "configuration": {
+    "host": "localhost",
+    "port": 8080,
+    "api_key": "your_api_key_here",
+    "timeout_ms": 5000
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "name": "magic-mcp",
+  "repository": "https://github.com/21st-dev/magic-mcp",
+  "description": "AI-powered code generation and transformation utilities",
+  "enabled": false,
+  "local_installed": false,
+  "configuration": {
+    "host": "localhost",
+    "port": 8080,
+    "api_key": "your_api_key_here",
+    "timeout_ms": 5000
+  }
+}

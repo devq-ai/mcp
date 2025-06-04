@@ -1,0 +1,25 @@
+{
+  "surrealdb": {
+    "host": "localhost",
+    "port": 8000,
+    "user": "root",
+    "password": "root",
+    "namespace": "ptolemies",
+    "database": "knowledge"
+  },
+  "vector_db": {
+    "type": "qdrant",
+    "host": "localhost",
+    "port": 6333
+  },
+  "embedding": {
+    "provider": "openai",
+    "model": "text-embedding-3-small",
+    "dimensions": 1536
+  },
+  "mcp": {
+    "host": "localhost",
+    "port": 8080,
+    "api_key": "your_api_key_here"
+  }
+}

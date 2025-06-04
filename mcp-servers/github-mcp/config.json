@@ -1,0 +1,13 @@
+{
+  "name": "github-mcp",
+  "repository": "https://github.com/github/github-mcp-server",
+  "description": "GitHub API integration for repository management, issues, and pull requests",
+  "enabled": false,
+  "local_installed": false,
+  "configuration": {
+    "host": "localhost",
+    "port": 8080,
+    "api_key": "your_api_key_here",
+    "timeout_ms": 5000
+  }
+}

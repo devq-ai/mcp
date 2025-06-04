@@ -1,0 +1,13 @@
+{
+  "name": "stripe-mcp",
+  "repository": "https://github.com/stripe/agent-toolkit",
+  "description": "Stripe payment processing integration with transaction management",
+  "enabled": false,
+  "local_installed": false,
+  "configuration": {
+    "host": "localhost",
+    "port": 8080,
+    "api_key": "your_api_key_here",
+    "timeout_ms": 5000
+  }
+}
