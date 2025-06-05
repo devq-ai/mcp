@@ -149,6 +149,18 @@
         "SURREALDB_NAMESPACE": "${SURREALDB_NAMESPACE:-devq}",
         "SURREALDB_DATABASE": "${SURREALDB_DATABASE:-main}"
       }
+    },
+    "logfire-mcp": {
+      "command": "python",
+      "args": ["-m", "logfire_mcp.src.logfire-fastapi"],
+      "description": "Pydantic Logfire observability and monitoring integration",
+      "cwd": "./mcp-servers/logfire-mcp",
+      "env": {
+        "LOGFIRE_TOKEN": "${LOGFIRE_TOKEN}",
+        "LOGFIRE_PROJECT_NAME": "${LOGFIRE_PROJECT_NAME:-mcp-server}",
+        "LOGFIRE_SERVICE_NAME": "${LOGFIRE_SERVICE_NAME:-mcp-logfire}",
+        "LOGFIRE_ENVIRONMENT": "${LOGFIRE_ENVIRONMENT:-development}"
+      }
     }
   }
 }

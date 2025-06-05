@@ -1,0 +1,64 @@
+{
+  "name": "logfire-mcp",
+  "version": "0.1.0",
+  "description": "MCP server for Pydantic Logfire observability and monitoring",
+  "author": "DevQ.ai",
+  "license": "MIT",
+  "main": "src/logfire-fastapi.py",
+  "runtime": "python",
+  "requirements": [
+    "logfire>=0.1.0",
+    "mcp>=0.1.0",
+    "python-dotenv>=1.0.0"
+  ],
+  "environment": {
+    "LOGFIRE_TOKEN": {
+      "description": "Your Logfire API token",
+      "required": true
+    },
+    "LOGFIRE_PROJECT_NAME": {
+      "description": "Logfire project name",
+      "required": false,
+      "default": "mcp-server"
+    },
+    "LOGFIRE_SERVICE_NAME": {
+      "description": "Service name for this MCP server",
+      "required": false,
+      "default": "mcp-logfire"
+    },
+    "LOGFIRE_ENVIRONMENT": {
+      "description": "Environment name (development, staging, production)",
+      "required": false,
+      "default": "development"
+    }
+  },
+  "tools": [
+    {
+      "name": "logfire_log",
+      "description": "Send structured logs to Logfire"
+    },
+    {
+      "name": "logfire_span",
+      "description": "Create tracing spans for operations"
+    },
+    {
+      "name": "logfire_metric",
+      "description": "Record metrics in Logfire"
+    },
+    {
+      "name": "logfire_exception",
+      "description": "Log exceptions with context"
+    },
+    {
+      "name": "logfire_instrument_code",
+      "description": "Get instrumentation code examples"
+    }
+  ],
+  "capabilities": {
+    "logging": true,
+    "tracing": true,
+    "metrics": true,
+    "exceptions": true,
+    "instrumentation": true
+  }
+}

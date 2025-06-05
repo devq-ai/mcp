@@ -16,8 +16,12 @@ from typing import Dict, List, Any, Optional
 from fastapi import FastAPI, HTTPException, Depends, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
+from dotenv import load_dotenv
 
 from .crawler import Crawler, ContentProcessor
+
+# Load environment variables
+load_dotenv()
 
 # Set up logging
 logging.basicConfig(
@@ -25,6 +29,27 @@ logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
 logger = logging.getLogger("crawl4ai.mcp_server")
+
+# Configure Logfire if available
+logfire_initialized = False
+try:
+    import logfire
+    
+    # Initialize Logfire if token is available
+    logfire_token = os.getenv("LOGFIRE_TOKEN")
+    if logfire_token:
+        logfire.configure(
+            token=logfire_token,
+            service_name=os.getenv("LOGFIRE_SERVICE_NAME", "crawl4ai-mcp"),
+            environment=os.getenv("LOGFIRE_ENVIRONMENT", "development")
+        )
+        logfire_initialized = True
+        logger.info("Logfire initialized successfully")
+    else:
+        logger.info("Logfire token not found, running without Logfire")
+except ImportError:
+    logger.info("Logfire not installed, running without observability")
+    logfire = None
 
 # Create the FastAPI app
 app = FastAPI(
@@ -41,6 +66,11 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Instrument FastAPI with Logfire if available
+if logfire and logfire_token:
+    logfire.instrument_fastapi(app)
+    logger.info("FastAPI instrumented with Logfire")
 
 # Load configuration
 def load_config():
@@ -153,15 +183,43 @@ async def handle_crawl(parameters: Dict[str, Any]) -> Dict[str, Any]:
     
     logger.info(f"Handling crawl request for {url} with depth {depth}")
     
-    result = await crawler.crawl(
-        url=url,
-        depth=depth,
-        max_pages=max_pages,
-        extract_code=extract_code,
-        extract_tables=extract_tables
-    )
-    
-    return result
+    if logfire:
+        with logfire.span("crawl_operation", 
+                         url=url, 
+                         depth=depth, 
+                         max_pages=max_pages):
+            logfire.info("Starting crawl operation",
+                        url=url,
+                        depth=depth,
+                        max_pages=max_pages,
+                        extract_code=extract_code,
+                        extract_tables=extract_tables)
+            
+            result = await crawler.crawl(
+                url=url,
+                depth=depth,
+                max_pages=max_pages,
+                extract_code=extract_code,
+                extract_tables=extract_tables
+            )
+            
+            pages_crawled = len(result.get("pages", []))
+            logfire.info("Crawl operation completed",
+                        url=url,
+                        pages_crawled=pages_crawled,
+                        success=True)
+            
+            return result
+    else:
+        result = await crawler.crawl(
+            url=url,
+            depth=depth,
+            max_pages=max_pages,
+            extract_code=extract_code,
+            extract_tables=extract_tables
+        )
+        
+        return result
 
 async def handle_process(parameters: Dict[str, Any]) -> Dict[str, Any]:
     """Handle a content processing operation."""
