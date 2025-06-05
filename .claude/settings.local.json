@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls:*)",
+      "Bash(source:*)",
+      "Bash(python:*)",
+      "Bash(/Users/dionedge/devqai/path/to/venv/bin/python3 src/logfire-fastapi.py)",
+      "Bash(pip install:*)",
+      "Bash(venv/bin/python:*)",
+      "Bash(cat:*)",
+      "Bash(grep:*)",
+      "Bash(/usr/bin/python3:*)",
+      "Bash(rm:*)",
+      "Bash(find:*)"
+    ],
+    "deny": []
+  }
+}

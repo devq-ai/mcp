@@ -65,4 +65,4 @@ logs/
 *.temp
 
 # Cache
-.cache/
+.cache/.DS_Store
