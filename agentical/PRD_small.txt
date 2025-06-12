@@ -1,0 +1,100 @@
+# Agentical PRD
+
+# Agentical
+
+**Agentic framework built on Pydantic AI for creating powerful AI agents and workflows**
+
+[![Python 3.12+](https://img.shields.io/badge/python-3.12+-blue.svg)](https://www.python.org/downloads/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.115+-green.svg)](https://fastapi.tiangolo.com/)
+[![Pydantic AI](https://img.shields.io/badge/Pydantic%20AI-latest-orange.svg)](https://ai.pydantic.dev/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+## Overview
+
+Agentical is a modern, production-ready framework for building intelligent AI agents and workflows. Built on top of Pydantic AI and FastAPI, it provides a robust foundation for creating scalable agentic systems with comprehensive observability, security, and testing capabilities.
+
++ 1. FastAPI is the web framework we use to optmize Pydantic AI's agentic framework. This is the foundation of a production grade environement.
++ 2. Not far behind is the deeply integrated Logfire observability platform. We log all events, capture all exceptions.
++ 3. PyTest is the unit test frawmework that guides our Build-to-Test development approach. Every subtask must pass at 95% or greater before development can progress to the next dependent subtask.
++ 4. Taskmaster AI is our project management work horse. 
+	+ a. We estimate and update complexity after every subtask. We save all status updates in /devqai/darwin/.taskmaster/reports and all tasks/subtasks in /Users/dionedge/devqai/darwin/.taskmaster/tasks
+	+ b. We commit after the completion of every subtask.
+	+ c. We determine the critical path of subtasks, reasses after the completion of a subtask, and execute to the critical path. We do this to save time and tokens and to accumulate the least technical debt.
++ 5. We backup our entire environment /Users/dionedge/devqai every night at 2 AM CDT to /Users/dionedge/backups.
++ 6. The ZED IDE Agent and Claude Code Agent verify at the start of a project they have access to the many tools avaible to them (MCP Servers: /devqai/mcp, Knowledge Base:/devqai/ptolemies, Agent Tools: setting.json).
+	a. IMPORTANT: Agents should never have to hallucianate or guess when writing code if they have access to tools like `context7` the `ptolemis` konwledge graph but they must use them.
+	b. Agentical does not need to build tools when /devqai/mcp and /devqai/ptolemies are available.
++ 7. The SurrealDB serves two distinct independent purposes:
+	+ a. The knolwedge base contained and managed by /ptolemies/ that serves the /devqai/ community
+	+ b. The application database in Agentical which keeps configs for Agents, Tool, Workflows, and messages, documents, logs while executing Playbooks.
+
+## Features
+
+The primary features in Agentical are, not surprisingly:
+
+### Agents
+
++ Base: This is a single class of Agent that be assigne certain Tools and Workflows
+	code_agent: (base)	
+	+ description: Full-stack development agent with code generation, review, and testing capabilities
+	+ data_scienc_agent: (base)	
+	description: Data science and analytics specialist with ML/AI capabilities
+	+ dba_agent: (base)	
+	description: Database administration with optimization and maintenance workflows
+	+ devops_agent: (base)	
+	description: DevOps automation with CI/CD, infrastructure, and monitoring
+	+ gcp_agent: (base)	
+	description: Google Cloud Platform specialist for cloud architecture and deployment
+	+ github_agent: (base)	
+	description: GitHub workflow automation and repository management
+	+ legal_agent: (base)	
+	description: Legal document analysis and compliance checking
+	+ infosec_agent: (base)	
+	description: Information security analysis and threat assessment
+	+ pulumi_agent: (base)	
+	description: Pulumi API subject matter expert in designing and deploying infrastructure
+	+ research_agent: (base)	
+	description: Research and information gathering with source validation
+	+ tester_agent: (base)	
+	description: Quality assurance and testing automation specialist
+	+ token_agent: (base)	
+	description: Token economy and blockchain analysis specialist
+	+ uat_agent: (base)	
+	description: User acceptance testing with automated validation workflows
+	+ ux_agent: (base)	
+	description: User experience design and interface optimization
++ Custom: These are agents with the own classes and config that are used in every Playbook
+	+ codifier_agent: (codifier)	
+	  description: Responsible for all things documentation, logging, tasks, progress bars
+	+ io_agent: (inspector_observer)	
+	  description: Responsible for evaluating all steps, looking for bottlenecks, errors, exceptions
+	+ playbook_agent: (playbook)	
+	  description: Strategic playbook development, selection, and execution
+	+ super_agent: (super)	
+	  description: Meta-agent coordinator with multi-agent orchestration, can use any tool, any workflow, interacts with user
+
+#### Reasoning
+
+Some Agents have the aditional ability to reason when evaluating a problem or overcoming some obstacle. This can be as simple as having more time to think about a problem or objective to using sophisticated mathematics like Bayes Inference, Genetic Algorithm, or Simulations. All of these are available through MCP and Ptolemies. 
+
+### Workflows
+
++ workflow: agent_feedback
+  type: pydantic-graph
+  components: need-to-update
+  description: collaborative feedback loop between two specialized agents with iterative refinement	
+
++ workflow:	handoff
+  type:	pydantic-graph
+  components: need-to-update
+  description: dynamic transfer to specialized agents based on conditional routing and task classification
+
++ workflow:	human_loop
+  type:	pydantic-graph
+  components: need-to-update
+  description: agent-human collaboration with explicit human intervention points and approval gates
+
++ workflow:	parallel
+  type:	standard
+  components: need-to-update
+  description: concurrent execution across multiple independent agents with result aggregation

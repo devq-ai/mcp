@@ -1,0 +1,7 @@
+# DevQ.ai Development Directory Backup
+# Runs at 2:00 AM Central Time (CDT/CST) daily
+# Timezone: America/Chicago
+# Created: 2024-06-09
+
+# m h dom mon dow command
+0 2 * * * /Users/dionedge/devqai/agentical/scripts/backup_devqai.sh >> /Users/dionedge/backups/cron.log 2>&1

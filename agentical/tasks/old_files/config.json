@@ -1,0 +1,38 @@
+{
+  "version": "2.0",
+  "models": {
+    "default": "claude-3-7-sonnet-20250219",
+    "expansion": "claude-3-7-sonnet-20250219",
+    "complexity": "claude-3-7-sonnet-20250219",
+    "research": "claude-3-7-sonnet-20250219"
+  },
+  "parameters": {
+    "max_tokens": 64000,
+    "temperature": 0.2
+  },
+  "project": {
+    "name": "Agentical",
+    "rootDir": "/Users/dionedge/devqai/agentical",
+    "tasksDir": "/Users/dionedge/devqai/agentical/.taskmaster",
+    "reportsDir": "/Users/dionedge/devqai/agentical/.taskmaster"
+  },
+  "defaults": {
+    "subtasks": 5,
+    "priority": "medium"
+  },
+  "features": {
+    "saveHistory": true,
+    "complexity": {
+      "enabled": true,
+      "threshold": 7
+    },
+    "dependencies": {
+      "validate": true,
+      "autofix": true
+    }
+  },
+  "logging": {
+    "level": "debug",
+    "file": "/Users/dionedge/devqai/agentical/.taskmaster/taskmaster.log"
+  }
+}
