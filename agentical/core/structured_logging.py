@@ -70,7 +70,7 @@ class CorrelationContext:
     workflow_id: Optional[str] = None
     parent_operation_id: Optional[str] = None
     trace_id: Optional[str] = None
-    
+
     @classmethod
     def generate(cls, **kwargs) -> 'CorrelationContext':
         """Generate new correlation context with unique IDs"""
@@ -95,7 +95,7 @@ class BaseLogSchema(BaseModel):
     component: str
     version: str = "1.0.0"
     environment: str = "development"
-    
+
     class Config:
         json_encoders = {
             datetime: lambda v: v.isoformat(),
@@ -116,7 +116,7 @@ class APIRequestSchema(BaseLogSchema):
     client_ip: Optional[str] = None
     headers: Optional[Dict[str, Any]] = None
     query_params: Optional[Dict[str, Any]] = None
-    
+
 
 class AgentOperationSchema(BaseLogSchema):
     """Schema for agent operation logging"""
@@ -205,28 +205,28 @@ class PerformanceMetricSchema(BaseLogSchema):
 
 class StructuredLogger:
     """Enhanced structured logger that builds on Logfire foundation"""
-    
+
     def __init__(self, component: str, environment: str = "development"):
         self.component = component
         self.environment = environment
         self._context_stack: List[CorrelationContext] = []
-    
+
     def _get_current_context(self) -> Optional[CorrelationContext]:
         """Get the current correlation context from the stack"""
         return self._context_stack[-1] if self._context_stack else None
-    
+
     def _log_structured(self, schema: BaseLogSchema, extra_attributes: Optional[Dict[str, Any]] = None):
         """Log structured data using Logfire with proper context"""
         # Set component and environment
         schema.component = self.component
         schema.environment = self.environment
-        
+
         # Convert to dict for logging
         log_data = schema.dict()
-        
+
         # Extract main attributes for Logfire span
         span_name = f"{schema.operation_type.value}_{schema.correlation.request_id[:8]}"
-        
+
         # Create span attributes
         attributes = {
             "operation_type": schema.operation_type.value,
@@ -234,7 +234,7 @@ class StructuredLogger:
             "level": schema.level.value,
             "request_id": schema.correlation.request_id,
         }
-        
+
         # Add correlation IDs if available
         if schema.correlation.agent_id:
             attributes["agent_id"] = schema.correlation.agent_id
@@ -242,11 +242,11 @@ class StructuredLogger:
             attributes["workflow_id"] = schema.correlation.workflow_id
         if schema.correlation.trace_id:
             attributes["trace_id"] = schema.correlation.trace_id
-        
+
         # Add extra attributes if provided
         if extra_attributes:
             attributes.update(extra_attributes)
-        
+
         # Log using Logfire with appropriate level
         with logfire.span(span_name, **attributes):
             if schema.level == LogLevel.DEBUG:
@@ -259,7 +259,7 @@ class StructuredLogger:
                 logfire.error(schema.message, **log_data)
             elif schema.level == LogLevel.CRITICAL:
                 logfire.error(schema.message, **log_data)
-    
+
     @contextmanager
     def correlation_context(self, context: CorrelationContext):
         """Context manager for maintaining correlation context"""
@@ -268,7 +268,7 @@ class StructuredLogger:
             yield context
         finally:
             self._context_stack.pop()
-    
+
     def log_api_request(
         self,
         message: str,
@@ -280,7 +280,7 @@ class StructuredLogger:
     ):
         """Log API request with structured data"""
         context = correlation or self._get_current_context() or CorrelationContext.generate()
-        
+
         schema = APIRequestSchema(
             level=level,
             message=message,
@@ -290,9 +290,9 @@ class StructuredLogger:
             path=path,
             **kwargs
         )
-        
+
         self._log_structured(schema)
-    
+
     def log_agent_operation(
         self,
         message: str,
@@ -306,7 +306,7 @@ class StructuredLogger:
     ):
         """Log agent operation with structured data"""
         context = correlation or self._get_current_context() or CorrelationContext.generate()
-        
+
         schema = AgentOperationSchema(
             level=level,
             message=message,
@@ -318,9 +318,9 @@ class StructuredLogger:
             operation_id=operation_id,
             **kwargs
         )
-        
+
         self._log_structured(schema)
-    
+
     def log_workflow_execution(
         self,
         message: str,
@@ -332,7 +332,7 @@ class StructuredLogger:
     ):
         """Log workflow execution with structured data"""
         context = correlation or self._get_current_context() or CorrelationContext.generate()
-        
+
         schema = WorkflowExecutionSchema(
             level=level,
             message=message,
@@ -342,9 +342,9 @@ class StructuredLogger:
             workflow_name=workflow_name,
             **kwargs
         )
-        
+
         self._log_structured(schema)
-    
+
     def log_tool_usage(
         self,
         message: str,
@@ -357,7 +357,7 @@ class StructuredLogger:
     ):
         """Log tool usage with structured data"""
         context = correlation or self._get_current_context() or CorrelationContext.generate()
-        
+
         schema = ToolUsageSchema(
             level=level,
             message=message,
@@ -368,9 +368,9 @@ class StructuredLogger:
             operation=operation,
             **kwargs
         )
-        
+
         self._log_structured(schema)
-    
+
     def log_database_operation(
         self,
         message: str,
@@ -382,7 +382,7 @@ class StructuredLogger:
     ):
         """Log database operation with structured data"""
         context = correlation or self._get_current_context() or CorrelationContext.generate()
-        
+
         schema = DatabaseOperationSchema(
             level=level,
             message=message,
@@ -392,9 +392,9 @@ class StructuredLogger:
             operation=operation,
             **kwargs
         )
-        
+
         self._log_structured(schema)
-    
+
     def log_external_service(
         self,
         message: str,
@@ -405,7 +405,7 @@ class StructuredLogger:
     ):
         """Log external service interaction with structured data"""
         context = correlation or self._get_current_context() or CorrelationContext.generate()
-        
+
         schema = ExternalServiceSchema(
             level=level,
             message=message,
@@ -414,9 +414,9 @@ class StructuredLogger:
             service_name=service_name,
             **kwargs
         )
-        
+
         self._log_structured(schema)
-    
+
     def log_performance_metric(
         self,
         message: str,
@@ -429,7 +429,7 @@ class StructuredLogger:
     ):
         """Log performance metric with structured data"""
         context = correlation or self._get_current_context() or CorrelationContext.generate()
-        
+
         schema = PerformanceMetricSchema(
             level=level,
             message=message,
@@ -440,7 +440,7 @@ class StructuredLogger:
             metric_unit=metric_unit,
             **kwargs
         )
-        
+
         self._log_structured(schema)
 
 
@@ -451,12 +451,12 @@ def timed_operation(logger: StructuredLogger, operation_name: str, operation_typ
         async def async_wrapper(*args, **kwargs):
             start_time = time.time()
             correlation = CorrelationContext.generate()
-            
+
             with logger.correlation_context(correlation):
                 try:
                     result = await func(*args, **kwargs)
                     execution_time = (time.time() - start_time) * 1000
-                    
+
                     logger.log_performance_metric(
                         message=f"Operation {operation_name} completed successfully",
                         metric_name=f"{operation_name}_execution_time",
@@ -466,11 +466,11 @@ def timed_operation(logger: StructuredLogger, operation_name: str, operation_typ
                         correlation=correlation,
                         tags={"operation": operation_name, "success": "true"}
                     )
-                    
+
                     return result
                 except Exception as e:
                     execution_time = (time.time() - start_time) * 1000
-                    
+
                     logger.log_performance_metric(
                         message=f"Operation {operation_name} failed after {execution_time:.2f}ms",
                         metric_name=f"{operation_name}_execution_time",
@@ -481,17 +481,17 @@ def timed_operation(logger: StructuredLogger, operation_name: str, operation_typ
                         tags={"operation": operation_name, "success": "false", "error": str(e)}
                     )
                     raise
-        
+
         @wraps(func)
         def sync_wrapper(*args, **kwargs):
             start_time = time.time()
             correlation = CorrelationContext.generate()
-            
+
             with logger.correlation_context(correlation):
                 try:
                     result = func(*args, **kwargs)
                     execution_time = (time.time() - start_time) * 1000
-                    
+
                     logger.log_performance_metric(
                         message=f"Operation {operation_name} completed successfully",
                         metric_name=f"{operation_name}_execution_time",
@@ -501,11 +501,11 @@ def timed_operation(logger: StructuredLogger, operation_name: str, operation_typ
                         correlation=correlation,
                         tags={"operation": operation_name, "success": "true"}
                     )
-                    
+
                     return result
                 except Exception as e:
                     execution_time = (time.time() - start_time) * 1000
-                    
+
                     logger.log_performance_metric(
                         message=f"Operation {operation_name} failed after {execution_time:.2f}ms",
                         metric_name=f"{operation_name}_execution_time",
@@ -516,14 +516,14 @@ def timed_operation(logger: StructuredLogger, operation_name: str, operation_typ
                         tags={"operation": operation_name, "success": "false", "error": str(e)}
                     )
                     raise
-        
+
         # Return appropriate wrapper based on function type
         import asyncio
         if asyncio.iscoroutinefunction(func):
             return async_wrapper
         else:
             return sync_wrapper
-    
+
     return decorator
 
 
@@ -557,14 +557,14 @@ def log_error_with_context(
 ):
     """Log an error with full context and exception details"""
     context = correlation or logger._get_current_context() or CorrelationContext.generate()
-    
+
     error_details = {
         "exception_type": type(error).__name__,
         "exception_message": str(error),
         "traceback": getattr(error, '__traceback__', None)
     }
     error_details.update(extra_context)
-    
+
     # Use base schema for error logging
     schema = BaseLogSchema(
         level=LogLevel.ERROR,
@@ -574,13 +574,13 @@ def log_error_with_context(
         component=logger.component,
         environment=logger.environment
     )
-    
+
     logger._log_structured(schema, {"error_details": error_details})
 
 
 __all__ = [
     "LogLevel",
-    "OperationType", 
+    "OperationType",
     "AgentPhase",
     "CorrelationContext",
     "BaseLogSchema",

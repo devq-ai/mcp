@@ -1,4 +1,4 @@
-# Agent Reasoning System Documentation
+# Agent Reasoning System
 
 **Framework:** Agentical Multi-Agent Framework  
 **Component:** Task 5 - Agent Reasoning System  
@@ -38,6 +38,7 @@ The Agent Reasoning System is a sophisticated probabilistic decision-making engi
 ### **Why It Matters**
 
 Traditional rule-based agents follow predetermined logic paths. The Reasoning System enables agents to:
+
 - Handle ambiguous situations intelligently
 - Learn from experience and improve over time
 - Provide transparent reasoning with confidence levels
@@ -84,6 +85,7 @@ Agent Reasoning System
 ```
 
 **Legend:**
+
 - ✅ **Completed** (Production Ready)
 - 🔄 **In Progress** (Task 5.2)
 - ⏳ **Planned** (Task 5.3)
@@ -97,6 +99,7 @@ Agent Reasoning System
 The heart of the reasoning system, providing probabilistic inference capabilities.
 
 **Key Features:**
+
 - Multiple inference methods (exact, variational, MCMC)
 - Dynamic belief updating using Bayes' theorem
 - Hypothesis evaluation and ranking
@@ -145,6 +148,7 @@ ranking = await bayesian_engine.rank_hypotheses(hypotheses, evidence)
 Structured decision-making with uncertainty propagation through decision paths.
 
 **Key Features:**
+
 - Multi-criteria decision analysis
 - Uncertainty propagation through decision chains
 - Dynamic tree modification and pruning
@@ -152,6 +156,7 @@ Structured decision-making with uncertainty propagation through decision paths.
 - Real-time decision optimization
 
 **Decision Criteria:**
+
 - **Maximum Expected Value**: Choose option with highest expected outcome
 - **Expected Utility**: Incorporate risk preferences and utility functions
 - **Minimax Regret**: Minimize maximum possible regret
@@ -183,6 +188,7 @@ best_option = decision_tree.select_optimal_path(outcomes)
 Comprehensive uncertainty analysis and confidence measurement.
 
 **Uncertainty Types:**
+
 - **Aleatory**: Natural randomness in the system
 - **Epistemic**: Uncertainty due to lack of knowledge  
 - **Parametric**: Uncertainty in model parameters
@@ -214,6 +220,7 @@ risk_profile = await uncertainty_quantifier.assess_risk(
 Dynamic belief management with convergence detection and stability analysis.
 
 **Key Features:**
+
 - Real-time belief updating
 - Convergence detection for stable beliefs
 - Belief decay for time-sensitive information
@@ -243,6 +250,7 @@ async def update_beliefs_continuously(self, evidence_stream):
 Evolutionary optimization for complex problem spaces and agent strategy evolution.
 
 **Planned Features:**
+
 - Multi-objective optimization
 - Population-based strategy evolution
 - Fitness function framework
@@ -254,6 +262,7 @@ Evolutionary optimization for complex problem spaces and agent strategy evolutio
 Monte Carlo simulation for scenario analysis and prediction.
 
 **Planned Features:**
+
 - Monte Carlo simulation capabilities
 - Scenario modeling and analysis
 - Prediction engines with uncertainty bounds
@@ -961,11 +970,13 @@ class LearningAgent(ReasoningEnabledAgent):
 ### **Computational Complexity**
 
 **Bayesian Inference:**
+
 - **Exact Methods**: O(n²) for simple models, exponential for complex networks
 - **Variational Methods**: O(n log n) with good approximation quality  
 - **MCMC Methods**: O(n × iterations) with convergence guarantees
 
 **Decision Trees:**
+
 - **Tree Construction**: O(n × d × log n) where n=options, d=criteria
 - **Path Evaluation**: O(depth × branches)
 - **Optimization**: O(n!) for exhaustive search, O(n log n) with heuristics
@@ -1324,6 +1335,7 @@ class ReasoningOptimizer:
 #### **Issue 1: Slow Inference Performance**
 
 **Symptoms:**
+
 - Inference takes longer than expected
 - Agent response times are high
 - Memory usage increases over time
@@ -1353,6 +1365,7 @@ for i in range(0, len(decisions), batch_size):
 #### **Issue 2: Beliefs Not Converging**
 
 **Symptoms:**
+
 - Posterior probabilities keep changing
 - Agent decisions are inconsistent
 - Uncertainty remains high
@@ -1388,6 +1401,7 @@ if convergence_monitor.detect_oscillation():
 #### **Issue 3: High Memory Usage**
 
 **Symptoms:**
+
 - Memory usage grows over time
 - Out of memory errors
 - Slow garbage collection
@@ -1443,6 +1457,7 @@ def optimize_evidence_storage(evidence: Evidence) -> Evidence:
 #### **Issue 4: Inconsistent Decision Making**
 
 **Symptoms:**
+
 - Same inputs produce different outputs
 - Decision quality varies significantly
 - Confidence levels are unreliable
@@ -1718,21 +1733,25 @@ async def reasoning_health_check(reasoning_engine: BayesianInferenceEngine) -> D
 ### **Planned Features**
 
 1. **Advanced Machine Learning Integration**
+
    - Neural network-based belief updating
    - Deep reinforcement learning for decision optimization
    - Automated feature engineering for evidence processing
 
 2. **Distributed Reasoning**
+
    - Multi-node reasoning for large-scale problems
    - Federated learning across agent instances
    - Real-time belief synchronization
 
 3. **Explainable AI Integration**
+
    - LIME/SHAP integration for decision explanations
    - Causal reasoning and counterfactual analysis
    - Interactive reasoning visualization
 
 4. **Advanced Optimization Algorithms**
+
    - Multi-objective Pareto optimization
    - Constraint satisfaction with uncertainty
    - Robust optimization under model uncertainty
@@ -1749,16 +1768,19 @@ async def reasoning_health_check(reasoning_engine: BayesianInferenceEngine) -> D
 ## 📚 References and Further Reading
 
 ### **Academic Papers**
+
 - Pearl, J. (2009). *Probabilistic Reasoning in Intelligent Systems*
 - Koller, D., & Friedman, N. (2009). *Probabilistic Graphical Models*
 - Russell, S., & Norvig, P. (2020). *Artificial Intelligence: A Modern Approach*
 
 ### **Technical Documentation**
+
 - [Bayesian Networks in Python](https://pymc.io/)
 - [Decision Theory and Analysis](https://scipy.org/)
 - [Uncertainty Quantification Methods](https://scikit-learn.org/)
 
 ### **Related Agentical Documentation**
+
 - [Agent Architecture Guide](./Agent_Architecture.md)
 - [MCP Integration Guide](./MCP_Integration.md)
 - [Performance Optimization Guide](./Performance_Guide.md)

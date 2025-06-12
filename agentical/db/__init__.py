@@ -48,11 +48,106 @@ from sqlalchemy.exc import SQLAlchemyError
 
 # Import SurrealDB integration
 from .surrealdb_client import (
+    SurrealDBManager,
     get_surrealdb_manager,
     execute_surreal_query,
     check_surrealdb_health,
     shutdown_surrealdb,
+    get_surrealdb_dependency
+)
+
+# Import graph operations
+from .graph_operations import (
+    GraphOperations,
+    GraphNode,
+    GraphRelationship,
+    GraphTraversalPath,
+    VectorSearchResult,
+    NodeType,
+    RelationshipType,
+    create_graph_operations,
+    graph_transaction
+)
+
+# Import knowledge schemas
+from .knowledge_schemas import (
+    AgentKnowledgeSchema,
+    CodeAgentSchema,
+    DataScienceAgentSchema,
+    SuperAgentSchema,
+    KnowledgeEntity,
+    AgentCapability,
+    ToolUsagePattern,
+    LearningRecord,
+    AgentDomain,
+    KnowledgeType,
+    CapabilityLevel,
+    create_agent_schema,
+    merge_knowledge_schemas,
+    extract_learning_insights
+)
+
+# Import vector search
+from .vector_search import (
+    VectorSearchEngine,
+    VectorSearchConfig,
+    VectorSearchResult as VectorResult,
+    EmbeddingModel,
+    SimilarityMetric,
+    create_vector_search_engine,
+    vector_search_session,
+    quick_similarity_search,
+    batch_similarity_matrix
+)
+
+# Import data synchronization
+from .graph_sync import (
+    DataSynchronizer,
+    SyncConfig,
+    ChangeRecord,
+    SyncResult,
+    SyncDirection,
+    SyncStrategy,
+    ChangeType,
+    ConflictResolution,
+    create_data_synchronizer,
+    sync_session,
+    quick_sync_entity,
+    bulk_sync_entities
+)
+
+# Import SurrealDB components
+from .surrealdb_client import (
+    shutdown_surrealdb,
     SURREALDB_AVAILABLE
+)
+
+# Import Redis integration
+from .redis_client import (
+    get_redis_manager,
+    get_session_manager,
+    check_redis_health,
+    shutdown_redis,
+    REDIS_AVAILABLE,
+    cached
+)
+
+# Import backup system
+from .backup import (
+    get_backup_manager,
+    create_database_backup,
+    restore_database_backup,
+    get_backup_system_status,
+    start_backup_scheduler,
+    stop_backup_scheduler
+)
+
+# Import middleware
+from .middleware import (
+    database_middleware,
+    transaction_middleware,
+    database_health_middleware,
+    get_database_metrics
 )
 
 # Configure logging
@@ -381,7 +476,7 @@ async def check_async_database_connection() -> bool:
 
 
 class DatabaseManager:
-    """Centralized database connection management with enhanced monitoring."""
+    """Comprehensive database manager for all database systems."""
 
     def __init__(self):
         self.started_at = time.time()
@@ -389,11 +484,17 @@ class DatabaseManager:
         self.error_count = 0
         self.connection_stats = {
             'sqlalchemy': {'active': 0, 'total': 0},
-            'surrealdb': {'active': 0, 'total': 0}
+            'surrealdb': {'active': 0, 'total': 0},
+            'redis': {'active': 0, 'total': 0}
         }
+        self.backup_manager = None
+        self.redis_manager = None
+        self.graph_operations = None
+        self.vector_search_engine = None
+        self.data_synchronizer = None
 
     async def initialize_all_databases(self, drop_all: bool = False):
-        """Initialize both SQLAlchemy and SurrealDB."""
+        """Initialize SQLAlchemy, SurrealDB, and Redis."""
         with logfire.span("Database Layer Initialization"):
             # Initialize SQLAlchemy
             if ASYNC_DB_URL:
@@ -408,6 +509,22 @@ class DatabaseManager:
                     logfire.info("SurrealDB initialized successfully")
                 except Exception as e:
                     logfire.warning("SurrealDB initialization failed", error=str(e))
+
+            # Initialize Redis
+            if REDIS_AVAILABLE:
+                try:
+                    self.redis_manager = await get_redis_manager()
+                    logfire.info("Redis initialized successfully")
+                except Exception as e:
+                    logfire.warning("Redis initialization failed", error=str(e))
+
+            # Initialize backup system
+            try:
+                self.backup_manager = await get_backup_manager()
+                await start_backup_scheduler()
+                logfire.info("Backup system initialized successfully")
+            except Exception as e:
+                logfire.warning("Backup system initialization failed", error=str(e))
 
     async def health_check_all(self) -> Dict[str, Any]:
         """Comprehensive health check for all database systems."""
@@ -449,6 +566,17 @@ class DatabaseManager:
                 "error": str(e)
             }
 
+        # Redis health check
+        try:
+            redis_health = await check_redis_health()
+            health_status["databases"]["redis"] = redis_health
+        except Exception as e:
+            health_status["databases"]["redis"] = {
+                "status": "error",
+                "available": REDIS_AVAILABLE,
+                "error": str(e)
+            }
+
         # Overall status
         all_healthy = all(
             db.get("status") == "healthy"
@@ -479,11 +607,44 @@ class DatabaseManager:
         except Exception:
             stats["surrealdb"] = {"status": "unavailable"}
 
+        # Add Redis stats if available
+        try:
+            redis_health = await check_redis_health()
+            stats["redis"] = redis_health.get("stats", {"status": "unavailable"})
+        except Exception:
+            stats["redis"] = {"status": "unavailable"}
+
+        # Add backup system stats
+        try:
+            backup_status = await get_backup_system_status()
+            stats["backup_system"] = backup_status
+        except Exception:
+            stats["backup_system"] = {"status": "unavailable"}
+
+        # Add middleware metrics
+        try:
+            middleware_metrics = get_database_metrics()
+            stats["middleware"] = middleware_metrics
+        except Exception:
+            stats["middleware"] = {"status": "unavailable"}
+
         return stats
 
     async def shutdown_all(self):
         """Shutdown all database connections."""
         with logfire.span("Database Layer Shutdown"):
+            # Stop backup scheduler
+            try:
+                await stop_backup_scheduler()
+            except Exception as e:
+                logfire.warning("Error stopping backup scheduler", error=str(e))
+
+            # Shutdown Redis
+            try:
+                await shutdown_redis()
+            except Exception as e:
+                logfire.warning("Error shutting down Redis", error=str(e))
+
             # Close SQLAlchemy engines
             if 'async_engine' in globals():
                 await async_engine.dispose()
@@ -539,7 +700,26 @@ __all__ = [
     "shutdown_database_layer",
     "execute_surreal_query",
     "check_surrealdb_health",
-    "SURREALDB_AVAILABLE"
+    "SURREALDB_AVAILABLE",
+    # Redis components
+    "get_redis_manager",
+    "get_session_manager",
+    "check_redis_health",
+    "shutdown_redis",
+    "REDIS_AVAILABLE",
+    "cached",
+    # Backup components
+    "get_backup_manager",
+    "create_database_backup",
+    "restore_database_backup",
+    "get_backup_system_status",
+    "start_backup_scheduler",
+    "stop_backup_scheduler",
+    # Middleware components
+    "database_middleware",
+    "transaction_middleware",
+    "database_health_middleware",
+    "get_database_metrics"
 ]
 
 # Add async components if available

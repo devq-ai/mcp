@@ -35,6 +35,12 @@ from .agent_registry import (
     get_agent_registry
 )
 
+# Custom Agents (Task 4.4)
+from .codifier_agent import CodifierAgent
+from .io_agent import IOAgent
+from .playbook_agent import PlaybookAgent
+from .super_agent import SuperAgent
+
 # Re-export for convenience
 agent_registry = get_agent_registry()
 
@@ -47,14 +53,20 @@ __all__ = [
     "AgentExecutionContext",
     "AgentExecutionResult",
     "InfrastructureConnections",
-    
+
     # Concrete implementations
     "GenericAgent",
     "PerceptionResult",
     "DecisionResult",
-    "ActionResult", 
+    "ActionResult",
     "ToolExecutionResult",
-    
+
+    # Custom Agents (Task 4.4)
+    "CodifierAgent",
+    "IOAgent",
+    "PlaybookAgent",
+    "SuperAgent",
+
     # Registry
     "AgentRegistry",
     "get_agent_registry",
