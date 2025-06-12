@@ -1,20 +1,37 @@
 """
 Analytics & Monitoring API Endpoints for Agentical
 
-This module provides comprehensive analytics and monitoring endpoints including:
-- Performance metrics and analytics APIs
-- Logfire integration for observability data
-- System health and resource monitoring
-- Real-time metrics streaming endpoints
-- Custom dashboard data endpoints
+SCOPE CLARIFICATION:
+This module provides analytics and monitoring for the entire Agentical platform including:
+- SYSTEM WORKFLOW analytics (orchestration-level workflows coordinating multiple agents)
+- Agent performance metrics (individual agent execution patterns)
+- Platform infrastructure monitoring (CPU, memory, disk, network)
+- Cross-system integration observability
 
-Features:
+System Workflow Analytics Features:
+- Multi-agent coordination performance metrics
+- Business process execution analytics
+- Cross-system integration monitoring
+- Long-running workflow trend analysis
+
+Agent Analytics Features:
+- Individual agent performance tracking
+- Agent workflow pattern analysis
+- Tool usage effectiveness metrics
+- Agent learning and adaptation insights
+
+Platform Monitoring Features:
+- Real-time system resource monitoring
+- Logfire integration for distributed observability
+- Custom analytics queries and reports
+- Multi-format data export capabilities
+
+Technical Features:
 - RESTful API design with OpenAPI documentation
 - Real-time metrics streaming via WebSocket
 - Comprehensive error handling and validation
-- Logfire integration for deep observability
-- Custom analytics queries and reports
-- System health monitoring
+- Performance optimizations for large-scale analytics
+- Enterprise-grade health monitoring
 """
 
 import asyncio

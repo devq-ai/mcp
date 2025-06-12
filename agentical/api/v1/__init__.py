@@ -2,14 +2,19 @@
 Agentical API v1 Module
 
 This module contains version 1 of the Agentical API endpoints,
-providing comprehensive REST APIs for agent management, workflow orchestration,
+providing comprehensive REST APIs for agent management, system workflow orchestration,
 playbook execution, and system monitoring.
 
+WORKFLOW TYPE CLARIFICATION:
+- System Workflows (/workflows/) - Multi-agent orchestration, business processes, external integrations
+- Agent Workflows - Internal agent logic patterns (managed via agent configuration APIs)
+See docs/workflow_quick_reference.md for detailed differences.
+
 Features:
-- Agent Management APIs (CRUD, monitoring, analytics)
+- Agent Management APIs (CRUD, monitoring, analytics, internal workflow configuration)
 - Playbook Management APIs (creation, execution, monitoring)
-- Workflow Management APIs (orchestration, control)
-- System Analytics and Monitoring APIs
+- System Workflow Management APIs (multi-agent orchestration, business process control)
+- System Analytics and Monitoring APIs (workflows, agents, infrastructure)
 - Real-time WebSocket connections
 - Comprehensive error handling and validation
 """

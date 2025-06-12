@@ -1,19 +1,36 @@
 """
-Workflow Management API Endpoints for Agentical
+System Workflow Management API Endpoints for Agentical
 
-This module provides comprehensive workflow management endpoints including:
-- Workflow CRUD operations
+IMPORTANT SCOPE CLARIFICATION:
+This module manages SYSTEM WORKFLOWS - high-level orchestration workflows that:
+- Coordinate multiple agents working together
+- Integrate with external systems, databases, and APIs
+- Represent complete business processes and automation sequences
+- Handle multi-step, long-running operations (hours to days)
+- Manage complex dependencies and conditional logic
+
+This is DISTINCT from AGENT WORKFLOWS, which are:
+- Internal execution patterns within individual agents
+- Cognitive and operational patterns for task-specific logic
+- Managed through agent configuration APIs
+- Short-running task completion patterns (minutes to hours)
+
+See docs/workflow_types_explanation.md for detailed differences.
+
+System Workflow Management Features:
+- Multi-agent orchestration and coordination
+- Cross-system integration capabilities
+- Business process automation workflows
 - Execution control (start/pause/resume/stop)
-- Status monitoring and progress tracking
-- Workflow template management
-- Real-time execution streaming
+- Real-time status monitoring and progress tracking
+- Workflow template management for reusable processes
 
-Features:
+Technical Features:
 - RESTful API design with OpenAPI documentation
 - Comprehensive error handling and validation
-- Logfire integration for observability
+- Logfire integration for distributed observability
 - WebSocket support for real-time updates
-- Pagination and filtering support
+- Pagination and filtering support for enterprise scale
 """
 
 import asyncio
