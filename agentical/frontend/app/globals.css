@@ -1,0 +1,428 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+
+@layer base {
+  :root {
+    --background: 0 0% 4%; /* #0A0A0A - Pure Black */
+    --foreground: 0 0% 96%; /* #F5F5F5 - Snow White */
+
+    --card: 0 0% 11%; /* #1B1B1B - Dark Grey */
+    --card-foreground: 0 0% 96%; /* #F5F5F5 - Snow White */
+
+    --popover: 0 0% 11%; /* #1B1B1B - Dark Grey */
+    --popover-foreground: 0 0% 96%; /* #F5F5F5 - Snow White */
+
+    --primary: 328 100% 50%; /* #FF0090 - Neon Magenta */
+    --primary-foreground: 0 0% 96%; /* #F5F5F5 - Snow White */
+
+    --secondary: 74 76% 54%; /* #C7EA46 - Neon Lime */
+    --secondary-foreground: 0 0% 13%; /* #212121 - Deep Grey */
+
+    --muted: 210 18% 51%; /* #7D8B99 - Cool Grey */
+    --muted-foreground: 0 0% 64%; /* #A3A3A3 - Stone Grey */
+
+    --accent: 18 100% 56%; /* #FF5F1F - Neon Orange */
+    --accent-foreground: 0 0% 96%; /* #F5F5F5 - Snow White */
+
+    --destructive: 0 100% 59%; /* #FF3131 - Neon Red */
+    --destructive-foreground: 0 0% 96%; /* #F5F5F5 - Snow White */
+
+    --border: 210 18% 20%; /* #2C2F33 - Gunmetal Grey */
+    --input: 210 18% 20%; /* #2C2F33 - Gunmetal Grey */
+    --ring: 328 100% 50%; /* #FF0090 - Neon Magenta */
+
+    --radius: 0.5rem;
+
+    /* Custom CSS Variables for Cyber Theme */
+    --cyber-grid-opacity: 0.05;
+    --neon-glow-primary: 328 100% 50%;
+    --neon-glow-secondary: 74 76% 54%;
+    --neon-glow-accent: 18 100% 56%;
+  }
+
+  .light {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 13%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 13%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 13%;
+
+    --primary: 328 100% 50%;
+    --primary-foreground: 0 0% 96%;
+
+    --secondary: 74 76% 54%;
+    --secondary-foreground: 0 0% 13%;
+
+    --muted: 210 18% 96%;
+    --muted-foreground: 210 18% 38%;
+
+    --accent: 18 100% 56%;
+    --accent-foreground: 0 0% 96%;
+
+    --destructive: 0 100% 59%;
+    --destructive-foreground: 0 0% 96%;
+
+    --border: 210 18% 85%;
+    --input: 210 18% 85%;
+    --ring: 328 100% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Cyber Grid Background */
+  .cyber-bg {
+    background-image:
+      linear-gradient(rgba(255, 0, 144, var(--cyber-grid-opacity)) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 0, 144, var(--cyber-grid-opacity)) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+
+  /* Scrollbar Styling */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-background;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-border rounded-md;
+    border: 2px solid transparent;
+    background-clip: content-box;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-muted;
+  }
+
+  /* Firefox scrollbar */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--border)) hsl(var(--background));
+  }
+
+  /* Selection styling */
+  ::selection {
+    background-color: hsla(var(--primary), 0.3);
+    color: hsl(var(--primary-foreground));
+  }
+
+  /* Focus ring */
+  .focus-visible {
+    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+  }
+}
+
+@layer components {
+  /* Neon text effects */
+  .text-neon {
+    text-shadow:
+      0 0 5px currentColor,
+      0 0 10px currentColor,
+      0 0 15px currentColor;
+  }
+
+  .text-neon-sm {
+    text-shadow:
+      0 0 3px currentColor,
+      0 0 6px currentColor;
+  }
+
+  .text-neon-lg {
+    text-shadow:
+      0 0 10px currentColor,
+      0 0 20px currentColor,
+      0 0 30px currentColor;
+  }
+
+  /* Neon border effects */
+  .border-neon {
+    border-color: currentColor;
+    box-shadow:
+      0 0 5px currentColor,
+      inset 0 0 5px currentColor;
+  }
+
+  .border-neon-sm {
+    border-color: currentColor;
+    box-shadow:
+      0 0 3px currentColor,
+      inset 0 0 3px currentColor;
+  }
+
+  .border-neon-lg {
+    border-color: currentColor;
+    box-shadow:
+      0 0 10px currentColor,
+      0 0 20px currentColor,
+      inset 0 0 10px currentColor;
+  }
+
+  /* Glowing button */
+  .btn-neon {
+    @apply relative overflow-hidden border border-current bg-transparent px-6 py-3 text-current transition-all duration-300;
+    text-shadow: 0 0 5px currentColor;
+    box-shadow:
+      0 0 5px currentColor,
+      inset 0 0 5px currentColor;
+  }
+
+  .btn-neon:hover {
+    text-shadow: 0 0 10px currentColor, 0 0 20px currentColor;
+    box-shadow:
+      0 0 10px currentColor,
+      0 0 20px currentColor,
+      inset 0 0 10px currentColor;
+    transform: translateY(-1px);
+  }
+
+  .btn-neon:active {
+    transform: translateY(0);
+  }
+
+  /* Cyber card */
+  .cyber-card {
+    @apply bg-card/50 backdrop-blur-sm border border-border/50 rounded-lg;
+    background-image:
+      linear-gradient(135deg, rgba(255, 0, 144, 0.02) 0%, transparent 50%),
+      linear-gradient(45deg, rgba(199, 234, 70, 0.02) 0%, transparent 50%);
+  }
+
+  .cyber-card:hover {
+    @apply border-primary/50;
+    box-shadow: 0 0 20px hsla(var(--primary), 0.1);
+  }
+
+  /* Status indicators */
+  .status-backlog {
+    @apply bg-status-backlog text-black;
+  }
+
+  .status-planning {
+    @apply bg-status-planning text-black;
+  }
+
+  .status-note {
+    @apply bg-status-note text-black;
+  }
+
+  .status-todo {
+    @apply bg-status-todo text-black;
+  }
+
+  .status-doing {
+    @apply bg-status-doing text-black;
+  }
+
+  .status-done {
+    @apply bg-status-done text-white;
+  }
+
+  .status-review {
+    @apply bg-status-review text-black;
+  }
+
+  .status-codify {
+    @apply bg-status-codify text-black;
+  }
+
+  .status-tech-debt {
+    @apply bg-status-tech-debt text-white;
+  }
+
+  /* Animated gradient background */
+  .gradient-animation {
+    background: linear-gradient(
+      -45deg,
+      hsla(var(--primary), 0.1),
+      hsla(var(--secondary), 0.1),
+      hsla(var(--accent), 0.1),
+      hsla(var(--primary), 0.1)
+    );
+    background-size: 400% 400%;
+    animation: gradient-shift 15s ease infinite;
+  }
+
+  @keyframes gradient-shift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  /* Loading spinner */
+  .loading-spinner {
+    border: 2px solid transparent;
+    border-top: 2px solid currentColor;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  /* Pulse animation for active states */
+  .pulse-active {
+    animation: pulse-active 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  @keyframes pulse-active {
+    0%, 100% {
+      opacity: 1;
+      box-shadow: 0 0 5px currentColor;
+    }
+    50% {
+      opacity: 0.8;
+      box-shadow: 0 0 15px currentColor, 0 0 25px currentColor;
+    }
+  }
+
+  /* Chat bubble styles */
+  .chat-bubble-user {
+    @apply bg-primary/20 border-primary/50 text-foreground ml-12 rounded-tl-2xl rounded-tr-2xl rounded-bl-2xl;
+  }
+
+  .chat-bubble-agent {
+    @apply bg-secondary/20 border-secondary/50 text-foreground mr-12 rounded-tl-2xl rounded-tr-2xl rounded-br-2xl;
+  }
+
+  /* Code block styling */
+  pre {
+    @apply bg-cyber-dark-grey/50 border border-border rounded-lg p-4 overflow-x-auto;
+    font-family: 'JetBrains Mono', 'Consolas', monospace;
+  }
+
+  code {
+    @apply bg-cyber-dark-grey/30 text-neon-magenta px-1 py-0.5 rounded text-sm;
+    font-family: 'JetBrains Mono', 'Consolas', monospace;
+  }
+
+  pre code {
+    @apply bg-transparent text-foreground px-0 py-0;
+  }
+
+  /* Syntax highlighting for code */
+  .hljs-keyword {
+    @apply text-neon-magenta;
+  }
+
+  .hljs-string {
+    @apply text-neon-lime;
+  }
+
+  .hljs-number {
+    @apply text-neon-orange;
+  }
+
+  .hljs-comment {
+    @apply text-muted;
+  }
+
+  .hljs-function {
+    @apply text-neon-cyan;
+  }
+
+  /* Custom form controls */
+  .form-input {
+    @apply bg-background border-border text-foreground placeholder:text-muted-foreground;
+    @apply focus:border-primary focus:ring-1 focus:ring-primary focus:ring-offset-0;
+    @apply transition-all duration-200;
+  }
+
+  .form-input:focus {
+    box-shadow: 0 0 0 1px hsl(var(--primary)), 0 0 10px hsla(var(--primary), 0.3);
+  }
+
+  /* Progress bar */
+  .progress-bar {
+    @apply bg-border rounded-full overflow-hidden;
+  }
+
+  .progress-fill {
+    @apply bg-gradient-to-r from-primary to-secondary h-full transition-all duration-500 ease-out;
+    box-shadow: 0 0 10px hsla(var(--primary), 0.5);
+  }
+
+  /* Tooltip */
+  .tooltip {
+    @apply bg-cyber-dark-grey border border-border text-foreground text-sm px-2 py-1 rounded;
+    @apply opacity-0 pointer-events-none transition-opacity duration-200;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  }
+
+  .tooltip.show {
+    @apply opacity-100 pointer-events-auto;
+  }
+}
+
+@layer utilities {
+  /* Custom utilities */
+  .text-gradient {
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-accent {
+    background: linear-gradient(135deg, hsl(var(--accent)), hsl(var(--primary)));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Hide scrollbar but keep functionality */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Glassmorphism effect */
+  .glass {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  /* Perspective for 3D effects */
+  .perspective {
+    perspective: 1000px;
+  }
+
+  .rotate-y-6 {
+    transform: rotateY(6deg);
+  }
+
+  .rotate-y-12 {
+    transform: rotateY(12deg);
+  }
+}
