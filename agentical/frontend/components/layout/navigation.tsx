@@ -1,51 +1,58 @@
-'use client';
+"use client";
 
-import * as React from 'react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
+import * as React from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 import {
   Home,
   BookOpen,
   Play,
   BarChart3,
   Settings,
+  Monitor,
   Zap,
   Menu,
-  X
-} from 'lucide-react';
+  X,
+} from "lucide-react";
 
 const navigationItems = [
   {
-    name: 'Dashboard',
-    href: '/',
+    name: "Dashboard",
+    href: "/",
     icon: Home,
-    description: 'System overview and quick actions',
+    description: "System overview and quick actions",
   },
   {
-    name: 'Playbooks',
-    href: '/playbooks',
+    name: "Playbooks",
+    href: "/playbooks",
     icon: BookOpen,
-    description: 'Create and manage playbooks',
+    description: "Create and manage playbooks",
   },
   {
-    name: 'Executions',
-    href: '/executions',
+    name: "Monitor",
+    href: "/monitor",
+    icon: Monitor,
+    description: "Real-time execution monitoring",
+  },
+  {
+    name: "Executions",
+    href: "/executions",
     icon: Play,
-    description: 'Monitor running playbooks',
+    description: "Monitor running playbooks",
   },
   {
-    name: 'Analytics',
-    href: '/analytics',
+    name: "Analytics",
+    href: "/analytics",
     icon: BarChart3,
-    description: 'Performance insights and reports',
+    description: "Performance insights and reports",
   },
   {
-    name: 'Settings',
-    href: '/settings',
+    name: "Settings",
+    href: "/settings",
     icon: Settings,
-    description: 'System configuration',
+    description: "System configuration",
   },
 ];
 
@@ -54,8 +61,8 @@ export function Navigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
 
   const isActive = (href: string) => {
-    if (href === '/') {
-      return pathname === '/';
+    if (href === "/") {
+      return pathname === "/";
     }
     return pathname.startsWith(href);
   };
@@ -85,10 +92,10 @@ export function Navigation() {
                 <Button
                   variant="ghost"
                   className={cn(
-                    'flex items-center space-x-2 px-3 py-2 text-sm font-medium transition-all duration-200',
+                    "flex items-center space-x-2 px-3 py-2 text-sm font-medium transition-all duration-200",
                     active
-                      ? 'text-primary bg-primary/10 border border-primary/20'
-                      : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                      ? "text-primary bg-primary/10 border border-primary/20"
+                      : "text-muted-foreground hover:text-foreground hover:bg-muted/50",
                   )}
                 >
                   <Icon className="h-4 w-4" />
@@ -145,10 +152,10 @@ export function Navigation() {
                   href={item.href}
                   onClick={() => setMobileMenuOpen(false)}
                   className={cn(
-                    'flex items-center space-x-3 px-3 py-3 rounded-lg transition-all duration-200',
+                    "flex items-center space-x-3 px-3 py-3 rounded-lg transition-all duration-200",
                     active
-                      ? 'text-primary bg-primary/10 border border-primary/20'
-                      : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                      ? "text-primary bg-primary/10 border border-primary/20"
+                      : "text-muted-foreground hover:text-foreground hover:bg-muted/50",
                   )}
                 >
                   <Icon className="h-5 w-5" />

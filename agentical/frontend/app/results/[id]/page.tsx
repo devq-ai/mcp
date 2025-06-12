@@ -1,11 +1,10 @@
-'use client';
+"use client";
 
-import * as React from 'react';
-import { useState, useEffect, useRef } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import * as React from "react";
+import { useState, useEffect, useRef } from "react";
+import { useParams, useRouter } from "next/navigation";
 import {
   Play,
-  Pause,
   Square,
   CheckCircle2,
   AlertCircle,
@@ -13,20 +12,26 @@ import {
   Download,
   Maximize2,
   Minimize2,
-  RotateCcw,
-  ArrowLeft
-} from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Progress } from '@/components/ui/progress';
-import { cn } from '@/lib/utils';
-import { formatDuration, formatRelativeTime } from '@/lib/utils';
+  ArrowLeft,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Progress } from "@/components/ui/progress";
+import { cn } from "@/lib/utils";
+import { formatDuration, formatRelativeTime } from "@/lib/utils";
+import { WorkflowVisualization } from "@/components/playbook/WorkflowVisualization";
 
 interface ExecutionStep {
   id: string;
   name: string;
-  status: 'pending' | 'running' | 'completed' | 'failed' | 'skipped';
+  status: "pending" | "running" | "completed" | "failed" | "skipped";
   started_at?: string;
   completed_at?: string;
   duration?: number;
@@ -38,7 +43,7 @@ interface ExecutionStep {
 interface ExecutionLog {
   id: string;
   timestamp: string;
-  level: 'info' | 'warning' | 'error' | 'debug';
+  level: "info" | "warning" | "error" | "debug";
   message: string;
   step_id?: string;
   step_name?: string;
@@ -50,7 +55,7 @@ interface PlaybookExecution {
   id: string;
   playbook_id: string;
   playbook_name: string;
-  status: 'pending' | 'running' | 'completed' | 'failed' | 'cancelled';
+  status: "pending" | "running" | "completed" | "failed" | "cancelled";
   progress_percentage: number;
   current_step?: string;
   current_step_name?: string;
@@ -58,7 +63,7 @@ interface PlaybookExecution {
   completed_at?: string;
   duration_seconds?: number;
   steps: ExecutionStep[];
-  agents: Record<string, { status: 'active' | 'idle' | 'error'; name: string }>;
+  agents: Record<string, { status: "active" | "idle" | "error"; name: string }>;
   input_variables: Record<string, any>;
   output_data?: any;
   error_message?: string;
@@ -74,7 +79,7 @@ export default function ExecutionResultsPage() {
   const [loading, setLoading] = useState(true);
   const [autoScroll, setAutoScroll] = useState(true);
   const [logsExpanded, setLogsExpanded] = useState(false);
-  const [filterLevel, setFilterLevel] = useState<string>('all');
+  const [filterLevel, setFilterLevel] = useState<string>("all");
 
   const logsEndRef = useRef<HTMLDivElement>(null);
   const logsContainerRef = useRef<HTMLDivElement>(null);
@@ -83,154 +88,155 @@ export default function ExecutionResultsPage() {
     // Mock data - replace with actual API call and WebSocket connection
     const mockExecution: PlaybookExecution = {
       id: executionId,
-      playbook_id: 'pb_001',
-      playbook_name: 'Data Processing Pipeline',
-      status: 'running',
+      playbook_id: "pb_001",
+      playbook_name: "Data Processing Pipeline",
+      status: "running",
       progress_percentage: 65,
-      current_step: 'step_3',
-      current_step_name: 'Data Transformation',
+      current_step: "step_3",
+      current_step_name: "Data Transformation",
       started_at: new Date(Date.now() - 5 * 60 * 1000).toISOString(),
       steps: [
         {
-          id: 'step_1',
-          name: 'Data Ingestion',
-          status: 'completed',
+          id: "step_1",
+          name: "Data Ingestion",
+          status: "completed",
           started_at: new Date(Date.now() - 5 * 60 * 1000).toISOString(),
           completed_at: new Date(Date.now() - 4 * 60 * 1000).toISOString(),
           duration: 45,
-          agent_id: 'io_agent',
-          agent_name: 'IO Agent',
+          agent_id: "io_agent",
+          agent_name: "IO Agent",
           progress: 100,
         },
         {
-          id: 'step_2',
-          name: 'Data Validation',
-          status: 'completed',
+          id: "step_2",
+          name: "Data Validation",
+          status: "completed",
           started_at: new Date(Date.now() - 4 * 60 * 1000).toISOString(),
           completed_at: new Date(Date.now() - 3 * 60 * 1000).toISOString(),
           duration: 32,
-          agent_id: 'codifier',
-          agent_name: 'Codifier Agent',
+          agent_id: "codifier",
+          agent_name: "Codifier Agent",
           progress: 100,
         },
         {
-          id: 'step_3',
-          name: 'Data Transformation',
-          status: 'running',
+          id: "step_3",
+          name: "Data Transformation",
+          status: "running",
           started_at: new Date(Date.now() - 2 * 60 * 1000).toISOString(),
-          agent_id: 'super_agent',
-          agent_name: 'Super Agent',
+          agent_id: "super_agent",
+          agent_name: "Super Agent",
           progress: 75,
         },
         {
-          id: 'step_4',
-          name: 'Quality Checks',
-          status: 'pending',
-          agent_id: 'codifier',
-          agent_name: 'Codifier Agent',
+          id: "step_4",
+          name: "Quality Checks",
+          status: "pending",
+          agent_id: "codifier",
+          agent_name: "Codifier Agent",
           progress: 0,
         },
         {
-          id: 'step_5',
-          name: 'Output Generation',
-          status: 'pending',
-          agent_id: 'io_agent',
-          agent_name: 'IO Agent',
+          id: "step_5",
+          name: "Output Generation",
+          status: "pending",
+          agent_id: "io_agent",
+          agent_name: "IO Agent",
           progress: 0,
         },
       ],
       agents: {
-        super_agent: { status: 'active', name: 'Super Agent' },
-        codifier: { status: 'idle', name: 'Codifier Agent' },
-        io_agent: { status: 'idle', name: 'IO Agent' },
-        playbook_agent: { status: 'idle', name: 'Playbook Agent' },
+        super_agent: { status: "active", name: "Super Agent" },
+        codifier: { status: "idle", name: "Codifier Agent" },
+        io_agent: { status: "idle", name: "IO Agent" },
+        playbook_agent: { status: "idle", name: "Playbook Agent" },
       },
       input_variables: {
-        source_file: 'data.csv',
-        target_format: 'json',
-        validation_rules: ['not_null', 'data_type_check'],
+        source_file: "data.csv",
+        target_format: "json",
+        validation_rules: ["not_null", "data_type_check"],
       },
     };
 
     const mockLogs: ExecutionLog[] = [
       {
-        id: '1',
+        id: "1",
         timestamp: new Date(Date.now() - 5 * 60 * 1000).toISOString(),
-        level: 'info',
-        message: 'Execution started for Data Processing Pipeline',
+        level: "info",
+        message: "Execution started for Data Processing Pipeline",
         metadata: { execution_id: executionId },
       },
       {
-        id: '2',
+        id: "2",
         timestamp: new Date(Date.now() - 4.5 * 60 * 1000).toISOString(),
-        level: 'info',
-        message: 'Starting data ingestion from source file: data.csv',
-        step_id: 'step_1',
-        step_name: 'Data Ingestion',
-        agent_name: 'IO Agent',
+        level: "info",
+        message: "Starting data ingestion from source file: data.csv",
+        step_id: "step_1",
+        step_name: "Data Ingestion",
+        agent_name: "IO Agent",
       },
       {
-        id: '3',
+        id: "3",
         timestamp: new Date(Date.now() - 4.3 * 60 * 1000).toISOString(),
-        level: 'info',
-        message: 'Successfully loaded 1,250 records from source',
-        step_id: 'step_1',
-        step_name: 'Data Ingestion',
-        agent_name: 'IO Agent',
+        level: "info",
+        message: "Successfully loaded 1,250 records from source",
+        step_id: "step_1",
+        step_name: "Data Ingestion",
+        agent_name: "IO Agent",
       },
       {
-        id: '4',
+        id: "4",
         timestamp: new Date(Date.now() - 4 * 60 * 1000).toISOString(),
-        level: 'info',
-        message: 'Data ingestion completed successfully',
-        step_id: 'step_1',
-        step_name: 'Data Ingestion',
-        agent_name: 'IO Agent',
+        level: "info",
+        message: "Data ingestion completed successfully",
+        step_id: "step_1",
+        step_name: "Data Ingestion",
+        agent_name: "IO Agent",
       },
       {
-        id: '5',
+        id: "5",
         timestamp: new Date(Date.now() - 3.8 * 60 * 1000).toISOString(),
-        level: 'info',
-        message: 'Starting data validation with rules: not_null, data_type_check',
-        step_id: 'step_2',
-        step_name: 'Data Validation',
-        agent_name: 'Codifier Agent',
+        level: "info",
+        message:
+          "Starting data validation with rules: not_null, data_type_check",
+        step_id: "step_2",
+        step_name: "Data Validation",
+        agent_name: "Codifier Agent",
       },
       {
-        id: '6',
+        id: "6",
         timestamp: new Date(Date.now() - 3.5 * 60 * 1000).toISOString(),
-        level: 'warning',
-        message: 'Found 12 records with null values in optional fields',
-        step_id: 'step_2',
-        step_name: 'Data Validation',
-        agent_name: 'Codifier Agent',
+        level: "warning",
+        message: "Found 12 records with null values in optional fields",
+        step_id: "step_2",
+        step_name: "Data Validation",
+        agent_name: "Codifier Agent",
       },
       {
-        id: '7',
+        id: "7",
         timestamp: new Date(Date.now() - 3 * 60 * 1000).toISOString(),
-        level: 'info',
-        message: 'Data validation completed - 1,238 valid records',
-        step_id: 'step_2',
-        step_name: 'Data Validation',
-        agent_name: 'Codifier Agent',
+        level: "info",
+        message: "Data validation completed - 1,238 valid records",
+        step_id: "step_2",
+        step_name: "Data Validation",
+        agent_name: "Codifier Agent",
       },
       {
-        id: '8',
+        id: "8",
         timestamp: new Date(Date.now() - 2 * 60 * 1000).toISOString(),
-        level: 'info',
-        message: 'Starting data transformation to JSON format',
-        step_id: 'step_3',
-        step_name: 'Data Transformation',
-        agent_name: 'Super Agent',
+        level: "info",
+        message: "Starting data transformation to JSON format",
+        step_id: "step_3",
+        step_name: "Data Transformation",
+        agent_name: "Super Agent",
       },
       {
-        id: '9',
+        id: "9",
         timestamp: new Date(Date.now() - 1.5 * 60 * 1000).toISOString(),
-        level: 'info',
-        message: 'Processed 930 records (75% complete)',
-        step_id: 'step_3',
-        step_name: 'Data Transformation',
-        agent_name: 'Super Agent',
+        level: "info",
+        message: "Processed 930 records (75% complete)",
+        step_id: "step_3",
+        step_name: "Data Transformation",
+        agent_name: "Super Agent",
       },
     ];
 
@@ -242,24 +248,31 @@ export default function ExecutionResultsPage() {
 
     // Simulate real-time updates
     const interval = setInterval(() => {
-      if (mockExecution.status === 'running') {
+      if (mockExecution.status === "running") {
         const newLog: ExecutionLog = {
           id: Date.now().toString(),
           timestamp: new Date().toISOString(),
-          level: Math.random() > 0.8 ? 'warning' : 'info',
+          level: Math.random() > 0.8 ? "warning" : "info",
           message: `Processing batch ${Math.floor(Math.random() * 100) + 900}...`,
-          step_id: 'step_3',
-          step_name: 'Data Transformation',
-          agent_name: 'Super Agent',
+          step_id: "step_3",
+          step_name: "Data Transformation",
+          agent_name: "Super Agent",
         };
 
-        setLogs(prev => [...prev, newLog]);
+        setLogs((prev) => [...prev, newLog]);
 
         // Update progress
-        setExecution(prev => prev ? {
-          ...prev,
-          progress_percentage: Math.min(100, prev.progress_percentage + Math.random() * 5),
-        } : null);
+        setExecution((prev) =>
+          prev
+            ? {
+                ...prev,
+                progress_percentage: Math.min(
+                  100,
+                  prev.progress_percentage + Math.random() * 5,
+                ),
+              }
+            : null,
+        );
       }
     }, 3000);
 
@@ -268,19 +281,19 @@ export default function ExecutionResultsPage() {
 
   useEffect(() => {
     if (autoScroll && logsEndRef.current) {
-      logsEndRef.current.scrollIntoView({ behavior: 'smooth' });
+      logsEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [logs, autoScroll]);
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case 'completed':
+      case "completed":
         return <CheckCircle2 className="h-4 w-4 text-neon-green" />;
-      case 'running':
+      case "running":
         return <Play className="h-4 w-4 text-neon-lime animate-pulse" />;
-      case 'failed':
+      case "failed":
         return <AlertCircle className="h-4 w-4 text-neon-red" />;
-      case 'pending':
+      case "pending":
         return <Clock className="h-4 w-4 text-muted-foreground" />;
       default:
         return <Clock className="h-4 w-4 text-muted-foreground" />;
@@ -289,47 +302,62 @@ export default function ExecutionResultsPage() {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'completed': return 'status-done';
-      case 'running': return 'status-doing';
-      case 'failed': return 'status-tech-debt';
-      case 'pending': return 'status-todo';
-      case 'cancelled': return 'status-backlog';
-      default: return 'status-backlog';
+      case "completed":
+        return "status-done";
+      case "running":
+        return "status-doing";
+      case "failed":
+        return "status-tech-debt";
+      case "pending":
+        return "status-todo";
+      case "cancelled":
+        return "status-backlog";
+      default:
+        return "status-backlog";
     }
   };
 
   const getLogLevelColor = (level: string) => {
     switch (level) {
-      case 'error': return 'text-neon-red';
-      case 'warning': return 'text-neon-orange';
-      case 'info': return 'text-foreground';
-      case 'debug': return 'text-muted-foreground';
-      default: return 'text-foreground';
+      case "error":
+        return "text-neon-red";
+      case "warning":
+        return "text-neon-orange";
+      case "info":
+        return "text-foreground";
+      case "debug":
+        return "text-muted-foreground";
+      default:
+        return "text-foreground";
     }
   };
 
   const getAgentStatusColor = (status: string) => {
     switch (status) {
-      case 'active': return 'bg-neon-green';
-      case 'idle': return 'bg-muted';
-      case 'error': return 'bg-neon-red';
-      default: return 'bg-muted';
+      case "active":
+        return "bg-neon-green";
+      case "idle":
+        return "bg-muted";
+      case "error":
+        return "bg-neon-red";
+      default:
+        return "bg-muted";
     }
   };
 
-  const filteredLogs = logs.filter(log =>
-    filterLevel === 'all' || log.level === filterLevel
+  const filteredLogs = logs.filter(
+    (log) => filterLevel === "all" || log.level === filterLevel,
   );
 
   const handleStopExecution = () => {
     if (execution) {
-      setExecution(prev => prev ? { ...prev, status: 'cancelled' } : null);
+      setExecution((prev) => (prev ? { ...prev, status: "cancelled" } : null));
     }
   };
 
   const handleDownloadReport = () => {
     // Generate and download execution report
-    console.log('Downloading execution report...');
+    console.log("Downloading execution report...");
   };
 
   if (loading) {
@@ -351,7 +379,7 @@ export default function ExecutionResultsPage() {
           <p className="text-muted-foreground mb-4">
             The execution with ID {executionId} could not be found.
           </p>
-          <Button onClick={() => router.push('/playbooks')}>
+          <Button onClick={() => router.push("/playbooks")}>
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to Playbooks
           </Button>
@@ -365,11 +393,7 @@ export default function ExecutionResultsPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-4">
-          <Button
-            variant="ghost"
-            onClick={() => router.back()}
-            className="p-2"
-          >
+          <Button variant="ghost" onClick={() => router.back()} className="p-2">
             <ArrowLeft className="h-4 w-4" />
           </Button>
           <div>
@@ -387,7 +411,7 @@ export default function ExecutionResultsPage() {
             {execution.status.toUpperCase()}
           </Badge>
 
-          {execution.status === 'running' && (
+          {execution.status === "running" && (
             <Button
               variant="outline"
               onClick={handleStopExecution}
@@ -398,7 +422,7 @@ export default function ExecutionResultsPage() {
             </Button>
           )}
 
-          {execution.status === 'completed' && (
+          {execution.status === "completed" && (
             <Button
               variant="outline"
               onClick={handleDownloadReport}
@@ -443,20 +467,31 @@ export default function ExecutionResultsPage() {
                 <div className="font-medium">
                   {execution.duration_seconds
                     ? formatDuration(execution.duration_seconds)
-                    : formatDuration(Math.floor((Date.now() - new Date(execution.started_at).getTime()) / 1000))
-                  }
+                    : formatDuration(
+                        Math.floor(
+                          (Date.now() -
+                            new Date(execution.started_at).getTime()) /
+                            1000,
+                        ),
+                      )}
                 </div>
               </div>
               <div>
-                <div className="text-sm text-muted-foreground">Current Step</div>
+                <div className="text-sm text-muted-foreground">
+                  Current Step
+                </div>
                 <div className="font-medium text-neon-lime">
-                  {execution.current_step_name || 'Initializing...'}
+                  {execution.current_step_name || "Initializing..."}
                 </div>
               </div>
               <div>
                 <div className="text-sm text-muted-foreground">Steps</div>
                 <div className="font-medium">
-                  {execution.steps.filter(s => s.status === 'completed').length} / {execution.steps.length}
+                  {
+                    execution.steps.filter((s) => s.status === "completed")
+                      .length
+                  }{" "}
+                  / {execution.steps.length}
                 </div>
               </div>
             </div>
@@ -465,18 +500,84 @@ export default function ExecutionResultsPage() {
       </Card>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Steps Progress */}
+        {/* Workflow Visualization */}
         <div className="lg:col-span-2 space-y-6">
+          <Card className="cyber-card">
+            <CardHeader>
+              <CardTitle>Workflow Visualization</CardTitle>
+              <CardDescription>
+                Interactive workflow diagram with execution path tracking
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="p-0">
+              <WorkflowVisualization
+                executionData={{
+                  id: execution.id,
+                  name: execution.playbook_name,
+                  status: execution.status,
+                  ...(execution.current_step && {
+                    currentStep: execution.current_step,
+                  }),
+                  executionPath: execution.steps
+                    .filter(
+                      (step) =>
+                        step.status === "completed" ||
+                        step.status === "running",
+                    )
+                    .map((step) => step.id),
+                  steps: execution.steps.map((step, index) => ({
+                    id: step.id,
+                    name: step.name,
+                    type:
+                      index === 0
+                        ? ("start" as const)
+                        : index === execution.steps.length - 1
+                          ? ("end" as const)
+                          : ("action" as const),
+                    status: step.status,
+                    progress: step.progress,
+                    ...(step.duration !== undefined && {
+                      duration: step.duration,
+                    }),
+                    ...(step.agent_name && {
+                      agent_name: step.agent_name,
+                    }),
+                    position: {
+                      x: 200 + (index % 3) * 250,
+                      y: 100 + Math.floor(index / 3) * 150,
+                    },
+                    connections: (() => {
+                      const nextStep = execution.steps[index + 1];
+                      return index < execution.steps.length - 1 && nextStep
+                        ? [nextStep.id]
+                        : [];
+                    })(),
+                  })),
+                  startTime: execution.started_at,
+                  ...(execution.completed_at && {
+                    endTime: execution.completed_at,
+                  }),
+                }}
+                height={500}
+                onStepSelect={(stepId) => {
+                  // Handle step selection
+                  console.log("Selected step:", stepId);
+                }}
+                className="rounded-lg"
+              />
+            </CardContent>
+          </Card>
+
           <Card className="cyber-card">
             <CardHeader>
               <CardTitle>Step Progress</CardTitle>
               <CardDescription>
-                Visual representation of playbook execution steps
+                Detailed step-by-step execution status
               </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                {execution.steps.map((step, index) => (
+                {execution.steps.map((step) => (
                   <div key={step.id} className="flex items-center space-x-4">
                     <div className="flex items-center justify-center w-8 h-8 rounded-full border-2 border-border">
                       {getStatusIcon(step.status)}
@@ -497,7 +598,7 @@ export default function ExecutionResultsPage() {
                         </div>
                       </div>
 
-                      {step.status === 'running' && (
+                      {step.status === "running" && (
                         <div className="mt-2">
                           <Progress value={step.progress} className="h-2" />
                         </div>
@@ -535,7 +636,7 @@ export default function ExecutionResultsPage() {
                     variant="ghost"
                     size="sm"
                     onClick={() => setAutoScroll(!autoScroll)}
-                    className={autoScroll ? 'text-neon-lime' : ''}
+                    className={autoScroll ? "text-neon-lime" : ""}
                   >
                     Auto-scroll
                   </Button>
@@ -544,7 +645,11 @@ export default function ExecutionResultsPage() {
                     size="sm"
                     onClick={() => setLogsExpanded(!logsExpanded)}
                   >
-                    {logsExpanded ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
+                    {logsExpanded ? (
+                      <Minimize2 className="h-4 w-4" />
+                    ) : (
+                      <Maximize2 className="h-4 w-4" />
+                    )}
                   </Button>
                 </div>
               </div>
@@ -553,8 +658,8 @@ export default function ExecutionResultsPage() {
               <div
                 ref={logsContainerRef}
                 className={cn(
-                  'bg-cyber-dark-grey/30 rounded-lg p-4 font-mono text-sm overflow-y-auto',
-                  logsExpanded ? 'h-96' : 'h-64'
+                  "bg-cyber-dark-grey/30 rounded-lg p-4 font-mono text-sm overflow-y-auto",
+                  logsExpanded ? "h-96" : "h-64",
                 )}
               >
                 {filteredLogs.map((log) => (
@@ -562,7 +667,12 @@ export default function ExecutionResultsPage() {
                     <span className="text-muted-foreground text-xs shrink-0">
                       {new Date(log.timestamp).toLocaleTimeString()}
                     </span>
-                    <span className={cn('text-xs font-medium shrink-0 w-16', getLogLevelColor(log.level))}>
+                    <span
+                      className={cn(
+                        "text-xs font-medium shrink-0 w-16",
+                        getLogLevelColor(log.level),
+                      )}
+                    >
                       [{log.level.toUpperCase()}]
                     </span>
                     {log.agent_name && (
@@ -593,12 +703,17 @@ export default function ExecutionResultsPage() {
             <CardContent>
               <div className="space-y-3">
                 {Object.entries(execution.agents).map(([agentId, agent]) => (
-                  <div key={agentId} className="flex items-center justify-between">
+                  <div
+                    key={agentId}
+                    className="flex items-center justify-between"
+                  >
                     <div className="flex items-center space-x-3">
-                      <div className={cn(
-                        'w-3 h-3 rounded-full',
-                        getAgentStatusColor(agent.status)
-                      )}></div>
+                      <div
+                        className={cn(
+                          "w-3 h-3 rounded-full",
+                          getAgentStatusColor(agent.status),
+                        )}
+                      ></div>
                       <span className="font-medium">{agent.name}</span>
                     </div>
                     <Badge variant="outline" className="text-xs">
@@ -617,14 +732,18 @@ export default function ExecutionResultsPage() {
             </CardHeader>
             <CardContent>
               <div className="space-y-2">
-                {Object.entries(execution.input_variables).map(([key, value]) => (
-                  <div key={key} className="text-sm">
-                    <span className="text-muted-foreground">{key}:</span>
-                    <span className="ml-2 font-mono text-neon-lime">
-                      {typeof value === 'string' ? value : JSON.stringify(value)}
-                    </span>
-                  </div>
-                ))}
+                {Object.entries(execution.input_variables).map(
+                  ([key, value]) => (
+                    <div key={key} className="text-sm">
+                      <span className="text-muted-foreground">{key}:</span>
+                      <span className="ml-2 font-mono text-neon-lime">
+                        {typeof value === "string"
+                          ? value
+                          : JSON.stringify(value)}
+                      </span>
+                    </div>
+                  ),
+                )}
               </div>
             </CardContent>
           </Card>
@@ -645,7 +764,7 @@ export default function ExecutionResultsPage() {
             </Card>
           )}
 
-          {execution.status === 'completed' && execution.output_data && (
+          {execution.status === "completed" && execution.output_data && (
             <Card className="cyber-card border-neon-green">
               <CardHeader>
                 <CardTitle className="text-neon-green">Output Data</CardTitle>

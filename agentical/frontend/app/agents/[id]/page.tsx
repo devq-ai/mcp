@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import * as React from 'react';
-import { useState, useEffect } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import * as React from "react";
+import { useState, useEffect } from "react";
+import { useParams, useRouter } from "next/navigation";
 import {
   ArrowLeft,
   Zap,
@@ -12,7 +12,6 @@ import {
   Play,
   Pause,
   RotateCcw,
-  Download,
   Edit,
   Save,
   X,
@@ -20,27 +19,28 @@ import {
   XCircle,
   Clock,
   AlertTriangle,
-  TrendingUp,
-  TrendingDown,
-  Cpu,
-  Memory,
   Network,
-  HardDrive
-} from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Progress } from '@/components/ui/progress';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { cn } from '@/lib/utils';
-import { formatDuration, formatRelativeTime } from '@/lib/utils';
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Progress } from "@/components/ui/progress";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { cn } from "@/lib/utils";
+import { formatDuration, formatRelativeTime } from "@/lib/utils";
 
 interface AgentDetail {
   id: string;
   name: string;
-  type: 'super_agent' | 'playbook_agent' | 'codifier' | 'io' | 'custom';
-  status: 'active' | 'idle' | 'busy' | 'error' | 'offline';
+  type: "super_agent" | "playbook_agent" | "codifier" | "io" | "custom";
+  status: "active" | "idle" | "busy" | "error" | "offline";
   version: string;
   uptime: number;
   started_at: string;
@@ -71,7 +71,7 @@ interface ActivityLog {
   timestamp: string;
   action: string;
   details: string;
-  status: 'success' | 'warning' | 'error';
+  status: "success" | "warning" | "error";
   execution_id?: string;
 }
 
@@ -99,7 +99,9 @@ export default function AgentDetailPage() {
 
   const [agent, setAgent] = useState<AgentDetail | null>(null);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<'overview' | 'config' | 'logs' | 'performance'>('overview');
+  const [activeTab, setActiveTab] = useState<
+    "overview" | "config" | "logs" | "performance"
+  >("overview");
   const [isEditing, setIsEditing] = useState(false);
   const [editedConfig, setEditedConfig] = useState<Record<string, any>>({});
 
@@ -107,22 +109,51 @@ export default function AgentDetailPage() {
     // Mock data - replace with actual API call
     const mockAgent: AgentDetail = {
       id: agentId,
-      name: agentId === 'super_agent' ? 'Super Agent' :
-            agentId === 'playbook_agent' ? 'Playbook Agent' :
-            agentId === 'codifier' ? 'Codifier Agent' :
-            agentId === 'io_agent' ? 'IO Agent' : 'Unknown Agent',
+      name:
+        agentId === "super_agent"
+          ? "Super Agent"
+          : agentId === "playbook_agent"
+            ? "Playbook Agent"
+            : agentId === "codifier"
+              ? "Codifier Agent"
+              : agentId === "io_agent"
+                ? "IO Agent"
+                : "Unknown Agent",
       type: agentId as any,
-      status: 'active',
-      version: '2.1.0',
+      status: "active",
+      version: "2.1.0",
       uptime: 86400,
       started_at: new Date(Date.now() - 86400000).toISOString(),
-      capabilities: agentId === 'super_agent'
-        ? ['orchestration', 'planning', 'coordination', 'chat_interface', 'decision_making']
-        : agentId === 'playbook_agent'
-        ? ['playbook_creation', 'step_generation', 'workflow_design', 'optimization']
-        : agentId === 'codifier'
-        ? ['code_generation', 'validation', 'testing', 'optimization', 'refactoring']
-        : ['data_ingestion', 'file_processing', 'api_integration', 'data_transformation'],
+      capabilities:
+        agentId === "super_agent"
+          ? [
+              "orchestration",
+              "planning",
+              "coordination",
+              "chat_interface",
+              "decision_making",
+            ]
+          : agentId === "playbook_agent"
+            ? [
+                "playbook_creation",
+                "step_generation",
+                "workflow_design",
+                "optimization",
+              ]
+            : agentId === "codifier"
+              ? [
+                  "code_generation",
+                  "validation",
+                  "testing",
+                  "optimization",
+                  "refactoring",
+                ]
+              : [
+                  "data_ingestion",
+                  "file_processing",
+                  "api_integration",
+                  "data_transformation",
+                ],
       current_tasks: 3,
       queue_length: 7,
       performance_metrics: {
@@ -142,40 +173,40 @@ export default function AgentDetailPage() {
         max_concurrent_tasks: 10,
         timeout_seconds: 300,
         retry_attempts: 3,
-        log_level: 'info',
+        log_level: "info",
         enable_metrics: true,
         auto_scale: false,
       },
       activity_logs: [
         {
-          id: '1',
+          id: "1",
           timestamp: new Date(Date.now() - 300000).toISOString(),
-          action: 'Task Completed',
-          details: 'Successfully processed playbook execution request',
-          status: 'success',
-          execution_id: 'exec_001',
+          action: "Task Completed",
+          details: "Successfully processed playbook execution request",
+          status: "success",
+          execution_id: "exec_001",
         },
         {
-          id: '2',
+          id: "2",
           timestamp: new Date(Date.now() - 600000).toISOString(),
-          action: 'Configuration Updated',
-          details: 'Updated max_concurrent_tasks from 8 to 10',
-          status: 'success',
+          action: "Configuration Updated",
+          details: "Updated max_concurrent_tasks from 8 to 10",
+          status: "success",
         },
         {
-          id: '3',
+          id: "3",
           timestamp: new Date(Date.now() - 900000).toISOString(),
-          action: 'Warning',
-          details: 'High memory usage detected (85%)',
-          status: 'warning',
+          action: "Warning",
+          details: "High memory usage detected (85%)",
+          status: "warning",
         },
         {
-          id: '4',
+          id: "4",
           timestamp: new Date(Date.now() - 1200000).toISOString(),
-          action: 'Task Started',
-          details: 'Began processing complex playbook creation request',
-          status: 'success',
-          execution_id: 'exec_002',
+          action: "Task Started",
+          details: "Began processing complex playbook creation request",
+          status: "success",
+          execution_id: "exec_002",
         },
       ],
       performance_history: Array.from({ length: 24 }, (_, i) => ({
@@ -187,17 +218,17 @@ export default function AgentDetailPage() {
       })),
       error_logs: [
         {
-          id: '1',
+          id: "1",
           timestamp: new Date(Date.now() - 3600000).toISOString(),
-          error_type: 'TimeoutError',
-          message: 'Request timeout after 300 seconds',
-          execution_id: 'exec_003',
+          error_type: "TimeoutError",
+          message: "Request timeout after 300 seconds",
+          execution_id: "exec_003",
         },
         {
-          id: '2',
+          id: "2",
           timestamp: new Date(Date.now() - 7200000).toISOString(),
-          error_type: 'ValidationError',
-          message: 'Invalid input parameters for playbook creation',
+          error_type: "ValidationError",
+          message: "Invalid input parameters for playbook creation",
         },
       ],
     };
@@ -211,15 +242,33 @@ export default function AgentDetailPage() {
     // Real-time updates
     const interval = setInterval(() => {
       if (mockAgent) {
-        setAgent(prev => prev ? {
-          ...prev,
-          performance_metrics: {
-            ...prev.performance_metrics,
-            cpu_usage: Math.max(5, Math.min(95, prev.performance_metrics.cpu_usage + (Math.random() - 0.5) * 10)),
-            memory_usage: Math.max(10, Math.min(90, prev.performance_metrics.memory_usage + (Math.random() - 0.5) * 5)),
-          },
-          last_heartbeat: new Date().toISOString(),
-        } : null);
+        setAgent((prev) =>
+          prev
+            ? {
+                ...prev,
+                performance_metrics: {
+                  ...prev.performance_metrics,
+                  cpu_usage: Math.max(
+                    5,
+                    Math.min(
+                      95,
+                      prev.performance_metrics.cpu_usage +
+                        (Math.random() - 0.5) * 10,
+                    ),
+                  ),
+                  memory_usage: Math.max(
+                    10,
+                    Math.min(
+                      90,
+                      prev.performance_metrics.memory_usage +
+                        (Math.random() - 0.5) * 5,
+                    ),
+                  ),
+                },
+                last_heartbeat: new Date().toISOString(),
+              }
+            : null,
+        );
       }
     }, 5000);
 
@@ -228,63 +277,79 @@ export default function AgentDetailPage() {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'active': return 'status-done';
-      case 'busy': return 'status-doing';
-      case 'idle': return 'status-todo';
-      case 'error': return 'status-tech-debt';
-      case 'offline': return 'status-backlog';
-      default: return 'status-backlog';
+      case "active":
+        return "status-done";
+      case "busy":
+        return "status-doing";
+      case "idle":
+        return "status-todo";
+      case "error":
+        return "status-tech-debt";
+      case "offline":
+        return "status-backlog";
+      default:
+        return "status-backlog";
     }
   };
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case 'active': return <CheckCircle className="h-4 w-4 text-neon-green" />;
-      case 'busy': return <Activity className="h-4 w-4 text-neon-lime animate-pulse" />;
-      case 'idle': return <Clock className="h-4 w-4 text-muted-foreground" />;
-      case 'error': return <XCircle className="h-4 w-4 text-neon-red" />;
-      case 'offline': return <XCircle className="h-4 w-4 text-muted" />;
-      default: return <Clock className="h-4 w-4 text-muted-foreground" />;
+      case "active":
+        return <CheckCircle className="h-4 w-4 text-neon-green" />;
+      case "busy":
+        return <Activity className="h-4 w-4 text-neon-lime animate-pulse" />;
+      case "idle":
+        return <Clock className="h-4 w-4 text-muted-foreground" />;
+      case "error":
+        return <XCircle className="h-4 w-4 text-neon-red" />;
+      case "offline":
+        return <XCircle className="h-4 w-4 text-muted" />;
+      default:
+        return <Clock className="h-4 w-4 text-muted-foreground" />;
     }
   };
 
   const getAgentTypeIcon = (type: string) => {
     switch (type) {
-      case 'super_agent': return <Zap className="h-6 w-6 text-neon-magenta" />;
-      case 'playbook_agent': return <Bot className="h-6 w-6 text-neon-lime" />;
-      case 'codifier': return <Settings className="h-6 w-6 text-neon-orange" />;
-      case 'io_agent': return <Network className="h-6 w-6 text-neon-cyan" />;
-      default: return <Bot className="h-6 w-6 text-muted-foreground" />;
+      case "super_agent":
+        return <Zap className="h-6 w-6 text-neon-magenta" />;
+      case "playbook_agent":
+        return <Bot className="h-6 w-6 text-neon-lime" />;
+      case "codifier":
+        return <Settings className="h-6 w-6 text-neon-orange" />;
+      case "io_agent":
+        return <Network className="h-6 w-6 text-neon-cyan" />;
+      default:
+        return <Bot className="h-6 w-6 text-muted-foreground" />;
     }
   };
 
-  const getActivityStatusColor = (status: string) => {
-    switch (status) {
-      case 'success': return 'text-neon-green';
-      case 'warning': return 'text-neon-orange';
-      case 'error': return 'text-neon-red';
-      default: return 'text-foreground';
-    }
-  };
-
-  const handleAgentAction = (action: 'start' | 'stop' | 'restart') => {
+  const handleAgentAction = (action: "start" | "stop" | "restart") => {
     if (!agent) return;
 
     console.log(`${action} agent:`, agent.id);
-    setAgent(prev => prev ? {
-      ...prev,
-      status: action === 'stop' ? 'offline' : 'active',
-      last_heartbeat: new Date().toISOString()
-    } : null);
+    setAgent((prev) =>
+      prev
+        ? {
+            ...prev,
+            status: action === "stop" ? "offline" : "active",
+            last_heartbeat: new Date().toISOString(),
+          }
+        : null,
+    );
   };
 
   const handleSaveConfig = () => {
     if (!agent) return;
 
-    setAgent(prev => prev ? {
-      ...prev,
-      configuration: editedConfig
-    } : null);
+    setAgent((prev) =>
+      prev
+        ? {
+            ...prev,
+            configuration: editedConfig,
+          }
+        : null,
+    );
     setIsEditing(false);
   };
 
@@ -314,7 +379,7 @@ export default function AgentDetailPage() {
           <p className="text-muted-foreground mb-4">
             The agent with ID {agentId} could not be found.
           </p>
-          <Button onClick={() => router.push('/agents')}>
+          <Button onClick={() => router.push("/agents")}>
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to Agents
           </Button>
@@ -328,11 +393,7 @@ export default function AgentDetailPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-4">
-          <Button
-            variant="ghost"
-            onClick={() => router.back()}
-            className="p-2"
-          >
+          <Button variant="ghost" onClick={() => router.back()} className="p-2">
             <ArrowLeft className="h-4 w-4" />
           </Button>
           <div className="flex items-center space-x-3">
@@ -340,7 +401,7 @@ export default function AgentDetailPage() {
             <div>
               <h1 className="text-4xl font-bold text-gradient">{agent.name}</h1>
               <p className="text-xl text-muted-foreground">
-                v{agent.version} • {agent.type.replace('_', ' ')}
+                v{agent.version} • {agent.type.replace("_", " ")}
               </p>
             </div>
           </div>
@@ -354,9 +415,9 @@ export default function AgentDetailPage() {
             {getStatusIcon(agent.status)}
           </div>
 
-          {agent.status === 'offline' ? (
+          {agent.status === "offline" ? (
             <Button
-              onClick={() => handleAgentAction('start')}
+              onClick={() => handleAgentAction("start")}
               className="btn-neon text-neon-green"
             >
               <Play className="h-4 w-4 mr-2" />
@@ -366,14 +427,14 @@ export default function AgentDetailPage() {
             <div className="flex space-x-2">
               <Button
                 variant="outline"
-                onClick={() => handleAgentAction('restart')}
+                onClick={() => handleAgentAction("restart")}
               >
                 <RotateCcw className="h-4 w-4 mr-2" />
                 Restart
               </Button>
               <Button
                 variant="outline"
-                onClick={() => handleAgentAction('stop')}
+                onClick={() => handleAgentAction("stop")}
                 className="text-neon-red border-neon-red hover:bg-neon-red/10"
               >
                 <Pause className="h-4 w-4 mr-2" />
@@ -444,18 +505,18 @@ export default function AgentDetailPage() {
       {/* Navigation Tabs */}
       <div className="flex space-x-1 border-b border-border">
         {[
-          { id: 'overview', label: 'Overview' },
-          { id: 'config', label: 'Configuration' },
-          { id: 'logs', label: 'Activity Logs' },
-          { id: 'performance', label: 'Performance' },
+          { id: "overview", label: "Overview" },
+          { id: "config", label: "Configuration" },
+          { id: "logs", label: "Activity Logs" },
+          { id: "performance", label: "Performance" },
         ].map((tab) => (
           <Button
             key={tab.id}
-            variant={activeTab === tab.id ? 'default' : 'ghost'}
+            variant={activeTab === tab.id ? "default" : "ghost"}
             onClick={() => setActiveTab(tab.id as any)}
             className={cn(
-              'rounded-b-none',
-              activeTab === tab.id && 'btn-neon text-neon-magenta'
+              "rounded-b-none",
+              activeTab === tab.id && "btn-neon text-neon-magenta",
             )}
           >
             {tab.label}
@@ -464,7 +525,7 @@ export default function AgentDetailPage() {
       </div>
 
       {/* Tab Content */}
-      {activeTab === 'overview' && (
+      {activeTab === "overview" && (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Performance Metrics */}
           <Card className="cyber-card">
@@ -475,13 +536,17 @@ export default function AgentDetailPage() {
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <div className="text-sm text-muted-foreground">Avg Response Time</div>
+                    <div className="text-sm text-muted-foreground">
+                      Avg Response Time
+                    </div>
                     <div className="text-lg font-semibold">
                       {agent.performance_metrics.avg_response_time}ms
                     </div>
                   </div>
                   <div>
-                    <div className="text-sm text-muted-foreground">Total Executions</div>
+                    <div className="text-sm text-muted-foreground">
+                      Total Executions
+                    </div>
                     <div className="text-lg font-semibold">
                       {agent.performance_metrics.total_executions.toLocaleString()}
                     </div>
@@ -492,30 +557,50 @@ export default function AgentDetailPage() {
                   <div>
                     <div className="flex justify-between text-sm mb-1">
                       <span>CPU Usage</span>
-                      <span>{agent.performance_metrics.cpu_usage.toFixed(1)}%</span>
+                      <span>
+                        {agent.performance_metrics.cpu_usage.toFixed(1)}%
+                      </span>
                     </div>
-                    <Progress value={agent.performance_metrics.cpu_usage} className="h-2" />
+                    <Progress
+                      value={agent.performance_metrics.cpu_usage}
+                      className="h-2"
+                    />
                   </div>
                   <div>
                     <div className="flex justify-between text-sm mb-1">
                       <span>Memory Usage</span>
-                      <span>{agent.performance_metrics.memory_usage.toFixed(1)}%</span>
+                      <span>
+                        {agent.performance_metrics.memory_usage.toFixed(1)}%
+                      </span>
                     </div>
-                    <Progress value={agent.performance_metrics.memory_usage} className="h-2" />
+                    <Progress
+                      value={agent.performance_metrics.memory_usage}
+                      className="h-2"
+                    />
                   </div>
                   <div>
                     <div className="flex justify-between text-sm mb-1">
                       <span>Network I/O</span>
-                      <span>{agent.performance_metrics.network_io.toFixed(1)} MB/s</span>
+                      <span>
+                        {agent.performance_metrics.network_io.toFixed(1)} MB/s
+                      </span>
                     </div>
-                    <Progress value={agent.performance_metrics.network_io * 5} className="h-2" />
+                    <Progress
+                      value={agent.performance_metrics.network_io * 5}
+                      className="h-2"
+                    />
                   </div>
                   <div>
                     <div className="flex justify-between text-sm mb-1">
                       <span>Disk Usage</span>
-                      <span>{agent.performance_metrics.disk_usage.toFixed(1)}%</span>
+                      <span>
+                        {agent.performance_metrics.disk_usage.toFixed(1)}%
+                      </span>
                     </div>
-                    <Progress value={agent.performance_metrics.disk_usage} className="h-2" />
+                    <Progress
+                      value={agent.performance_metrics.disk_usage}
+                      className="h-2"
+                    />
                   </div>
                 </div>
               </div>
@@ -530,10 +615,16 @@ export default function AgentDetailPage() {
             <CardContent>
               <div className="space-y-4">
                 <div>
-                  <div className="text-sm text-muted-foreground mb-2">Capabilities</div>
+                  <div className="text-sm text-muted-foreground mb-2">
+                    Capabilities
+                  </div>
                   <div className="flex flex-wrap gap-2">
                     {agent.capabilities.map((capability) => (
-                      <Badge key={capability} variant="outline" className="text-xs">
+                      <Badge
+                        key={capability}
+                        variant="outline"
+                        className="text-xs"
+                      >
                         {capability}
                       </Badge>
                     ))}
@@ -541,7 +632,9 @@ export default function AgentDetailPage() {
                 </div>
 
                 <div>
-                  <div className="text-sm text-muted-foreground mb-2">System Information</div>
+                  <div className="text-sm text-muted-foreground mb-2">
+                    System Information
+                  </div>
                   <div className="space-y-2 text-sm">
                     <div className="flex justify-between">
                       <span>Last Heartbeat</span>
@@ -549,7 +642,9 @@ export default function AgentDetailPage() {
                     </div>
                     <div className="flex justify-between">
                       <span>Errors (24h)</span>
-                      <span className="text-neon-red">{agent.performance_metrics.error_count_24h}</span>
+                      <span className="text-neon-red">
+                        {agent.performance_metrics.error_count_24h}
+                      </span>
                     </div>
                     <div className="flex justify-between">
                       <span>Started</span>
@@ -563,7 +658,7 @@ export default function AgentDetailPage() {
         </div>
       )}
 
-      {activeTab === 'config' && (
+      {activeTab === "config" && (
         <Card className="cyber-card">
           <CardHeader>
             <div className="flex items-center justify-between">
@@ -610,20 +705,29 @@ export default function AgentDetailPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {Object.entries(editedConfig).map(([key, value]) => (
                 <div key={key} className="space-y-2">
-                  <Label htmlFor={key}>{key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</Label>
+                  <Label htmlFor={key}>
+                    {key
+                      .replace(/_/g, " ")
+                      .replace(/\b\w/g, (l) => l.toUpperCase())}
+                  </Label>
                   {isEditing ? (
                     <Input
                       id={key}
-                      value={value?.toString() || ''}
-                      onChange={(e) => setEditedConfig(prev => ({
-                        ...prev,
-                        [key]: typeof value === 'number' ? Number(e.target.value) : e.target.value
-                      }))}
-                      type={typeof value === 'number' ? 'number' : 'text'}
+                      value={value?.toString() || ""}
+                      onChange={(e) =>
+                        setEditedConfig((prev) => ({
+                          ...prev,
+                          [key]:
+                            typeof value === "number"
+                              ? Number(e.target.value)
+                              : e.target.value,
+                        }))
+                      }
+                      type={typeof value === "number" ? "number" : "text"}
                     />
                   ) : (
                     <div className="p-2 bg-muted/20 rounded border">
-                      {value?.toString() || 'N/A'}
+                      {value?.toString() || "N/A"}
                     </div>
                   )}
                 </div>
@@ -633,7 +737,7 @@ export default function AgentDetailPage() {
         </Card>
       )}
 
-      {activeTab === 'logs' && (
+      {activeTab === "logs" && (
         <Card className="cyber-card">
           <CardHeader>
             <CardTitle>Activity Logs</CardTitle>
@@ -644,11 +748,20 @@ export default function AgentDetailPage() {
           <CardContent>
             <div className="space-y-4">
               {agent.activity_logs.map((log) => (
-                <div key={log.id} className="flex items-start space-x-4 p-4 rounded-lg border border-border/50">
+                <div
+                  key={log.id}
+                  className="flex items-start space-x-4 p-4 rounded-lg border border-border/50"
+                >
                   <div className="flex-shrink-0 mt-1">
-                    {log.status === 'success' && <CheckCircle className="h-4 w-4 text-neon-green" />}
-                    {log.status === 'warning' && <AlertTriangle className="h-4 w-4 text-neon-orange" />}
-                    {log.status === 'error' && <XCircle className="h-4 w-4 text-neon-red" />}
+                    {log.status === "success" && (
+                      <CheckCircle className="h-4 w-4 text-neon-green" />
+                    )}
+                    {log.status === "warning" && (
+                      <AlertTriangle className="h-4 w-4 text-neon-orange" />
+                    )}
+                    {log.status === "error" && (
+                      <XCircle className="h-4 w-4 text-neon-red" />
+                    )}
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between">
@@ -657,7 +770,9 @@ export default function AgentDetailPage() {
                         {formatRelativeTime(log.timestamp)}
                       </span>
                     </div>
-                    <p className="text-sm text-muted-foreground mt-1">{log.details}</p>
+                    <p className="text-sm text-muted-foreground mt-1">
+                      {log.details}
+                    </p>
                     {log.execution_id && (
                       <Badge variant="outline" className="text-xs mt-2">
                         Execution: {log.execution_id}
@@ -671,7 +786,7 @@ export default function AgentDetailPage() {
         </Card>
       )}
 
-      {activeTab === 'performance' && (
+      {activeTab === "performance" && (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <Card className="cyber-card">
             <CardHeader>
@@ -712,9 +827,14 @@ export default function AgentDetailPage() {
             <CardContent>
               <div className="space-y-3">
                 {agent.error_logs.map((error) => (
-                  <div key={error.id} className="p-3 rounded border border-neon-red/20 bg-neon-red/5">
+                  <div
+                    key={error.id}
+                    className="p-3 rounded border border-neon-red/20 bg-neon-red/5"
+                  >
                     <div className="flex items-center justify-between">
-                      <span className="font-medium text-neon-red">{error.error_type}</span>
+                      <span className="font-medium text-neon-red">
+                        {error.error_type}
+                      </span>
                       <span className="text-xs text-muted-foreground">
                         {formatRelativeTime(error.timestamp)}
                       </span>

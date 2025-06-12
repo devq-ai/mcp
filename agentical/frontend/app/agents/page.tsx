@@ -1,39 +1,41 @@
-'use client';
+"use client";
 
-import * as React from 'react';
-import { useState, useEffect } from 'react';
-import Link from 'next/link';
+import * as React from "react";
+import { useState, useEffect } from "react";
+import Link from "next/link";
 import {
   Zap,
   Bot,
   Settings,
   Activity,
-  TrendingUp,
-  AlertTriangle,
   Play,
   Pause,
   RotateCcw,
   Eye,
   BarChart3,
-  Clock,
   CheckCircle,
+  Clock,
   XCircle,
-  Cpu,
-  Memory,
-  Network
-} from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Progress } from '@/components/ui/progress';
-import { cn } from '@/lib/utils';
-import { formatDuration, formatRelativeTime } from '@/lib/utils';
+  Network,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Progress } from "@/components/ui/progress";
+import { cn } from "@/lib/utils";
+import { formatDuration, formatRelativeTime } from "@/lib/utils";
 
 interface Agent {
   id: string;
   name: string;
-  type: 'super_agent' | 'playbook_agent' | 'codifier' | 'io' | 'custom';
-  status: 'active' | 'idle' | 'busy' | 'error' | 'offline';
+  type: "super_agent" | "playbook_agent" | "codifier" | "io" | "custom";
+  status: "active" | "idle" | "busy" | "error" | "offline";
   version: string;
   uptime: number;
   capabilities: string[];
@@ -73,19 +75,24 @@ export default function AgentsPage() {
   });
   const [loading, setLoading] = useState(true);
   const [selectedAgent, setSelectedAgent] = useState<string | null>(null);
-  const [viewMode, setViewMode] = useState<'overview' | 'detailed'>('overview');
+  const [viewMode, setViewMode] = useState<"overview" | "detailed">("overview");
 
   useEffect(() => {
     // Mock data - replace with actual API calls
     const mockAgents: Agent[] = [
       {
-        id: 'super_agent',
-        name: 'Super Agent',
-        type: 'super_agent',
-        status: 'active',
-        version: '2.1.0',
+        id: "super_agent",
+        name: "Super Agent",
+        type: "super_agent",
+        status: "active",
+        version: "2.1.0",
         uptime: 86400,
-        capabilities: ['orchestration', 'planning', 'coordination', 'chat_interface'],
+        capabilities: [
+          "orchestration",
+          "planning",
+          "coordination",
+          "chat_interface",
+        ],
         current_tasks: 3,
         queue_length: 7,
         performance_metrics: {
@@ -105,13 +112,17 @@ export default function AgentsPage() {
         health_score: 95,
       },
       {
-        id: 'playbook_agent',
-        name: 'Playbook Agent',
-        type: 'playbook_agent',
-        status: 'busy',
-        version: '1.8.2',
+        id: "playbook_agent",
+        name: "Playbook Agent",
+        type: "playbook_agent",
+        status: "busy",
+        version: "1.8.2",
         uptime: 72000,
-        capabilities: ['playbook_creation', 'step_generation', 'workflow_design'],
+        capabilities: [
+          "playbook_creation",
+          "step_generation",
+          "workflow_design",
+        ],
         current_tasks: 2,
         queue_length: 4,
         performance_metrics: {
@@ -131,13 +142,18 @@ export default function AgentsPage() {
         health_score: 88,
       },
       {
-        id: 'codifier',
-        name: 'Codifier Agent',
-        type: 'codifier',
-        status: 'active',
-        version: '3.0.1',
+        id: "codifier",
+        name: "Codifier Agent",
+        type: "codifier",
+        status: "active",
+        version: "3.0.1",
         uptime: 92400,
-        capabilities: ['code_generation', 'validation', 'testing', 'optimization'],
+        capabilities: [
+          "code_generation",
+          "validation",
+          "testing",
+          "optimization",
+        ],
         current_tasks: 1,
         queue_length: 2,
         performance_metrics: {
@@ -150,20 +166,20 @@ export default function AgentsPage() {
         },
         last_heartbeat: new Date(Date.now() - 45000).toISOString(),
         configuration: {
-          language_support: ['python', 'typescript', 'sql'],
+          language_support: ["python", "typescript", "sql"],
           code_quality_threshold: 85,
           auto_format: true,
         },
         health_score: 92,
       },
       {
-        id: 'io_agent',
-        name: 'IO Agent',
-        type: 'io',
-        status: 'idle',
-        version: '2.3.4',
+        id: "io_agent",
+        name: "IO Agent",
+        type: "io",
+        status: "idle",
+        version: "2.3.4",
         uptime: 68400,
-        capabilities: ['data_ingestion', 'file_processing', 'api_integration'],
+        capabilities: ["data_ingestion", "file_processing", "api_integration"],
         current_tasks: 0,
         queue_length: 1,
         performance_metrics: {
@@ -177,7 +193,7 @@ export default function AgentsPage() {
         last_heartbeat: new Date(Date.now() - 20000).toISOString(),
         configuration: {
           max_file_size_mb: 100,
-          supported_formats: ['json', 'csv', 'xml', 'yaml'],
+          supported_formats: ["json", "csv", "xml", "yaml"],
           timeout_seconds: 60,
         },
         health_score: 97,
@@ -201,15 +217,31 @@ export default function AgentsPage() {
 
     // Simulate real-time updates
     const interval = setInterval(() => {
-      setAgents(prev => prev.map(agent => ({
-        ...agent,
-        performance_metrics: {
-          ...agent.performance_metrics,
-          cpu_usage: Math.max(5, Math.min(95, agent.performance_metrics.cpu_usage + (Math.random() - 0.5) * 10)),
-          memory_usage: Math.max(10, Math.min(90, agent.performance_metrics.memory_usage + (Math.random() - 0.5) * 5)),
-        },
-        last_heartbeat: new Date().toISOString(),
-      })));
+      setAgents((prev) =>
+        prev.map((agent) => ({
+          ...agent,
+          performance_metrics: {
+            ...agent.performance_metrics,
+            cpu_usage: Math.max(
+              5,
+              Math.min(
+                95,
+                agent.performance_metrics.cpu_usage +
+                  (Math.random() - 0.5) * 10,
+              ),
+            ),
+            memory_usage: Math.max(
+              10,
+              Math.min(
+                90,
+                agent.performance_metrics.memory_usage +
+                  (Math.random() - 0.5) * 5,
+              ),
+            ),
+          },
+          last_heartbeat: new Date().toISOString(),
+        })),
+      );
     }, 5000);
 
     return () => clearInterval(interval);
@@ -217,56 +249,78 @@ export default function AgentsPage() {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'active': return 'status-done';
-      case 'busy': return 'status-doing';
-      case 'idle': return 'status-todo';
-      case 'error': return 'status-tech-debt';
-      case 'offline': return 'status-backlog';
-      default: return 'status-backlog';
+      case "active":
+        return "status-done";
+      case "busy":
+        return "status-doing";
+      case "idle":
+        return "status-todo";
+      case "error":
+        return "status-tech-debt";
+      case "offline":
+        return "status-backlog";
+      default:
+        return "status-backlog";
     }
   };
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case 'active': return <CheckCircle className="h-4 w-4 text-neon-green" />;
-      case 'busy': return <Activity className="h-4 w-4 text-neon-lime animate-pulse" />;
-      case 'idle': return <Clock className="h-4 w-4 text-muted-foreground" />;
-      case 'error': return <XCircle className="h-4 w-4 text-neon-red" />;
-      case 'offline': return <XCircle className="h-4 w-4 text-muted" />;
-      default: return <Clock className="h-4 w-4 text-muted-foreground" />;
+      case "active":
+        return <CheckCircle className="h-4 w-4 text-neon-green" />;
+      case "busy":
+        return <Activity className="h-4 w-4 text-neon-lime animate-pulse" />;
+      case "idle":
+        return <Clock className="h-4 w-4 text-muted-foreground" />;
+      case "error":
+        return <XCircle className="h-4 w-4 text-neon-red" />;
+      case "offline":
+        return <XCircle className="h-4 w-4 text-muted" />;
+      default:
+        return <Clock className="h-4 w-4 text-muted-foreground" />;
     }
   };
 
   const getAgentTypeIcon = (type: string) => {
     switch (type) {
-      case 'super_agent': return <Zap className="h-5 w-5 text-neon-magenta" />;
-      case 'playbook_agent': return <Bot className="h-5 w-5 text-neon-lime" />;
-      case 'codifier': return <Settings className="h-5 w-5 text-neon-orange" />;
-      case 'io': return <Network className="h-5 w-5 text-neon-cyan" />;
-      default: return <Bot className="h-5 w-5 text-muted-foreground" />;
+      case "super_agent":
+        return <Zap className="h-5 w-5 text-neon-magenta" />;
+      case "playbook_agent":
+        return <Bot className="h-5 w-5 text-neon-lime" />;
+      case "codifier":
+        return <Settings className="h-5 w-5 text-neon-orange" />;
+      case "io":
+        return <Network className="h-5 w-5 text-neon-cyan" />;
+      default:
+        return <Bot className="h-5 w-5 text-muted-foreground" />;
     }
   };
 
   const getHealthColor = (score: number) => {
-    if (score >= 90) return 'text-neon-green';
-    if (score >= 75) return 'text-neon-lime';
-    if (score >= 60) return 'text-neon-orange';
-    return 'text-neon-red';
+    if (score >= 90) return "text-neon-green";
+    if (score >= 75) return "text-neon-lime";
+    if (score >= 60) return "text-neon-orange";
+    return "text-neon-red";
   };
 
-  const handleAgentAction = (agentId: string, action: 'start' | 'stop' | 'restart') => {
+  const handleAgentAction = (
+    agentId: string,
+    action: "start" | "stop" | "restart",
+  ) => {
     // Implement agent control actions
     console.log(`${action} agent:`, agentId);
 
-    setAgents(prev => prev.map(agent =>
-      agent.id === agentId
-        ? {
-            ...agent,
-            status: action === 'stop' ? 'offline' : 'active',
-            last_heartbeat: new Date().toISOString()
-          }
-        : agent
-    ));
+    setAgents((prev) =>
+      prev.map((agent) =>
+        agent.id === agentId
+          ? {
+              ...agent,
+              status: action === "stop" ? "offline" : "active",
+              last_heartbeat: new Date().toISOString(),
+            }
+          : agent,
+      ),
+    );
   };
 
   if (loading) {
@@ -292,16 +346,18 @@ export default function AgentsPage() {
 
         <div className="flex items-center space-x-4">
           <Button
-            variant={viewMode === 'overview' ? 'default' : 'outline'}
-            onClick={() => setViewMode('overview')}
-            className={viewMode === 'overview' ? 'btn-neon text-neon-lime' : ''}
+            variant={viewMode === "overview" ? "default" : "outline"}
+            onClick={() => setViewMode("overview")}
+            className={viewMode === "overview" ? "btn-neon text-neon-lime" : ""}
           >
             Overview
           </Button>
           <Button
-            variant={viewMode === 'detailed' ? 'default' : 'outline'}
-            onClick={() => setViewMode('detailed')}
-            className={viewMode === 'detailed' ? 'btn-neon text-neon-magenta' : ''}
+            variant={viewMode === "detailed" ? "default" : "outline"}
+            onClick={() => setViewMode("detailed")}
+            className={
+              viewMode === "detailed" ? "btn-neon text-neon-magenta" : ""
+            }
           >
             Detailed
           </Button>
@@ -378,20 +434,24 @@ export default function AgentsPage() {
       </div>
 
       {/* Agents Grid */}
-      <div className={cn(
-        'grid gap-6',
-        viewMode === 'overview'
-          ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-2'
-          : 'grid-cols-1'
-      )}>
+      <div
+        className={cn(
+          "grid gap-6",
+          viewMode === "overview"
+            ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-2"
+            : "grid-cols-1",
+        )}
+      >
         {agents.map((agent) => (
           <Card
             key={agent.id}
             className={cn(
-              'cyber-card cursor-pointer transition-all',
-              selectedAgent === agent.id && 'border-primary shadow-neon'
+              "cyber-card cursor-pointer transition-all",
+              selectedAgent === agent.id && "border-primary shadow-neon",
             )}
-            onClick={() => setSelectedAgent(selectedAgent === agent.id ? null : agent.id)}
+            onClick={() =>
+              setSelectedAgent(selectedAgent === agent.id ? null : agent.id)
+            }
           >
             <CardHeader>
               <div className="flex items-center justify-between">
@@ -418,7 +478,12 @@ export default function AgentsPage() {
                 {/* Health Score */}
                 <div className="flex items-center justify-between">
                   <span className="text-sm font-medium">Health Score</span>
-                  <span className={cn('text-lg font-bold', getHealthColor(agent.health_score))}>
+                  <span
+                    className={cn(
+                      "text-lg font-bold",
+                      getHealthColor(agent.health_score),
+                    )}
+                  >
                     {agent.health_score}%
                   </span>
                 </div>
@@ -433,9 +498,7 @@ export default function AgentsPage() {
                   </div>
                   <div>
                     <div className="text-muted-foreground">Queue Length</div>
-                    <div className="font-medium">
-                      {agent.queue_length}
-                    </div>
+                    <div className="font-medium">{agent.queue_length}</div>
                   </div>
                 </div>
 
@@ -460,25 +523,41 @@ export default function AgentsPage() {
                   <div className="space-y-1">
                     <div className="flex justify-between text-sm">
                       <span>CPU Usage</span>
-                      <span>{agent.performance_metrics.cpu_usage.toFixed(1)}%</span>
+                      <span>
+                        {agent.performance_metrics.cpu_usage.toFixed(1)}%
+                      </span>
                     </div>
-                    <Progress value={agent.performance_metrics.cpu_usage} className="h-2" />
+                    <Progress
+                      value={agent.performance_metrics.cpu_usage}
+                      className="h-2"
+                    />
                   </div>
                   <div className="space-y-1">
                     <div className="flex justify-between text-sm">
                       <span>Memory Usage</span>
-                      <span>{agent.performance_metrics.memory_usage.toFixed(1)}%</span>
+                      <span>
+                        {agent.performance_metrics.memory_usage.toFixed(1)}%
+                      </span>
                     </div>
-                    <Progress value={agent.performance_metrics.memory_usage} className="h-2" />
+                    <Progress
+                      value={agent.performance_metrics.memory_usage}
+                      className="h-2"
+                    />
                   </div>
                 </div>
 
                 {/* Capabilities */}
                 <div>
-                  <div className="text-sm text-muted-foreground mb-2">Capabilities</div>
+                  <div className="text-sm text-muted-foreground mb-2">
+                    Capabilities
+                  </div>
                   <div className="flex flex-wrap gap-1">
                     {agent.capabilities.slice(0, 3).map((capability) => (
-                      <Badge key={capability} variant="outline" className="text-xs">
+                      <Badge
+                        key={capability}
+                        variant="outline"
+                        className="text-xs"
+                      >
                         {capability}
                       </Badge>
                     ))}
@@ -505,12 +584,12 @@ export default function AgentsPage() {
                       </Button>
                     </Link>
 
-                    {agent.status === 'offline' ? (
+                    {agent.status === "offline" ? (
                       <Button
                         size="sm"
                         onClick={(e) => {
                           e.stopPropagation();
-                          handleAgentAction(agent.id, 'start');
+                          handleAgentAction(agent.id, "start");
                         }}
                         className="btn-neon text-neon-green"
                       >
@@ -524,7 +603,7 @@ export default function AgentsPage() {
                           variant="outline"
                           onClick={(e) => {
                             e.stopPropagation();
-                            handleAgentAction(agent.id, 'restart');
+                            handleAgentAction(agent.id, "restart");
                           }}
                         >
                           <RotateCcw className="h-4 w-4" />
@@ -534,7 +613,7 @@ export default function AgentsPage() {
                           variant="outline"
                           onClick={(e) => {
                             e.stopPropagation();
-                            handleAgentAction(agent.id, 'stop');
+                            handleAgentAction(agent.id, "stop");
                           }}
                           className="text-neon-red border-neon-red hover:bg-neon-red/10"
                         >
@@ -562,9 +641,9 @@ export default function AgentsPage() {
           <div className="flex flex-wrap gap-4">
             <Button
               onClick={() => {
-                agents.forEach(agent => {
-                  if (agent.status === 'offline') {
-                    handleAgentAction(agent.id, 'start');
+                agents.forEach((agent) => {
+                  if (agent.status === "offline") {
+                    handleAgentAction(agent.id, "start");
                   }
                 });
               }}
@@ -576,8 +655,8 @@ export default function AgentsPage() {
 
             <Button
               onClick={() => {
-                agents.forEach(agent => {
-                  handleAgentAction(agent.id, 'restart');
+                agents.forEach((agent) => {
+                  handleAgentAction(agent.id, "restart");
                 });
               }}
               variant="outline"
@@ -586,16 +665,12 @@ export default function AgentsPage() {
               Restart All
             </Button>
 
-            <Button
-              variant="outline"
-            >
+            <Button variant="outline">
               <Settings className="h-4 w-4 mr-2" />
               Global Configuration
             </Button>
 
-            <Button
-              variant="outline"
-            >
+            <Button variant="outline">
               <BarChart3 className="h-4 w-4 mr-2" />
               Performance Report
             </Button>

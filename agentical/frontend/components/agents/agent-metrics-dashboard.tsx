@@ -1,11 +1,9 @@
-'use client';
+"use client";
 
-import * as React from 'react';
+import * as React from "react";
 import {
   LineChart,
   Line,
-  AreaChart,
-  Area,
   BarChart,
   Bar,
   XAxis,
@@ -16,25 +14,31 @@ import {
   ResponsiveContainer,
   PieChart,
   Pie,
-  Cell
-} from 'recharts';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Progress } from '@/components/ui/progress';
+  Cell,
+} from "recharts";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+
+import { Button } from "@/components/ui/button";
+import { Progress } from "@/components/ui/progress";
 import {
   TrendingUp,
   TrendingDown,
   Activity,
   Cpu,
-  Memory,
+  MemoryStick,
   Network,
   Clock,
   CheckCircle,
   AlertTriangle,
-  XCircle
-} from 'lucide-react';
-import { cn } from '@/lib/utils';
+  XCircle,
+} from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface MetricsData {
   timestamp: string;
@@ -63,100 +67,141 @@ interface AgentMetrics {
   };
   historical_data: MetricsData[];
   health_score: number;
-  status: 'active' | 'idle' | 'busy' | 'error' | 'offline';
+  status: "active" | "idle" | "busy" | "error" | "offline";
 }
 
 interface AgentMetricsDashboardProps {
   metrics: AgentMetrics;
-  timeRange?: '1h' | '6h' | '24h' | '7d';
-  onTimeRangeChange?: (range: '1h' | '6h' | '24h' | '7d') => void;
-  showComparison?: boolean;
+  timeRange?: "1h" | "6h" | "24h" | "7d";
+  onTimeRangeChange?: (range: "1h" | "6h" | "24h" | "7d") => void;
 }
 
 export function AgentMetricsDashboard({
   metrics,
-  timeRange = '24h',
+  timeRange = "24h",
   onTimeRangeChange,
-  showComparison = false
 }: AgentMetricsDashboardProps) {
-  const [selectedMetric, setSelectedMetric] = React.useState<'cpu' | 'memory' | 'response' | 'success'>('cpu');
+  const [selectedMetric, setSelectedMetric] = React.useState<
+    "cpu" | "memory" | "response" | "success"
+  >("cpu");
 
   // Colors for charts
   const colors = {
-    primary: '#FF0090',
-    secondary: '#C7EA46',
-    accent: '#FF5F1F',
-    success: '#39FF14',
-    warning: '#E9FF32',
-    error: '#FF3131',
-    info: '#00FFFF'
+    primary: "#FF0090",
+    secondary: "#C7EA46",
+    accent: "#FF5F1F",
+    success: "#39FF14",
+    warning: "#E9FF32",
+    error: "#FF3131",
+    info: "#00FFFF",
   };
 
   // Pie chart data for resource usage
   const resourceData = [
-    { name: 'CPU', value: metrics.current_metrics.cpu_usage, color: colors.primary },
-    { name: 'Memory', value: metrics.current_metrics.memory_usage, color: colors.secondary },
-    { name: 'Network', value: metrics.current_metrics.network_io * 10, color: colors.accent },
-    { name: 'Disk', value: metrics.current_metrics.disk_usage, color: colors.info }
+    {
+      name: "CPU",
+      value: metrics.current_metrics.cpu_usage,
+      color: colors.primary,
+    },
+    {
+      name: "Memory",
+      value: metrics.current_metrics.memory_usage,
+      color: colors.secondary,
+    },
+    {
+      name: "Network",
+      value: metrics.current_metrics.network_io * 10,
+      color: colors.accent,
+    },
+    {
+      name: "Disk",
+      value: metrics.current_metrics.disk_usage,
+      color: colors.info,
+    },
   ];
 
   // Status distribution for task execution
   const taskStatusData = [
-    { name: 'Active', value: metrics.current_metrics.active_tasks, color: colors.success },
-    { name: 'Queued', value: metrics.current_metrics.queue_length, color: colors.warning },
-    { name: 'Errors', value: metrics.current_metrics.errors_24h, color: colors.error }
+    {
+      name: "Active",
+      value: metrics.current_metrics.active_tasks,
+      color: colors.success,
+    },
+    {
+      name: "Queued",
+      value: metrics.current_metrics.queue_length,
+      color: colors.warning,
+    },
+    {
+      name: "Errors",
+      value: metrics.current_metrics.errors_24h,
+      color: colors.error,
+    },
   ];
 
   const getHealthColor = (score: number) => {
-    if (score >= 90) return 'text-neon-green';
-    if (score >= 75) return 'text-neon-lime';
-    if (score >= 60) return 'text-neon-orange';
-    return 'text-neon-red';
+    if (score >= 90) return "text-neon-green";
+    if (score >= 75) return "text-neon-lime";
+    if (score >= 60) return "text-neon-orange";
+    return "text-neon-red";
   };
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case 'active': return <CheckCircle className="h-5 w-5 text-neon-green" />;
-      case 'busy': return <Activity className="h-5 w-5 text-neon-lime animate-pulse" />;
-      case 'idle': return <Clock className="h-5 w-5 text-muted-foreground" />;
-      case 'error': return <XCircle className="h-5 w-5 text-neon-red" />;
-      case 'offline': return <XCircle className="h-5 w-5 text-muted" />;
-      default: return <Clock className="h-5 w-5 text-muted-foreground" />;
+      case "active":
+        return <CheckCircle className="h-5 w-5 text-neon-green" />;
+      case "busy":
+        return <Activity className="h-5 w-5 text-neon-lime animate-pulse" />;
+      case "idle":
+        return <Clock className="h-5 w-5 text-muted-foreground" />;
+      case "error":
+        return <XCircle className="h-5 w-5 text-neon-red" />;
+      case "offline":
+        return <XCircle className="h-5 w-5 text-muted" />;
+      default:
+        return <Clock className="h-5 w-5 text-muted-foreground" />;
     }
   };
 
   const calculateTrend = (data: MetricsData[], metric: keyof MetricsData) => {
-    if (data.length < 2) return { direction: 'stable', percentage: 0 };
+    if (data.length < 2) return { direction: "stable", percentage: 0 };
 
     const recent = data.slice(-6); // Last 6 data points
     const older = data.slice(-12, -6); // Previous 6 data points
 
-    const recentAvg = recent.reduce((sum, item) => sum + (item[metric] as number), 0) / recent.length;
-    const olderAvg = older.reduce((sum, item) => sum + (item[metric] as number), 0) / older.length;
+    const recentAvg =
+      recent.reduce((sum, item) => sum + (item[metric] as number), 0) /
+      recent.length;
+    const olderAvg =
+      older.reduce((sum, item) => sum + (item[metric] as number), 0) /
+      older.length;
 
     const change = ((recentAvg - olderAvg) / olderAvg) * 100;
 
     return {
-      direction: change > 2 ? 'up' : change < -2 ? 'down' : 'stable',
-      percentage: Math.abs(change)
+      direction: change > 2 ? "up" : change < -2 ? "down" : "stable",
+      percentage: Math.abs(change),
     };
   };
 
-  const cpuTrend = calculateTrend(metrics.historical_data, 'cpu_usage');
-  const memoryTrend = calculateTrend(metrics.historical_data, 'memory_usage');
-  const responseTrend = calculateTrend(metrics.historical_data, 'response_time');
-  const successTrend = calculateTrend(metrics.historical_data, 'success_rate');
+  const cpuTrend = calculateTrend(metrics.historical_data, "cpu_usage");
+  const memoryTrend = calculateTrend(metrics.historical_data, "memory_usage");
+  const responseTrend = calculateTrend(
+    metrics.historical_data,
+    "response_time",
+  );
+  const successTrend = calculateTrend(metrics.historical_data, "success_rate");
 
   const formatTooltipValue = (value: number, name: string) => {
     switch (name) {
-      case 'CPU Usage':
-      case 'Memory Usage':
-      case 'Success Rate':
+      case "CPU Usage":
+      case "Memory Usage":
+      case "Success Rate":
         return [`${value.toFixed(1)}%`, name];
-      case 'Response Time':
+      case "Response Time":
         return [`${value.toFixed(0)}ms`, name];
-      case 'Active Tasks':
-      case 'Errors':
+      case "Active Tasks":
+      case "Errors":
         return [value.toString(), name];
       default:
         return [value.toString(), name];
@@ -186,30 +231,39 @@ export function AgentMetricsDashboard({
         <div className="flex items-center space-x-4">
           {getStatusIcon(metrics.status)}
           <div>
-            <h2 className="text-2xl font-bold text-gradient">{metrics.agent_name}</h2>
-            <p className="text-muted-foreground">Performance Metrics Dashboard</p>
+            <h2 className="text-2xl font-bold text-gradient">
+              {metrics.agent_name}
+            </h2>
+            <p className="text-muted-foreground">
+              Performance Metrics Dashboard
+            </p>
           </div>
         </div>
 
         <div className="flex items-center space-x-4">
           <div className="text-right">
             <div className="text-sm text-muted-foreground">Health Score</div>
-            <div className={cn('text-2xl font-bold', getHealthColor(metrics.health_score))}>
+            <div
+              className={cn(
+                "text-2xl font-bold",
+                getHealthColor(metrics.health_score),
+              )}
+            >
               {metrics.health_score}%
             </div>
           </div>
 
           {/* Time Range Selector */}
           <div className="flex space-x-1 bg-muted/20 rounded-lg p-1">
-            {['1h', '6h', '24h', '7d'].map((range) => (
+            {["1h", "6h", "24h", "7d"].map((range) => (
               <Button
                 key={range}
                 size="sm"
-                variant={timeRange === range ? 'default' : 'ghost'}
+                variant={timeRange === range ? "default" : "ghost"}
                 onClick={() => onTimeRangeChange?.(range as any)}
                 className={cn(
-                  'text-xs',
-                  timeRange === range && 'bg-primary text-primary-foreground'
+                  "text-xs",
+                  timeRange === range && "bg-primary text-primary-foreground",
                 )}
               >
                 {range}
@@ -228,9 +282,9 @@ export function AgentMetricsDashboard({
                 <Cpu className="h-4 w-4 text-neon-magenta" />
                 CPU Usage
               </CardTitle>
-              {cpuTrend.direction !== 'stable' && (
+              {cpuTrend.direction !== "stable" && (
                 <div className="flex items-center text-xs">
-                  {cpuTrend.direction === 'up' ? (
+                  {cpuTrend.direction === "up" ? (
                     <TrendingUp className="h-3 w-3 text-neon-red mr-1" />
                   ) : (
                     <TrendingDown className="h-3 w-3 text-neon-green mr-1" />
@@ -244,7 +298,10 @@ export function AgentMetricsDashboard({
             <div className="text-2xl font-bold text-neon-magenta">
               {metrics.current_metrics.cpu_usage.toFixed(1)}%
             </div>
-            <Progress value={metrics.current_metrics.cpu_usage} className="mt-2 h-2" />
+            <Progress
+              value={metrics.current_metrics.cpu_usage}
+              className="mt-2 h-2"
+            />
           </CardContent>
         </Card>
 
@@ -252,12 +309,12 @@ export function AgentMetricsDashboard({
           <CardHeader className="pb-3">
             <div className="flex items-center justify-between">
               <CardTitle className="text-sm font-medium flex items-center gap-2">
-                <Memory className="h-4 w-4 text-neon-lime" />
+                <MemoryStick className="h-4 w-4 text-neon-lime" />
                 Memory Usage
               </CardTitle>
-              {memoryTrend.direction !== 'stable' && (
+              {memoryTrend.direction !== "stable" && (
                 <div className="flex items-center text-xs">
-                  {memoryTrend.direction === 'up' ? (
+                  {memoryTrend.direction === "up" ? (
                     <TrendingUp className="h-3 w-3 text-neon-red mr-1" />
                   ) : (
                     <TrendingDown className="h-3 w-3 text-neon-green mr-1" />
@@ -271,7 +328,10 @@ export function AgentMetricsDashboard({
             <div className="text-2xl font-bold text-neon-lime">
               {metrics.current_metrics.memory_usage.toFixed(1)}%
             </div>
-            <Progress value={metrics.current_metrics.memory_usage} className="mt-2 h-2" />
+            <Progress
+              value={metrics.current_metrics.memory_usage}
+              className="mt-2 h-2"
+            />
           </CardContent>
         </Card>
 
@@ -282,9 +342,9 @@ export function AgentMetricsDashboard({
                 <Clock className="h-4 w-4 text-neon-orange" />
                 Response Time
               </CardTitle>
-              {responseTrend.direction !== 'stable' && (
+              {responseTrend.direction !== "stable" && (
                 <div className="flex items-center text-xs">
-                  {responseTrend.direction === 'up' ? (
+                  {responseTrend.direction === "up" ? (
                     <TrendingUp className="h-3 w-3 text-neon-red mr-1" />
                   ) : (
                     <TrendingDown className="h-3 w-3 text-neon-green mr-1" />
@@ -311,9 +371,9 @@ export function AgentMetricsDashboard({
                 <CheckCircle className="h-4 w-4 text-neon-green" />
                 Success Rate
               </CardTitle>
-              {successTrend.direction !== 'stable' && (
+              {successTrend.direction !== "stable" && (
                 <div className="flex items-center text-xs">
-                  {successTrend.direction === 'up' ? (
+                  {successTrend.direction === "up" ? (
                     <TrendingUp className="h-3 w-3 text-neon-green mr-1" />
                   ) : (
                     <TrendingDown className="h-3 w-3 text-neon-red mr-1" />
@@ -327,7 +387,10 @@ export function AgentMetricsDashboard({
             <div className="text-2xl font-bold text-neon-green">
               {metrics.current_metrics.success_rate.toFixed(1)}%
             </div>
-            <Progress value={metrics.current_metrics.success_rate} className="mt-2 h-2" />
+            <Progress
+              value={metrics.current_metrics.success_rate}
+              className="mt-2 h-2"
+            />
           </CardContent>
         </Card>
       </div>
@@ -346,15 +409,15 @@ export function AgentMetricsDashboard({
               </div>
               <div className="flex space-x-2">
                 {[
-                  { key: 'cpu', label: 'CPU', icon: Cpu },
-                  { key: 'memory', label: 'Memory', icon: Memory },
-                  { key: 'response', label: 'Response', icon: Clock },
-                  { key: 'success', label: 'Success', icon: CheckCircle }
+                  { key: "cpu", label: "CPU", icon: Cpu },
+                  { key: "memory", label: "Memory", icon: MemoryStick },
+                  { key: "response", label: "Response", icon: Clock },
+                  { key: "success", label: "Success", icon: CheckCircle },
                 ].map(({ key, label, icon: Icon }) => (
                   <Button
                     key={key}
                     size="sm"
-                    variant={selectedMetric === key ? 'default' : 'outline'}
+                    variant={selectedMetric === key ? "default" : "outline"}
                     onClick={() => setSelectedMetric(key as any)}
                     className="text-xs"
                   >
@@ -374,13 +437,18 @@ export function AgentMetricsDashboard({
                     dataKey="timestamp"
                     stroke="#7D8B99"
                     fontSize={12}
-                    tickFormatter={(value) => new Date(value).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                    tickFormatter={(value) =>
+                      new Date(value).toLocaleTimeString([], {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })
+                    }
                   />
                   <YAxis stroke="#7D8B99" fontSize={12} />
                   <Tooltip content={<CustomTooltip />} />
                   <Legend />
 
-                  {selectedMetric === 'cpu' && (
+                  {selectedMetric === "cpu" && (
                     <Line
                       type="monotone"
                       dataKey="cpu_usage"
@@ -391,7 +459,7 @@ export function AgentMetricsDashboard({
                     />
                   )}
 
-                  {selectedMetric === 'memory' && (
+                  {selectedMetric === "memory" && (
                     <Line
                       type="monotone"
                       dataKey="memory_usage"
@@ -402,7 +470,7 @@ export function AgentMetricsDashboard({
                     />
                   )}
 
-                  {selectedMetric === 'response' && (
+                  {selectedMetric === "response" && (
                     <Line
                       type="monotone"
                       dataKey="response_time"
@@ -413,7 +481,7 @@ export function AgentMetricsDashboard({
                     />
                   )}
 
-                  {selectedMetric === 'success' && (
+                  {selectedMetric === "success" && (
                     <Line
                       type="monotone"
                       dataKey="success_rate"
@@ -433,7 +501,9 @@ export function AgentMetricsDashboard({
         <Card className="cyber-card">
           <CardHeader>
             <CardTitle>Resource Usage</CardTitle>
-            <CardDescription>Current system resource distribution</CardDescription>
+            <CardDescription>
+              Current system resource distribution
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="h-64">
@@ -453,11 +523,14 @@ export function AgentMetricsDashboard({
                     ))}
                   </Pie>
                   <Tooltip
-                    formatter={(value: number) => [`${value.toFixed(1)}%`, 'Usage']}
+                    formatter={(value: number) => [
+                      `${value.toFixed(1)}%`,
+                      "Usage",
+                    ]}
                     contentStyle={{
-                      backgroundColor: 'hsl(var(--card))',
-                      border: '1px solid hsl(var(--border))',
-                      borderRadius: '8px'
+                      backgroundColor: "hsl(var(--card))",
+                      border: "1px solid hsl(var(--border))",
+                      borderRadius: "8px",
                     }}
                   />
                   <Legend />
@@ -471,7 +544,9 @@ export function AgentMetricsDashboard({
         <Card className="cyber-card">
           <CardHeader>
             <CardTitle>Task Status</CardTitle>
-            <CardDescription>Current task execution distribution</CardDescription>
+            <CardDescription>
+              Current task execution distribution
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="h-64">
@@ -479,13 +554,21 @@ export function AgentMetricsDashboard({
                 <BarChart data={taskStatusData} layout="horizontal">
                   <CartesianGrid strokeDasharray="3 3" stroke="#2C2F33" />
                   <XAxis type="number" stroke="#7D8B99" fontSize={12} />
-                  <YAxis dataKey="name" type="category" stroke="#7D8B99" fontSize={12} />
+                  <YAxis
+                    dataKey="name"
+                    type="category"
+                    stroke="#7D8B99"
+                    fontSize={12}
+                  />
                   <Tooltip
-                    formatter={(value: number, name: string) => [value.toString(), name]}
+                    formatter={(value: number, name: string) => [
+                      value.toString(),
+                      name,
+                    ]}
                     contentStyle={{
-                      backgroundColor: 'hsl(var(--card))',
-                      border: '1px solid hsl(var(--border))',
-                      borderRadius: '8px'
+                      backgroundColor: "hsl(var(--card))",
+                      border: "1px solid hsl(var(--border))",
+                      borderRadius: "8px",
                     }}
                   />
                   <Bar dataKey="value" radius={[0, 4, 4, 0]}>
@@ -504,30 +587,42 @@ export function AgentMetricsDashboard({
       <Card className="cyber-card">
         <CardHeader>
           <CardTitle>Activity Summary</CardTitle>
-          <CardDescription>Current agent activity and task information</CardDescription>
+          <CardDescription>
+            Current agent activity and task information
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             <div className="flex items-center space-x-3">
               <Activity className="h-8 w-8 text-neon-lime" />
               <div>
-                <div className="text-2xl font-bold">{metrics.current_metrics.active_tasks}</div>
-                <div className="text-sm text-muted-foreground">Active Tasks</div>
+                <div className="text-2xl font-bold">
+                  {metrics.current_metrics.active_tasks}
+                </div>
+                <div className="text-sm text-muted-foreground">
+                  Active Tasks
+                </div>
               </div>
             </div>
 
             <div className="flex items-center space-x-3">
               <Clock className="h-8 w-8 text-neon-orange" />
               <div>
-                <div className="text-2xl font-bold">{metrics.current_metrics.queue_length}</div>
-                <div className="text-sm text-muted-foreground">Queued Tasks</div>
+                <div className="text-2xl font-bold">
+                  {metrics.current_metrics.queue_length}
+                </div>
+                <div className="text-sm text-muted-foreground">
+                  Queued Tasks
+                </div>
               </div>
             </div>
 
             <div className="flex items-center space-x-3">
               <Network className="h-8 w-8 text-neon-cyan" />
               <div>
-                <div className="text-2xl font-bold">{metrics.current_metrics.network_io.toFixed(1)}MB/s</div>
+                <div className="text-2xl font-bold">
+                  {metrics.current_metrics.network_io.toFixed(1)}MB/s
+                </div>
                 <div className="text-sm text-muted-foreground">Network I/O</div>
               </div>
             </div>
@@ -535,8 +630,12 @@ export function AgentMetricsDashboard({
             <div className="flex items-center space-x-3">
               <AlertTriangle className="h-8 w-8 text-neon-red" />
               <div>
-                <div className="text-2xl font-bold">{metrics.current_metrics.errors_24h}</div>
-                <div className="text-sm text-muted-foreground">Errors (24h)</div>
+                <div className="text-2xl font-bold">
+                  {metrics.current_metrics.errors_24h}
+                </div>
+                <div className="text-sm text-muted-foreground">
+                  Errors (24h)
+                </div>
               </div>
             </div>
           </div>
