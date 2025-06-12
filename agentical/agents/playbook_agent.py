@@ -1143,3 +1143,159 @@ class PlaybookAgent(EnhancedBaseAgent[PlaybookExecutionRequest, Dict[str, Any]])
                 raise ValidationError(f"Invalid validation level: {config['default_validation_level']}")
 
         return True
+
+    async def validate_playbook(self, playbook_data: Dict[str, Any]) -> Dict[str, Any]:
+        """Validate a playbook and return validation results."""
+        try:
+            errors = []
+            warnings = []
+            suggestions = []
+            
+            # Basic validation
+            if not playbook_data.get("name"):
+                errors.append("Playbook name is required")
+            
+            if not playbook_data.get("steps"):
+                errors.append("Playbook must have at least one step")
+            
+            # Validate steps
+            steps = playbook_data.get("steps", [])
+            for i, step in enumerate(steps):
+                if not step.get("name"):
+                    errors.append(f"Step {i+1}: name is required")
+                if not step.get("type"):
+                    errors.append(f"Step {i+1}: type is required")
+            
+            # Calculate complexity score
+            complexity_score = min(len(steps) * 2, 10)
+            
+            # Estimate duration (in minutes)
+            estimated_duration = len(steps) * 5
+            
+            return {
+                "valid": len(errors) == 0,
+                "errors": errors,
+                "warnings": warnings,
+                "suggestions": suggestions,
+                "estimated_duration": estimated_duration,
+                "complexity_score": complexity_score
+            }
+            
+        except Exception as e:
+            return {
+                "valid": False,
+                "errors": [f"Validation error: {str(e)}"],
+                "warnings": [],
+                "suggestions": [],
+                "estimated_duration": None,
+                "complexity_score": 0
+            }
+
+    async def get_available_templates(self, category_filter: Optional[str] = None) -> List[Dict[str, Any]]:
+        """Get available playbook templates."""
+        try:
+            templates = []
+            
+            for template_name, template_func in self.playbook_templates.items():
+                template_data = {
+                    "name": template_name,
+                    "description": f"{template_name.replace(\"_\", \" \").title()} playbook template",
+                    "category": self._get_template_category(template_name),
+                    "steps": template_func(),
+                    "variables": self._get_template_variables(template_name),
+                    "metadata": {"template": True, "source": "builtin"},
+                    "tags": self._get_template_tags(template_name)
+                }
+                
+                if not category_filter or template_data["category"] == category_filter:
+                    templates.append(template_data)
+            
+            return templates
+            
+        except Exception as e:
+            logfire.error(f"Error getting templates: {str(e)}")
+            return []
+    
+    def _get_template_category(self, template_name: str) -> str:
+        """Get category for a template."""
+        category_map = {
+            "incident_response": "security",
+            "deployment": "deployment", 
+            "troubleshooting": "troubleshooting",
+            "maintenance": "maintenance",
+            "testing": "testing"
+        }
+        return category_map.get(template_name, "general")
+    
+    def _get_template_variables(self, template_name: str) -> Dict[str, Any]:
+        """Get default variables for a template."""
+        return {
+            "timeout": 30,
+            "retry_count": 3,
+            "environment": "production"
+        }
+    
+    def _get_template_tags(self, template_name: str) -> List[str]:
+        """Get tags for a template."""
+        tag_map = {
+            "incident_response": ["security", "emergency", "automation"],
+            "deployment": ["deployment", "automation", "ci-cd"],
+            "troubleshooting": ["debugging", "diagnostics", "automation"],
+            "maintenance": ["maintenance", "scheduled", "automation"],
+            "testing": ["testing", "qa", "automation"]
+        }
+        return tag_map.get(template_name, ["automation"])
+
+    async def create_from_template(self, template_name: str, playbook_name: str, 
+                                 parameters: Dict[str, Any]) -> Dict[str, Any]:
+        """Create a playbook from a template."""
+        try:
+            if template_name not in self.playbook_templates:
+                raise ValueError(f"Template {template_name} not found")
+            
+            # Get template steps
+            template_func = self.playbook_templates[template_name]
+            steps = template_func()
+            
+            # Apply parameters to customize the playbook
+            customized_steps = self._customize_template_steps(steps, parameters)
+            
+            return {
+                "name": playbook_name,
+                "description": f"Playbook created from {template_name} template",
+                "category": self._get_template_category(template_name),
+                "steps": customized_steps,
+                "variables": {**self._get_template_variables(template_name), **parameters},
+                "metadata": {
+                    "template": template_name,
+                    "created_from_template": True,
+                    "creation_date": datetime.utcnow().isoformat()
+                },
+                "validation_rules": [],
+                "tags": self._get_template_tags(template_name)
+            }
+            
+        except Exception as e:
+            logfire.error(f"Error creating from template: {str(e)}")
+            raise ValueError(f"Failed to create from template: {str(e)}")
+    
+    def _customize_template_steps(self, steps: List[Dict[str, Any]], 
+                                parameters: Dict[str, Any]) -> List[Dict[str, Any]]:
+        """Customize template steps with parameters."""
+        customized_steps = []
+        
+        for step in steps:
+            customized_step = step.copy()
+            
+            # Apply parameter substitutions
+            if "parameters" in customized_step:
+                step_params = customized_step["parameters"].copy()
+                for key, value in parameters.items():
+                    if key in step_params:
+                        step_params[key] = value
+                customized_step["parameters"] = step_params
+            
+            customized_steps.append(customized_step)
+        
+        return customized_steps
+

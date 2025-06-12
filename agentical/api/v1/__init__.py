@@ -16,11 +16,13 @@ Features:
 
 from fastapi import APIRouter
 from .endpoints.agents import router as agents_router
+from .endpoints.playbooks import router as playbooks_router
 
 # Initialize v1 API router
 api_v1_router = APIRouter(prefix="/v1")
 
 # Include endpoint routers
 api_v1_router.include_router(agents_router)
+api_v1_router.include_router(playbooks_router)
 
 __all__ = ["api_v1_router"]
