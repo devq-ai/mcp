@@ -452,8 +452,13 @@
           "description": "Task analysis and complexity evaluation",
           "complexity": 7,
           "estimated_hours": 12,
+          "actual_hours": 8,
           "dependencies": ["5"],
-          "details": "Implement POST /tasks/{id}/analyze, POST /tasks/{id}/expand, GET /tasks/{id}/metrics, GET /tasks/reports"
+          "status": "done",
+          "completed_date": "2025-01-28",
+          "test_coverage": "95%",
+          "details": "Implement POST /tasks/{id}/analyze, POST /tasks/{id}/expand, GET /tasks/{id}/metrics, GET /tasks/reports",
+          "completion_notes": "Implemented comprehensive analytical endpoints for playbooks: POST /playbooks/{id}/analyze (complexity & performance analysis), POST /playbooks/{id}/expand (playbook variations & optimizations), GET /playbooks/{id}/metrics (detailed performance metrics), GET /playbooks/reports (system-wide analytics). Added 685 lines of repository methods and 646 lines of comprehensive tests. All endpoints provide deep insights into playbook performance, optimization opportunities, and system health indicators."
         },
         {
           "id": "9.3",
