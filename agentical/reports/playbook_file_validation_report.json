@@ -1,0 +1,381 @@
+{
+  "timestamp": "2025-06-11T19:00:29.912516",
+  "status": "PASSED",
+  "overall_score": 100.0,
+  "file_analysis": {
+    "file_size": 36460,
+    "line_count": 946,
+    "has_docstring": true,
+    "complexity_score": 220
+  },
+  "enum_validation": {
+    "total_expected": 6,
+    "found_enums": [
+      "PlaybookCategory",
+      "PlaybookStatus",
+      "ExecutionStatus",
+      "StepType",
+      "StepStatus",
+      "VariableType"
+    ],
+    "missing_enums": [],
+    "complete_enums": [
+      "PlaybookCategory",
+      "PlaybookStatus",
+      "ExecutionStatus",
+      "StepType",
+      "StepStatus",
+      "VariableType"
+    ],
+    "enum_details": {
+      "PlaybookCategory": {
+        "found": true,
+        "docstring": true
+      },
+      "PlaybookStatus": {
+        "found": true,
+        "docstring": true
+      },
+      "ExecutionStatus": {
+        "found": true,
+        "docstring": true
+      },
+      "StepType": {
+        "found": true,
+        "docstring": true
+      },
+      "StepStatus": {
+        "found": true,
+        "docstring": true
+      },
+      "VariableType": {
+        "found": true,
+        "docstring": true
+      }
+    },
+    "completion_rate": 100.0
+  },
+  "model_validation": {
+    "total_expected": 6,
+    "found_models": [
+      "Playbook",
+      "PlaybookStep",
+      "PlaybookVariable",
+      "PlaybookExecution",
+      "PlaybookStepExecution",
+      "PlaybookTemplate"
+    ],
+    "missing_models": [],
+    "complete_models": [
+      "Playbook",
+      "PlaybookStep",
+      "PlaybookVariable",
+      "PlaybookExecution",
+      "PlaybookStepExecution",
+      "PlaybookTemplate"
+    ],
+    "model_details": {
+      "Playbook": {
+        "found": true,
+        "methods_found": [
+          "get_tags",
+          "add_tag",
+          "remove_tag",
+          "get_success_criteria",
+          "add_success_criteria",
+          "get_configuration",
+          "set_configuration",
+          "update_performance_metrics",
+          "publish",
+          "archive",
+          "to_dict"
+        ],
+        "methods_missing": [],
+        "attributes_found": [
+          "name",
+          "display_name",
+          "description",
+          "category",
+          "tags",
+          "purpose",
+          "strategy",
+          "success_criteria",
+          "status",
+          "is_public",
+          "is_template",
+          "configuration",
+          "input_schema",
+          "output_schema",
+          "max_concurrent_executions",
+          "timeout_minutes",
+          "retry_attempts",
+          "total_executions",
+          "successful_executions",
+          "failed_executions",
+          "average_execution_time",
+          "version",
+          "parent_playbook_id",
+          "last_execution_at",
+          "published_at",
+          "created_by_user_id",
+          "created_by",
+          "parent_playbook",
+          "child_playbooks",
+          "steps",
+          "variables",
+          "executions",
+          "__table_args__"
+        ],
+        "has_docstring": true,
+        "inherits_base": true
+      },
+      "PlaybookStep": {
+        "found": true,
+        "methods_found": [
+          "get_depends_on_steps",
+          "add_dependency",
+          "remove_dependency",
+          "get_configuration",
+          "set_configuration",
+          "update_performance_metrics",
+          "to_dict"
+        ],
+        "methods_missing": [],
+        "attributes_found": [
+          "playbook_id",
+          "step_name",
+          "display_name",
+          "description",
+          "step_type",
+          "step_order",
+          "is_optional",
+          "is_manual",
+          "configuration",
+          "instructions",
+          "automation_script",
+          "conditions",
+          "depends_on_steps",
+          "agent_type",
+          "tool_name",
+          "parameters",
+          "verification_method",
+          "verification_criteria",
+          "success_indicators",
+          "timeout_minutes",
+          "retry_attempts",
+          "retry_delay_seconds",
+          "total_executions",
+          "successful_executions",
+          "failed_executions",
+          "average_execution_time",
+          "playbook",
+          "executions",
+          "__table_args__"
+        ],
+        "has_docstring": true,
+        "inherits_base": true
+      },
+      "PlaybookVariable": {
+        "found": true,
+        "methods_found": [
+          "get_enum_values",
+          "validate_value",
+          "set_value",
+          "get_value",
+          "reset_to_default",
+          "to_dict"
+        ],
+        "methods_missing": [],
+        "attributes_found": [
+          "playbook_id",
+          "variable_name",
+          "display_name",
+          "description",
+          "variable_type",
+          "is_required",
+          "is_sensitive",
+          "default_value",
+          "current_value",
+          "min_value",
+          "max_value",
+          "min_length",
+          "max_length",
+          "pattern",
+          "enum_values",
+          "scope",
+          "is_output",
+          "playbook",
+          "__table_args__"
+        ],
+        "has_docstring": true,
+        "inherits_base": true
+      },
+      "PlaybookExecution": {
+        "found": true,
+        "methods_found": [
+          "start_execution",
+          "complete_execution",
+          "pause_execution",
+          "resume_execution",
+          "cancel_execution",
+          "update_progress",
+          "get_success_criteria_met",
+          "mark_success_criteria",
+          "get_input_variables",
+          "get_output_variables",
+          "set_variable"
+        ],
+        "methods_missing": [],
+        "attributes_found": [
+          "playbook_id",
+          "execution_id",
+          "user_id",
+          "triggered_by",
+          "trigger_context",
+          "status",
+          "input_variables",
+          "output_variables",
+          "error_data",
+          "started_at",
+          "completed_at",
+          "execution_time_seconds",
+          "current_step_order",
+          "completed_steps",
+          "failed_steps",
+          "skipped_steps",
+          "success_criteria_met",
+          "overall_success",
+          "lessons_learned",
+          "playbook",
+          "user",
+          "step_executions",
+          "__table_args__"
+        ],
+        "has_docstring": true,
+        "inherits_base": true
+      },
+      "PlaybookStepExecution": {
+        "found": true,
+        "methods_found": [
+          "start_step",
+          "complete_step",
+          "fail_step",
+          "skip_step",
+          "to_dict"
+        ],
+        "methods_missing": [],
+        "attributes_found": [
+          "__tablename__",
+          "id",
+          "playbook_execution_id",
+          "playbook_step_id",
+          "step_order",
+          "status",
+          "started_at",
+          "completed_at",
+          "input_data",
+          "output_data",
+          "error_message",
+          "execution_time_seconds",
+          "retry_count",
+          "playbook_execution",
+          "playbook_step",
+          "__table_args__"
+        ],
+        "has_docstring": true,
+        "inherits_base": true
+      },
+      "PlaybookTemplate": {
+        "found": true,
+        "methods_found": [
+          "create_playbook",
+          "to_dict"
+        ],
+        "methods_missing": [],
+        "attributes_found": [
+          "__tablename__",
+          "id",
+          "name",
+          "description",
+          "category",
+          "version",
+          "template_data",
+          "default_variables",
+          "usage_count",
+          "success_rate",
+          "is_public",
+          "created_by",
+          "__table_args__"
+        ],
+        "has_docstring": true,
+        "inherits_base": true
+      }
+    },
+    "completion_rate": 100.0
+  },
+  "import_validation": {
+    "required_imports": [
+      "datetime.datetime",
+      "datetime.timedelta",
+      "typing.Dict",
+      "typing.Any",
+      "typing.List",
+      "typing.Optional",
+      "enum.Enum",
+      "sqlalchemy.Column",
+      "sqlalchemy.String",
+      "sqlalchemy.Integer",
+      "sqlalchemy.Text",
+      "sqlalchemy.Boolean",
+      "sqlalchemy.DateTime",
+      "sqlalchemy.ForeignKey",
+      "sqlalchemy.JSON",
+      "sqlalchemy.Float",
+      "sqlalchemy.Index",
+      "sqlalchemy.UniqueConstraint",
+      "sqlalchemy.orm.relationship",
+      "sqlalchemy.orm.validates",
+      "sqlalchemy.ext.hybrid.hybrid_property"
+    ],
+    "found_imports": [
+      "re",
+      "sqlalchemy.JSON",
+      "datetime.datetime",
+      "sqlalchemy.UniqueConstraint",
+      "sqlalchemy.ForeignKey",
+      "typing.Any",
+      "sqlalchemy.Integer",
+      "sqlalchemy.orm.validates",
+      "json",
+      "enum.Enum",
+      "typing.List",
+      "typing.Set",
+      "sqlalchemy.Boolean",
+      "typing.Optional",
+      "sqlalchemy.orm.relationship",
+      "typing.Dict",
+      "datetime.timedelta",
+      "sqlalchemy.DateTime",
+      "sqlalchemy.Column",
+      "base.BaseModel",
+      "sqlalchemy.Index",
+      "sqlalchemy.Text",
+      "sqlalchemy.Float",
+      "sqlalchemy.ext.hybrid.hybrid_property",
+      "sqlalchemy.Enum",
+      "sqlalchemy.String"
+    ],
+    "missing_imports": [],
+    "extra_imports": []
+  },
+  "structure_validation": {
+    "has_docstring": true,
+    "docstring_comprehensive": true,
+    "file_size_appropriate": true,
+    "line_count": 946,
+    "complexity_score": 220
+  },
+  "recommendations": [
+    "Excellent! The playbook models implementation is comprehensive and ready for production."
+  ]
+}

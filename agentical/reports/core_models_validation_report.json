@@ -1,0 +1,480 @@
+{
+  "timestamp": "2025-06-11T19:10:41.277273",
+  "overall_score": 100.0,
+  "status": "PASSED",
+  "domain_validations": {
+    "agent": {
+      "domain": "Agent",
+      "file_info": {
+        "has_docstring": true,
+        "file_size": 16898,
+        "line_count": 455
+      },
+      "enum_validation": {
+        "expected_count": 3,
+        "found_count": 3,
+        "missing_enums": [],
+        "complete_enums": [
+          "AgentStatus",
+          "AgentType",
+          "ExecutionStatus"
+        ],
+        "details": {
+          "AgentStatus": {
+            "found": true,
+            "has_docstring": true
+          },
+          "AgentType": {
+            "found": true,
+            "has_docstring": true
+          },
+          "ExecutionStatus": {
+            "found": true,
+            "has_docstring": true
+          }
+        }
+      },
+      "model_validation": {
+        "expected_count": 4,
+        "found_count": 4,
+        "missing_models": [],
+        "complete_models": [
+          "Agent",
+          "AgentCapability",
+          "AgentConfiguration",
+          "AgentExecution"
+        ],
+        "details": {
+          "Agent": {
+            "found": true,
+            "methods_found": [
+              "get_configuration",
+              "set_configuration",
+              "update_performance_metrics",
+              "get_available_tools",
+              "add_tool",
+              "remove_tool",
+              "to_dict"
+            ],
+            "methods_missing": [],
+            "has_docstring": true,
+            "inherits_base": true
+          },
+          "AgentCapability": {
+            "found": true,
+            "methods_found": [
+              "update_usage",
+              "get_required_tools"
+            ],
+            "methods_missing": [],
+            "has_docstring": true,
+            "inherits_base": true
+          },
+          "AgentConfiguration": {
+            "found": true,
+            "methods_found": [
+              "activate",
+              "deactivate",
+              "validate_configuration"
+            ],
+            "methods_missing": [],
+            "has_docstring": true,
+            "inherits_base": true
+          },
+          "AgentExecution": {
+            "found": true,
+            "methods_found": [
+              "start_execution",
+              "complete_execution",
+              "cancel_execution",
+              "get_tools_used",
+              "add_tool_usage",
+              "to_dict"
+            ],
+            "methods_missing": [],
+            "has_docstring": true,
+            "inherits_base": true
+          }
+        }
+      },
+      "overall_score": 100.0
+    },
+    "tool": {
+      "domain": "Tool",
+      "file_info": {
+        "has_docstring": true,
+        "file_size": 19370,
+        "line_count": 513
+      },
+      "enum_validation": {
+        "expected_count": 3,
+        "found_count": 3,
+        "missing_enums": [],
+        "complete_enums": [
+          "ToolType",
+          "ToolStatus",
+          "ExecutionStatus"
+        ],
+        "details": {
+          "ToolType": {
+            "found": true,
+            "has_docstring": true
+          },
+          "ToolStatus": {
+            "found": true,
+            "has_docstring": true
+          },
+          "ExecutionStatus": {
+            "found": true,
+            "has_docstring": true
+          }
+        }
+      },
+      "model_validation": {
+        "expected_count": 4,
+        "found_count": 4,
+        "missing_models": [],
+        "complete_models": [
+          "Tool",
+          "ToolCapability",
+          "ToolParameter",
+          "ToolExecution"
+        ],
+        "details": {
+          "Tool": {
+            "found": true,
+            "methods_found": [
+              "get_tags",
+              "add_tag",
+              "remove_tag",
+              "get_configuration",
+              "set_configuration",
+              "update_performance_metrics",
+              "validate_input",
+              "to_dict"
+            ],
+            "methods_missing": [],
+            "has_docstring": true,
+            "inherits_base": true
+          },
+          "ToolCapability": {
+            "found": true,
+            "methods_found": [
+              "get_data_types",
+              "get_operations",
+              "update_usage"
+            ],
+            "methods_missing": [],
+            "has_docstring": true,
+            "inherits_base": true
+          },
+          "ToolParameter": {
+            "found": true,
+            "methods_found": [
+              "get_enum_values",
+              "get_examples",
+              "validate_value"
+            ],
+            "methods_missing": [],
+            "has_docstring": true,
+            "inherits_base": true
+          },
+          "ToolExecution": {
+            "found": true,
+            "methods_found": [
+              "start_execution",
+              "complete_execution",
+              "timeout_execution",
+              "cancel_execution",
+              "to_dict"
+            ],
+            "methods_missing": [],
+            "has_docstring": true,
+            "inherits_base": true
+          }
+        }
+      },
+      "overall_score": 100.0
+    },
+    "workflow": {
+      "domain": "Workflow",
+      "file_info": {
+        "has_docstring": true,
+        "file_size": 25810,
+        "line_count": 684
+      },
+      "enum_validation": {
+        "expected_count": 5,
+        "found_count": 5,
+        "missing_enums": [],
+        "complete_enums": [
+          "WorkflowType",
+          "WorkflowStatus",
+          "ExecutionStatus",
+          "StepType",
+          "StepStatus"
+        ],
+        "details": {
+          "WorkflowType": {
+            "found": true,
+            "has_docstring": true
+          },
+          "WorkflowStatus": {
+            "found": true,
+            "has_docstring": true
+          },
+          "ExecutionStatus": {
+            "found": true,
+            "has_docstring": true
+          },
+          "StepType": {
+            "found": true,
+            "has_docstring": true
+          },
+          "StepStatus": {
+            "found": true,
+            "has_docstring": true
+          }
+        }
+      },
+      "model_validation": {
+        "expected_count": 4,
+        "found_count": 4,
+        "missing_models": [],
+        "complete_models": [
+          "Workflow",
+          "WorkflowStep",
+          "WorkflowExecution",
+          "WorkflowStepExecution"
+        ],
+        "details": {
+          "Workflow": {
+            "found": true,
+            "methods_found": [
+              "get_tags",
+              "add_tag",
+              "remove_tag",
+              "get_variables",
+              "set_variable",
+              "get_configuration",
+              "set_configuration",
+              "update_performance_metrics",
+              "publish",
+              "archive",
+              "to_dict"
+            ],
+            "methods_missing": [],
+            "has_docstring": true,
+            "inherits_base": true
+          },
+          "WorkflowStep": {
+            "found": true,
+            "methods_found": [
+              "get_depends_on_steps",
+              "add_dependency",
+              "remove_dependency",
+              "get_configuration",
+              "set_configuration",
+              "update_performance_metrics",
+              "to_dict"
+            ],
+            "methods_missing": [],
+            "has_docstring": true,
+            "inherits_base": true
+          },
+          "WorkflowExecution": {
+            "found": true,
+            "methods_found": [
+              "start_execution",
+              "complete_execution",
+              "pause_execution",
+              "resume_execution",
+              "cancel_execution",
+              "update_progress",
+              "get_context_data",
+              "set_context_variable",
+              "to_dict"
+            ],
+            "methods_missing": [],
+            "has_docstring": true,
+            "inherits_base": true
+          },
+          "WorkflowStepExecution": {
+            "found": true,
+            "methods_found": [
+              "start_execution",
+              "complete_execution",
+              "skip_execution",
+              "cancel_execution",
+              "to_dict"
+            ],
+            "methods_missing": [],
+            "has_docstring": true,
+            "inherits_base": true
+          }
+        }
+      },
+      "overall_score": 100.0
+    },
+    "task": {
+      "domain": "Task",
+      "file_info": {
+        "has_docstring": true,
+        "file_size": 23479,
+        "line_count": 639
+      },
+      "enum_validation": {
+        "expected_count": 4,
+        "found_count": 4,
+        "missing_enums": [],
+        "complete_enums": [
+          "TaskPriority",
+          "TaskStatus",
+          "TaskType",
+          "ExecutionStatus"
+        ],
+        "details": {
+          "TaskPriority": {
+            "found": true,
+            "has_docstring": true
+          },
+          "TaskStatus": {
+            "found": true,
+            "has_docstring": true
+          },
+          "TaskType": {
+            "found": true,
+            "has_docstring": true
+          },
+          "ExecutionStatus": {
+            "found": true,
+            "has_docstring": true
+          }
+        }
+      },
+      "model_validation": {
+        "expected_count": 3,
+        "found_count": 3,
+        "missing_models": [],
+        "complete_models": [
+          "Task",
+          "TaskExecution",
+          "TaskResult"
+        ],
+        "details": {
+          "Task": {
+            "found": true,
+            "methods_found": [
+              "get_tags",
+              "add_tag",
+              "remove_tag",
+              "get_custom_fields",
+              "set_custom_field",
+              "get_attachments",
+              "add_attachment",
+              "start_task",
+              "complete_task",
+              "block_task",
+              "unblock_task",
+              "update_progress",
+              "add_dependency",
+              "remove_dependency",
+              "can_start",
+              "update_performance_metrics",
+              "to_dict"
+            ],
+            "methods_missing": [],
+            "has_docstring": true,
+            "inherits_base": true
+          },
+          "TaskExecution": {
+            "found": true,
+            "methods_found": [
+              "start_execution",
+              "complete_execution",
+              "update_progress",
+              "cancel_execution",
+              "timeout_execution",
+              "to_dict"
+            ],
+            "methods_missing": [],
+            "has_docstring": true,
+            "inherits_base": true
+          },
+          "TaskResult": {
+            "found": true,
+            "methods_found": [
+              "record_access",
+              "get_result_data",
+              "to_dict"
+            ],
+            "methods_missing": [],
+            "has_docstring": true,
+            "inherits_base": true
+          }
+        }
+      },
+      "overall_score": 100.0
+    },
+    "playbook": {
+      "domain": "Playbook",
+      "overall_score": 100,
+      "file_info": {
+        "has_docstring": true,
+        "file_size": 36460
+      },
+      "enum_validation": {
+        "expected_count": 6,
+        "found_count": 6,
+        "missing_enums": []
+      },
+      "model_validation": {
+        "expected_count": 6,
+        "found_count": 6,
+        "missing_models": []
+      }
+    }
+  },
+  "integration_validation": {
+    "has_imports": {
+      "agent": true,
+      "tool": true,
+      "workflow": true,
+      "task": true,
+      "playbook": true
+    },
+    "has_exports": {
+      "Agent": true,
+      "AgentCapability": true,
+      "AgentConfiguration": true,
+      "AgentExecution": true,
+      "Tool": true,
+      "ToolCapability": true,
+      "ToolParameter": true,
+      "ToolExecution": true,
+      "Workflow": true,
+      "WorkflowStep": true,
+      "WorkflowExecution": true,
+      "WorkflowStepExecution": true,
+      "Task": true,
+      "TaskExecution": true,
+      "TaskResult": true,
+      "Playbook": true,
+      "PlaybookStep": true,
+      "PlaybookVariable": true,
+      "PlaybookExecution": true
+    },
+    "missing_imports": [],
+    "missing_exports": [],
+    "completion_score": 100.0
+  },
+  "summary": {
+    "total_domains": 5,
+    "domains_analyzed": 5,
+    "domains_passed": 5,
+    "integration_complete": true
+  },
+  "recommendations": [
+    "Excellent! All core data models are comprehensive and ready for production."
+  ]
+}

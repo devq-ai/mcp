@@ -1,0 +1,31 @@
+{
+  "validation_timestamp": "2025-06-11T23:59:10.207722",
+  "test_summary": {
+    "total_tests": 9,
+    "passed_tests": 0,
+    "failed_tests": 9,
+    "success_rate": 0.0
+  },
+  "test_results": {
+    "test_playbook_models_import": false,
+    "test_enum_completeness": false,
+    "test_model_structure": false,
+    "test_model_methods": false,
+    "test_database_schema": false,
+    "test_business_logic": false,
+    "test_relationships": false,
+    "test_serialization": false,
+    "test_edge_cases": false
+  },
+  "validation_status": "FAILED",
+  "recommendations": [
+    "Fix import issues for playbook models",
+    "Ensure all required enum values are defined",
+    "Review model structure and ensure all required fields are present",
+    "Implement missing model methods",
+    "Fix database schema creation issues",
+    "Debug business logic implementation",
+    "Fix model relationships and foreign key constraints",
+    "Implement or fix model serialization methods"
+  ]
+}

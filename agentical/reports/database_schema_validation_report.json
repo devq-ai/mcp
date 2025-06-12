@@ -1,0 +1,49 @@
+{
+  "timestamp": "2025-06-11T19:09:32.142576",
+  "test_summary": {
+    "total_tests": 5,
+    "passed_tests": 0,
+    "failed_tests": 5,
+    "success_rate": 0.0
+  },
+  "test_results": {
+    "Database Schema Creation": {
+      "passed": false,
+      "details": {
+        "error": "No module named 'agentical'"
+      }
+    },
+    "Table Structure Analysis": {
+      "passed": false,
+      "details": {
+        "error": "No module named 'agentical'"
+      }
+    },
+    "Model Instantiation": {
+      "passed": false,
+      "details": {
+        "error": "Import error: No module named 'agentical'"
+      }
+    },
+    "Enum Accessibility": {
+      "passed": false,
+      "details": {
+        "error": "No module named 'agentical'"
+      }
+    },
+    "Relationship Integrity": {
+      "passed": false,
+      "details": {
+        "error": "No module named 'agentical'"
+      }
+    }
+  },
+  "validation_status": "FAILED",
+  "recommendations": [
+    "Fix Database Schema Creation: No module named 'agentical'",
+    "Fix Table Structure Analysis: No module named 'agentical'",
+    "Fix Model Instantiation: Import error: No module named 'agentical'",
+    "Fix Enum Accessibility: No module named 'agentical'",
+    "Fix Relationship Integrity: No module named 'agentical'"
+  ]
+}
