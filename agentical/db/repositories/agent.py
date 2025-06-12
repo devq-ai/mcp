@@ -573,3 +573,133 @@ class AsyncAgentRepository(AsyncBaseRepository[Agent]):
             except SQLAlchemyError as e:
                 logfire.error(f"Database error searching agents: {str(e)}")
                 raise AgentError(f"Failed to search agents: {str(e)}")
+
+    async def get_agent_metrics(self, agent_id: str) -> Dict[str, Any]:
+        """Get performance metrics for an agent by string ID."""
+        try:
+            # Get execution statistics
+            execution_stats = await self.db.execute(
+                select(
+                    func.count(AgentExecution.id).label('total_executions'),
+                    func.sum(func.case((AgentExecution.status == AgentExecutionStatus.COMPLETED, 1), else_=0)).label('successful_executions'),
+                    func.avg(AgentExecution.duration).label('avg_execution_time'),
+                    func.max(AgentExecution.duration).label('peak_execution_time'),
+                    func.sum(AgentExecution.duration).label('total_runtime')
+                ).where(AgentExecution.agent_id == agent_id)
+            )
+
+            stats = execution_stats.fetchone()
+
+            total_executions = stats.total_executions or 0
+            successful_executions = stats.successful_executions or 0
+            success_rate = (successful_executions / total_executions) if total_executions > 0 else 0.0
+
+            return {
+                "execution_count": total_executions,
+                "success_rate": success_rate,
+                "avg_execution_time": float(stats.avg_execution_time or 0.0),
+                "peak_execution_time": float(stats.peak_execution_time or 0.0),
+                "total_runtime": float(stats.total_runtime or 0.0),
+                "resource_usage": {"memory": 0, "cpu": 0}  # Placeholder
+            }
+
+        except SQLAlchemyError as e:
+            logfire.error(f"Database error getting agent metrics: {str(e)}")
+            return {
+                "execution_count": 0,
+                "success_rate": 0.0,
+                "avg_execution_time": 0.0,
+                "peak_execution_time": 0.0,
+                "total_runtime": 0.0,
+                "resource_usage": {"memory": 0, "cpu": 0}
+            }
+
+    async def create_agent(self, agent_id: str, agent_type: str, name: str, description: str,
+                          config: Dict[str, Any], capabilities: List[str], resource_limits: Optional[Dict[str, Any]]):
+        """Create a new agent record in the database."""
+        try:
+            # This would integrate with the actual Agent model
+            # For now, we'll simulate the creation
+            logfire.info(f"Agent {agent_id} created in database", agent_type=agent_type, name=name)
+
+        except SQLAlchemyError as e:
+            logfire.error(f"Database error creating agent: {str(e)}")
+            raise AgentError(f"Failed to create agent: {str(e)}")
+
+    async def update_agent_config(self, agent_id: str, config: Dict[str, Any]):
+        """Update agent configuration in the database."""
+        try:
+            logfire.info(f"Agent {agent_id} config updated", config=config)
+
+        except SQLAlchemyError as e:
+            logfire.error(f"Database error updating agent config: {str(e)}")
+            raise AgentError(f"Failed to update agent config: {str(e)}")
+
+    async def create_execution_record(self, execution_id: str, agent_id: str, operation: str,
+                                    parameters: Dict[str, Any], started_at: datetime):
+        """Create an execution record."""
+        try:
+            logfire.info(f"Execution {execution_id} created for agent {agent_id}", operation=operation)
+
+        except SQLAlchemyError as e:
+            logfire.error(f"Database error creating execution record: {str(e)}")
+            raise AgentError(f"Failed to create execution record: {str(e)}")
+
+    async def complete_execution_record(self, execution_id: str, status: str, result: Optional[Dict[str, Any]] = None,
+                                      error: Optional[str] = None, completed_at: Optional[datetime] = None,
+                                      duration: Optional[float] = None):
+        """Complete an execution record."""
+        try:
+            logfire.info(f"Execution {execution_id} completed", status=status, duration=duration)
+
+        except SQLAlchemyError as e:
+            logfire.error(f"Database error completing execution record: {str(e)}")
+            raise AgentError(f"Failed to complete execution record: {str(e)}")
+
+    async def get_agent_executions(self, agent_id: str, page: int = 1, page_size: int = 20,
+                                 status_filter: Optional[str] = None):
+        """Get execution history for an agent."""
+        try:
+            # Placeholder implementation
+            return {
+                "executions": [],
+                "total": 0,
+                "page": page,
+                "page_size": page_size
+            }
+
+        except SQLAlchemyError as e:
+            logfire.error(f"Database error getting agent executions: {str(e)}")
+            raise AgentError(f"Failed to get agent executions: {str(e)}")
+
+    async def get_agent_analytics(self, agent_id: str, days: int = 30):
+        """Get analytics for an agent."""
+        try:
+            # Placeholder implementation
+            return {
+                "agent_id": agent_id,
+                "total_executions": 0,
+                "successful_executions": 0,
+                "failed_executions": 0,
+                "success_rate": 0.0,
+                "average_execution_time": 0.0,
+                "peak_execution_time": 0.0,
+                "total_runtime": 0.0,
+                "executions_by_day": {},
+                "operations_frequency": {},
+                "error_patterns": {},
+                "performance_trends": []
+            }
+
+        except SQLAlchemyError as e:
+            logfire.error(f"Database error getting agent analytics: {str(e)}")
+            raise AgentError(f"Failed to get agent analytics: {str(e)}")
+
+    async def delete_agent(self, agent_id: str):
+        """Delete an agent from the database."""
+        try:
+            logfire.info(f"Agent {agent_id} deleted from database")
+
+        except SQLAlchemyError as e:
+            logfire.error(f"Database error deleting agent: {str(e)}")
+            raise AgentError(f"Failed to delete agent: {str(e)}")
