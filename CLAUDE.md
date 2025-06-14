@@ -1,0 +1,1 @@
+- Never include Claude Code branding in the commit messages, comments, PRs, etc.

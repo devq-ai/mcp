@@ -161,6 +161,19 @@
         "LOGFIRE_SERVICE_NAME": "${LOGFIRE_SERVICE_NAME:-mcp-logfire}",
         "LOGFIRE_ENVIRONMENT": "${LOGFIRE_ENVIRONMENT:-development}"
       }
+    },
+    "darwin-mcp": {
+      "command": "python",
+      "args": ["-m", "darwin_mcp.mcp.server"],
+      "description": "Darwin genetic algorithm optimization server for AI-driven optimization",
+      "cwd": "./mcp-servers/darwin-mcp",
+      "env": {
+        "DARWIN_MCP_LOG_LEVEL": "${DARWIN_MCP_LOG_LEVEL:-INFO}",
+        "DARWIN_DEFAULT_POPULATION_SIZE": "${DARWIN_DEFAULT_POPULATION_SIZE:-100}",
+        "DARWIN_DEFAULT_MAX_GENERATIONS": "${DARWIN_DEFAULT_MAX_GENERATIONS:-200}",
+        "DARWIN_ENABLE_PARALLEL": "${DARWIN_ENABLE_PARALLEL:-true}",
+        "DARWIN_MAX_CONCURRENT_OPTIMIZATIONS": "${DARWIN_MAX_CONCURRENT_OPTIMIZATIONS:-5}"
+      }
     }
   }
 }

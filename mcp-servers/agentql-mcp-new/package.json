@@ -1,0 +1,44 @@
+{
+  "name": "agentql-mcp",
+  "version": "1.0.0",
+  "description": "Model Context Protocol (MCP) server that integrates AgentQL data extraction capabilities.",
+  "license": "MIT",
+  "repository": "https://github.com/tinyfish-io/agentql-mcp.git",
+  "type": "module",
+  "bin": {
+    "agentql-mcp": "./dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc && node -e \"require('fs').chmodSync('dist/index.js', '755')\"",
+    "prepare": "npm run build",
+    "watch": "tsc --watch",
+    "inspector": "npx @modelcontextprotocol/inspector dist/index.js",
+    "lint": "eslint src",
+    "lint:fix": "npm run lint -- --fix",
+    "format": "prettier --write src"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.6.1",
+    "node-fetch": "^3.3.2"
+  },
+  "devDependencies": {
+    "@trivago/prettier-plugin-sort-imports": "^4.3.0",
+    "@types/node": "^20.11.24",
+    "@types/node-fetch": "^2.6.12",
+    "@typescript-eslint/eslint-plugin": "^8.4.0",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "prettier": "^3.4.2",
+    "typescript": "^5.3.3"
+  },
+  "keywords": [
+    "mcp",
+    "agentql",
+    "data-extraction",
+    "web-scraping",
+    "content-extraction"
+  ]
+}
