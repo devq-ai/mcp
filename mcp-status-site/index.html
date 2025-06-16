@@ -12,21 +12,12 @@
         .server-row:hover {
             background-color: rgba(0,0,0,0.03);
         }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        }
-        .last-updated {
-            font-size: 0.9rem;
-            color: #6c757d;
-        }
     </style>
 </head>
 <body>
     <div class="container mt-5">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h1>MCP Servers Status</h1>
-            <p class="last-updated mb-0" id="last-updated">Last updated: Loading...</p>
-        </div>
+        <h1>MCP Servers Status</h1>
+        <p id="last-updated">Last updated: Loading...</p>
         
         <div class="card mb-4">
             <div class="card-header">
@@ -89,10 +80,6 @@
                 </table>
             </div>
         </div>
-        
-        <footer class="mt-4 text-center text-muted">
-            <p>MCP Status Monitor &copy; 2025 | <a href="https://github.com/devq-ai/mcp" target="_blank">GitHub Repository</a></p>
-        </footer>
     </div>
 
     <script>
@@ -100,9 +87,6 @@
         async function fetchStatus() {
             try {
                 const response = await fetch('mcp-status.json');
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
                 const data = await response.json();
                 updateUI(data);
             } catch (error) {
@@ -136,22 +120,17 @@
                 // Format the repository URL as a link if it exists
                 let repoCell = '';
                 if (server.repository) {
-                    const repoName = server.repository.replace('https://github.com/', '');
-                    repoCell = `<a href="${server.repository}" target="_blank">${repoName}</a>`;
+                    repoCell = `<a href="${server.repository}" target="_blank">${server.repository.replace('https://github.com/', '')}</a>`;
                 } else {
                     repoCell = '-';
                 }
-                
-                // Format the last checked time
-                const lastChecked = server.last_checked ? 
-                    new Date(server.last_checked).toLocaleString() : '-';
                 
                 row.innerHTML = `
                     <td>${server.name}</td>
                     <td><span class="badge status-badge ${server.status === 'online' ? 'bg-success' : 'bg-danger'}">${server.status}</span></td>
                     <td>${server.description || '-'}</td>
                     <td>${repoCell}</td>
-                    <td>${lastChecked}</td>
+                    <td>${new Date(server.last_checked).toLocaleString()}</td>
                 `;
                 
                 tableBody.appendChild(row);

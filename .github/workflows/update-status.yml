@@ -1,0 +1,38 @@
+name: Update MCP Status
+
+on:
+  schedule:
+    - cron: '*/15 * * * *'  # Run every 15 minutes
+  workflow_dispatch:  # Allow manual triggering
+
+jobs:
+  update-status:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+          
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install gitpython requests
+          
+      - name: Run status monitor
+        run: python mcp-status-monitor.py
+        
+      - name: Copy status file to GitHub Pages directory
+        run: |
+          mkdir -p mcp-status-site
+          cp mcp-status.json mcp-status-site/
+          
+      - name: Commit and push if changed
+        run: |
+          git config --global user.name 'GitHub Action'
+          git config --global user.email 'action@github.com'
+          git add mcp-status-site/mcp-status.json
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Update MCP server status" && git push)
