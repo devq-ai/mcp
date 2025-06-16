@@ -12,9 +12,6 @@
         .server-row:hover {
             background-color: rgba(0,0,0,0.03);
         }
-        .action-buttons {
-            white-space: nowrap;
-        }
     </style>
 </head>
 <body>
@@ -56,25 +53,6 @@
             </div>
         </div>
         
-        <div class="card mb-4">
-            <div class="card-header">
-                <h5 class="mb-0">Server Management</h5>
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-6">
-                        <button id="start-all-servers" class="btn btn-success mb-2">Start All Servers</button>
-                        <button id="refresh-status" class="btn btn-primary mb-2 ms-2">Refresh Status</button>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="alert alert-info" id="api-status">
-                            API Status: Checking...
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h5 class="mb-0">Server Details</h5>
@@ -92,12 +70,11 @@
                             <th>Description</th>
                             <th>Repository</th>
                             <th>Last Checked</th>
-                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody id="servers-table">
                         <tr>
-                            <td colspan="6" class="text-center">Loading server data...</td>
+                            <td colspan="5" class="text-center">Loading server data...</td>
                         </tr>
                     </tbody>
                 </table>
@@ -106,46 +83,16 @@
     </div>
 
     <script>
-        // API endpoint (defaults to current host)
-        const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
-            ? `${window.location.protocol}//${window.location.host}`
-            : '';
-        
-        // Check if API is available
-        async function checkApiStatus() {
-            try {
-                const response = await fetch(`${API_BASE_URL}/mcp-status.json`);
-                if (response.ok) {
-                    document.getElementById('api-status').innerHTML = 
-                        API_BASE_URL ? 'API Status: Connected' : 'API Status: GitHub Pages Mode (Read-Only)';
-                    document.getElementById('api-status').className = 
-                        API_BASE_URL ? 'alert alert-success' : 'alert alert-warning';
-                    
-                    // Disable buttons in GitHub Pages mode
-                    if (!API_BASE_URL) {
-                        document.getElementById('start-all-servers').disabled = true;
-                        document.getElementById('start-all-servers').title = 'Not available in GitHub Pages mode';
-                    }
-                } else {
-                    document.getElementById('api-status').innerHTML = 'API Status: Error connecting to API';
-                    document.getElementById('api-status').className = 'alert alert-danger';
-                }
-            } catch (error) {
-                document.getElementById('api-status').innerHTML = 'API Status: Not available';
-                document.getElementById('api-status').className = 'alert alert-danger';
-            }
-        }
-        
         // Fetch server status data
         async function fetchStatus() {
             try {
-                const response = await fetch(`${API_BASE_URL}/mcp-status.json`);
+                const response = await fetch('mcp-status.json');
                 const data = await response.json();
                 updateUI(data);
             } catch (error) {
                 console.error('Error fetching status:', error);
                 document.getElementById('servers-table').innerHTML = 
-                    `<tr><td colspan="6" class="text-center text-danger">Error loading server data</td></tr>`;
+                    `<tr><td colspan="5" class="text-center text-danger">Error loading server data: ${error.message}</td></tr>`;
             }
         }
 
@@ -178,178 +125,20 @@
                     repoCell = '-';
                 }
                 
-                // Create action buttons
-                let actionButtons = '';
-                if (API_BASE_URL) {
-                    if (server.status === 'online') {
-                        actionButtons = `<button class="btn btn-sm btn-danger stop-server" data-server="${server.name}">Stop</button>`;
-                    } else {
-                        actionButtons = `<button class="btn btn-sm btn-success start-server" data-server="${server.name}">Start</button>`;
-                    }
-                    
-                    // Add install button if repository exists
-                    if (server.repository) {
-                        actionButtons += ` <button class="btn btn-sm btn-info install-server" data-server="${server.name}">Install</button>`;
-                    }
-                } else {
-                    actionButtons = '-';
-                }
-                
                 row.innerHTML = `
                     <td>${server.name}</td>
                     <td><span class="badge status-badge ${server.status === 'online' ? 'bg-success' : 'bg-danger'}">${server.status}</span></td>
                     <td>${server.description || '-'}</td>
                     <td>${repoCell}</td>
                     <td>${new Date(server.last_checked).toLocaleString()}</td>
-                    <td class="action-buttons">${actionButtons}</td>
                 `;
                 
                 tableBody.appendChild(row);
             });
             
-            // Add event listeners to buttons
-            addButtonEventListeners();
-            
             // Apply filter if needed
             applyFilter();
         }
-        
-        // Add event listeners to action buttons
-        function addButtonEventListeners() {
-            // Start server buttons
-            document.querySelectorAll('.start-server').forEach(button => {
-                button.addEventListener('click', async (e) => {
-                    const serverName = e.target.dataset.server;
-                    try {
-                        button.disabled = true;
-                        button.textContent = 'Starting...';
-                        
-                        const response = await fetch(`${API_BASE_URL}/api/start-server`, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify({ server: serverName })
-                        });
-                        
-                        const result = await response.json();
-                        console.log(result);
-                        
-                        // Refresh status after a short delay
-                        setTimeout(fetchStatus, 2000);
-                    } catch (error) {
-                        console.error('Error starting server:', error);
-                        button.textContent = 'Error';
-                        setTimeout(() => {
-                            button.disabled = false;
-                            button.textContent = 'Start';
-                        }, 2000);
-                    }
-                });
-            });
-            
-            // Stop server buttons
-            document.querySelectorAll('.stop-server').forEach(button => {
-                button.addEventListener('click', async (e) => {
-                    const serverName = e.target.dataset.server;
-                    try {
-                        button.disabled = true;
-                        button.textContent = 'Stopping...';
-                        
-                        const response = await fetch(`${API_BASE_URL}/api/stop-server`, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify({ server: serverName })
-                        });
-                        
-                        const result = await response.json();
-                        console.log(result);
-                        
-                        // Refresh status after a short delay
-                        setTimeout(fetchStatus, 2000);
-                    } catch (error) {
-                        console.error('Error stopping server:', error);
-                        button.textContent = 'Error';
-                        setTimeout(() => {
-                            button.disabled = false;
-                            button.textContent = 'Stop';
-                        }, 2000);
-                    }
-                });
-            });
-            
-            // Install server buttons
-            document.querySelectorAll('.install-server').forEach(button => {
-                button.addEventListener('click', async (e) => {
-                    const serverName = e.target.dataset.server;
-                    try {
-                        button.disabled = true;
-                        button.textContent = 'Installing...';
-                        
-                        const response = await fetch(`${API_BASE_URL}/api/install-server`, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify({ server: serverName })
-                        });
-                        
-                        const result = await response.json();
-                        console.log(result);
-                        
-                        // Refresh status after a short delay
-                        setTimeout(fetchStatus, 2000);
-                    } catch (error) {
-                        console.error('Error installing server:', error);
-                        button.textContent = 'Error';
-                        setTimeout(() => {
-                            button.disabled = false;
-                            button.textContent = 'Install';
-                        }, 2000);
-                    }
-                });
-            });
-        }
-        
-        // Start all servers
-        document.getElementById('start-all-servers').addEventListener('click', async () => {
-            try {
-                const button = document.getElementById('start-all-servers');
-                button.disabled = true;
-                button.textContent = 'Starting servers...';
-                
-                const response = await fetch(`${API_BASE_URL}/api/start-all-servers`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                });
-                
-                const result = await response.json();
-                console.log(result);
-                
-                // Refresh status after a short delay
-                setTimeout(fetchStatus, 2000);
-                
-                button.textContent = 'Start All Servers';
-                button.disabled = false;
-            } catch (error) {
-                console.error('Error starting all servers:', error);
-                const button = document.getElementById('start-all-servers');
-                button.textContent = 'Error';
-                setTimeout(() => {
-                    button.disabled = false;
-                    button.textContent = 'Start All Servers';
-                }, 2000);
-            }
-        });
-        
-        // Refresh status
-        document.getElementById('refresh-status').addEventListener('click', () => {
-            fetchStatus();
-        });
         
         // Filter servers based on checkbox
         function applyFilter() {
@@ -363,9 +152,6 @@
         
         // Add event listener for filter checkbox
         document.getElementById('show-all-servers').addEventListener('change', applyFilter);
-        
-        // Check API status
-        checkApiStatus();
         
         // Initial fetch
         fetchStatus();
