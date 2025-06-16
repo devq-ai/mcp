@@ -7,10 +7,12 @@ import os
 import json
 import subprocess
 import threading
+import time
+import signal
+import sys
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from urllib.parse import parse_qs, urlparse
 import socket
-import time
 
 # Configuration
 PORT = 8080
@@ -143,4 +145,250 @@ class MCPServerHandler(BaseHTTPRequestHandler):
 def start_server(server_name):
     """Start an MCP server"""
     # Check if server is already running
-    if server_name in running_servers and running_servers[server
+    if server_name in running_servers and running_servers[server_name].poll() is None:
+        return f"Server '{server_name}' is already running"
+    
+    # Get server configuration from mcp-servers.json
+    server_config = get_server_config(server_name)
+    if not server_config:
+        return f"Server '{server_name}' not found in configuration"
+    
+    # Prepare command
+    command = server_config.get("command")
+    args = server_config.get("args", [])
+    cwd = server_config.get("cwd", MCP_SERVERS_DIR)
+    env = os.environ.copy()
+    
+    # Add server-specific environment variables
+    if "env" in server_config:
+        for key, value in server_config["env"].items():
+            # Handle environment variable substitution
+            if isinstance(value, str) and value.startswith("${") and value.endswith("}"):
+                env_var = value[2:-1]
+                # Check if there's a default value after a colon
+                if ":-" in env_var:
+                    env_var_name, default_value = env_var.split(":-", 1)
+                    env[key] = os.environ.get(env_var_name, default_value)
+                else:
+                    env[key] = os.environ.get(env_var, "")
+            else:
+                env[key] = value
+    
+    # Start the server process
+    try:
+        full_command = [command] + args
+        process = subprocess.Popen(
+            full_command,
+            cwd=cwd,
+            env=env,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            text=True,
+            bufsize=1
+        )
+        
+        # Store the process
+        running_servers[server_name] = process
+        
+        # Start a thread to read output
+        output_thread = threading.Thread(
+            target=read_process_output,
+            args=(process, server_name),
+            daemon=True
+        )
+        output_thread.start()
+        
+        # Update status file
+        update_status_file()
+        
+        return f"Started server '{server_name}' with PID {process.pid}"
+    except Exception as e:
+        return f"Error starting server '{server_name}': {str(e)}"
+
+def stop_server(server_name):
+    """Stop an MCP server"""
+    if server_name not in running_servers:
+        return f"Server '{server_name}' is not running"
+    
+    process = running_servers[server_name]
+    if process.poll() is not None:
+        del running_servers[server_name]
+        return f"Server '{server_name}' is not running"
+    
+    try:
+        # Try to terminate gracefully first
+        process.terminate()
+        
+        # Wait for a short time
+        for _ in range(10):
+            if process.poll() is not None:
+                break
+            time.sleep(0.1)
+        
+        # If still running, kill it
+        if process.poll() is None:
+            process.kill()
+            process.wait(timeout=5)
+        
+        del running_servers[server_name]
+        
+        # Update status file
+        update_status_file()
+        
+        return f"Stopped server '{server_name}'"
+    except Exception as e:
+        return f"Error stopping server '{server_name}': {str(e)}"
+
+def install_server(server_name):
+    """Install an MCP server"""
+    server_dir = os.path.join(MCP_SERVERS_DIR, server_name)
+    
+    # Check if server directory exists
+    if not os.path.exists(server_dir):
+        try:
+            os.makedirs(server_dir)
+        except Exception as e:
+            return f"Error creating directory for '{server_name}': {str(e)}"
+    
+    # Check for install script
+    install_script = os.path.join(server_dir, "install.sh")
+    if os.path.exists(install_script):
+        try:
+            # Make sure the script is executable
+            os.chmod(install_script, 0o755)
+            
+            # Run the install script
+            process = subprocess.Popen(
+                ["bash", install_script],
+                cwd=server_dir,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+                text=True
+            )
+            
+            output, _ = process.communicate()
+            
+            if process.returncode == 0:
+                # Update status file
+                update_status_file()
+                return f"Successfully installed '{server_name}':\n\n{output}"
+            else:
+                return f"Error installing '{server_name}' (exit code {process.returncode}):\n\n{output}"
+        except Exception as e:
+            return f"Error running install script for '{server_name}': {str(e)}"
+    else:
+        return f"No install script found for '{server_name}'"
+
+def start_all_servers():
+    """Start all available servers"""
+    # Get all server configurations
+    server_configs = get_all_server_configs()
+    
+    results = []
+    for server_name in server_configs:
+        # Skip servers that are already running
+        if server_name in running_servers and running_servers[server_name].poll() is None:
+            results.append(f"Server '{server_name}' is already running")
+            continue
+        
+        # Start the server
+        result = start_server(server_name)
+        results.append(result)
+    
+    return "\n".join(results)
+
+def read_process_output(process, server_name):
+    """Read and log output from a server process"""
+    log_dir = os.path.join(MCP_BASE_DIR, "logs")
+    if not os.path.exists(log_dir):
+        os.makedirs(log_dir)
+    
+    log_file = os.path.join(log_dir, f"{server_name}.log")
+    
+    with open(log_file, "a") as f:
+        f.write(f"\n--- Server started at {time.strftime('%Y-%m-%d %H:%M:%S')} ---\n")
+        
+        while True:
+            line = process.stdout.readline()
+            if not line and process.poll() is not None:
+                break
+            
+            if line:
+                f.write(line)
+                f.flush()
+
+def get_server_config(server_name):
+    """Get configuration for a specific server"""
+    all_configs = get_all_server_configs()
+    return all_configs.get(server_name)
+
+def get_all_server_configs():
+    """Get configurations for all servers"""
+    config_file = os.path.join(MCP_BASE_DIR, "mcp-servers.json")
+    
+    try:
+        with open(config_file, "r") as f:
+            data = json.load(f)
+        
+        return data.get("mcp_servers", {})
+    except Exception as e:
+        print(f"Error loading server configurations: {str(e)}")
+        return {}
+
+def update_status_file():
+    """Update the status JSON file with current server status"""
+    try:
+        # Read current status file
+        with open(STATUS_FILE, "r") as f:
+            status_data = json.load(f)
+        
+        # Update server status
+        for server in status_data.get("servers", []):
+            server_name = server.get("name")
+            
+            if server_name in running_servers and running_servers[server_name].poll() is None:
+                server["status"] = "online"
+            else:
+                server["status"] = "offline"
+        
+        # Update metadata
+        online_count = sum(1 for server in status_data.get("servers", []) if server.get("status") == "online")
+        status_data["metadata"]["online_servers"] = online_count
+        status_data["metadata"]["generated_at"] = time.strftime("%Y-%m-%dT%H:%M:%SZ")
+        
+        # Write updated status file
+        with open(STATUS_FILE, "w") as f:
+            json.dump(status_data, f, indent=2)
+    except Exception as e:
+        print(f"Error updating status file: {str(e)}")
+
+def signal_handler(sig, frame):
+    """Handle termination signals"""
+    print("Shutting down...")
+    
+    # Stop all running servers
+    for server_name in list(running_servers.keys()):
+        stop_server(server_name)
+    
+    sys.exit(0)
+
+def main():
+    """Run the API server"""
+    # Register signal handlers
+    signal.signal(signal.SIGINT, signal_handler)
+    signal.signal(signal.SIGTERM, signal_handler)
+    
+    # Create server
+    server = HTTPServer(("", PORT), MCPServerHandler)
+    print(f"Starting MCP Server API on port {PORT}")
+    
+    try:
+        server.serve_forever()
+    except KeyboardInterrupt:
+        pass
+    finally:
+        server.server_close()
+        print("Server stopped")
+
+if __name__ == "__main__":
+    main()
