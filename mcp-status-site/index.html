@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCP Servers Status</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .status-badge {
+            width: 80px;
+        }
+        .server-row:hover {
+            background-color: rgba(0,0,0,0.03);
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+        .last-updated {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>MCP Servers Status</h1>
+            <p class="last-updated mb-0" id="last-updated">Last updated: Loading...</p>
+        </div>
+        
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Status Summary</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card text-white bg-success">
+                            <div class="card-body text-center">
+                                <h3 id="online-count">-</h3>
+                                <p class="mb-0">Online</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-white bg-danger">
+                            <div class="card-body text-center">
+                                <h3 id="offline-count">-</h3>
+                                <p class="mb-0">Offline</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-white bg-secondary">
+                            <div class="card-body text-center">
+                                <h3 id="total-count">-</h3>
+                                <p class="mb-0">Total</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Server Details</h5>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="show-all-servers" checked>
+                    <label class="form-check-label" for="show-all-servers">Show All Servers</label>
+                </div>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th>Server Name</th>
+                            <th>Status</th>
+                            <th>Description</th>
+                            <th>Repository</th>
+                            <th>Last Checked</th>
+                        </tr>
+                    </thead>
+                    <tbody id="servers-table">
+                        <tr>
+                            <td colspan="5" class="text-center">Loading server data...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <footer class="mt-4 text-center text-muted">
+            <p>MCP Status Monitor &copy; 2025 | <a href="https://github.com/devq-ai/mcp" target="_blank">GitHub Repository</a></p>
+        </footer>
+    </div>
+
+    <script>
+        // Fetch server status data
+        async function fetchStatus() {
+            try {
+                const response = await fetch('mcp-status.json');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                const data = await response.json();
+                updateUI(data);
+            } catch (error) {
+                console.error('Error fetching status:', error);
+                document.getElementById('servers-table').innerHTML = 
+                    `<tr><td colspan="5" class="text-center text-danger">Error loading server data: ${error.message}</td></tr>`;
+            }
+        }
+
+        // Update the UI with server data
+        function updateUI(data) {
+            // Update metadata
+            document.getElementById('last-updated').textContent = 
+                `Last updated: ${new Date(data.metadata.generated_at).toLocaleString()}`;
+            document.getElementById('online-count').textContent = data.metadata.online_servers;
+            document.getElementById('offline-count').textContent = 
+                data.metadata.total_servers - data.metadata.online_servers;
+            document.getElementById('total-count').textContent = data.metadata.total_servers;
+            
+            // Update servers table
+            const tableBody = document.getElementById('servers-table');
+            tableBody.innerHTML = '';
+            
+            data.servers.forEach(server => {
+                const row = document.createElement('tr');
+                row.className = 'server-row';
+                if (server.status !== 'online') {
+                    row.classList.add('offline-server');
+                }
+                
+                // Format the repository URL as a link if it exists
+                let repoCell = '';
+                if (server.repository) {
+                    const repoName = server.repository.replace('https://github.com/', '');
+                    repoCell = `<a href="${server.repository}" target="_blank">${repoName}</a>`;
+                } else {
+                    repoCell = '-';
+                }
+                
+                // Format the last checked time
+                const lastChecked = server.last_checked ? 
+                    new Date(server.last_checked).toLocaleString() : '-';
+                
+                row.innerHTML = `
+                    <td>${server.name}</td>
+                    <td><span class="badge status-badge ${server.status === 'online' ? 'bg-success' : 'bg-danger'}">${server.status}</span></td>
+                    <td>${server.description || '-'}</td>
+                    <td>${repoCell}</td>
+                    <td>${lastChecked}</td>
+                `;
+                
+                tableBody.appendChild(row);
+            });
+            
+            // Apply filter if needed
+            applyFilter();
+        }
+        
+        // Filter servers based on checkbox
+        function applyFilter() {
+            const showAll = document.getElementById('show-all-servers').checked;
+            const offlineServers = document.querySelectorAll('.offline-server');
+            
+            offlineServers.forEach(server => {
+                server.style.display = showAll ? '' : 'none';
+            });
+        }
+        
+        // Add event listener for filter checkbox
+        document.getElementById('show-all-servers').addEventListener('change', applyFilter);
+        
+        // Initial fetch
+        fetchStatus();
+        
+        // Refresh every 60 seconds
+        setInterval(fetchStatus, 60000);
+    </script>
+</body>
+</html>
