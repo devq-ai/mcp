@@ -1,179 +1,82 @@
 {
   "mcp_servers": {
+    "git": {
+      "command": "uvx",
+      "args": ["mcp-server-git"],
+      "description": "Version control operations, commits, and branch management",
+      "repository": ""
+    },
+    "fetch": {
+      "command": "uvx",
+      "args": ["mcp-server-fetch"],
+      "description": "API calls and external resource access",
+      "repository": ""
+    },
     "filesystem": {
       "command": "npx",
       "args": ["-y", "@modelcontextprotocol/server-filesystem", "."],
-      "description": "File read/write operations for the current project directory"
-    },
-    "git": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-git"],
-      "description": "Version control operations, commits, and branch management"
-    },
-    "fetch": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-fetch"],
-      "description": "API calls and external resource access"
+      "description": "File read/write operations for the current project directory",
+      "repository": ""
     },
     "memory": {
       "command": "npx",
       "args": ["-y", "@modelcontextprotocol/server-memory"],
-      "description": "Persistent memory across Claude Code sessions"
+      "description": "Persistent memory across Claude Code sessions",
+      "repository": ""
     },
-    "sequentialthinking": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-sequentialthinking"],
-      "description": "Enhanced step-by-step problem solving"
-    },
-    "agentql-mcp": {
-      "command": "python",
-      "args": ["-m", "agentql_mcp.server"],
-      "description": "Web automation and query tool using AgentQL"
-    },
-    "bayes-mcp": {
-      "command": "python",
-      "args": ["-m", "bayes_mcp.server"],
-      "description": "Bayesian inference and probabilistic modeling tools"
-    },
-    "browser-tools-mcp": {
-      "command": "python",
-      "args": ["-m", "browser_tools_mcp.server"],
-      "description": "Browser automation and web interaction tools"
-    },
-    "calendar-mcp": {
-      "command": "python",
-      "args": ["-m", "calendar_mcp.server"],
-      "description": "Google Calendar integration for event management and scheduling",
-      "env": {
-        "GOOGLE_CALENDAR_CREDENTIALS": "${GOOGLE_CALENDAR_CREDENTIALS}"
-      }
-    },
-    "context7-mcp": {
-      "command": "python",
-      "args": ["-m", "context7_mcp.server"],
-      "description": "Advanced contextual reasoning with Redis-backed memory",
-      "env": {
-        "UPSTASH_REDIS_REST_URL": "${UPSTASH_REDIS_REST_URL}",
-        "UPSTASH_REDIS_REST_TOKEN": "${UPSTASH_REDIS_REST_TOKEN}"
-      }
-    },
-    "crawl4ai-mcp": {
-      "command": "python",
-      "args": ["-m", "crawl4ai_mcp.server"],
-      "description": "Web scraping and content extraction capabilities"
-    },
-    "dart-mcp": {
-      "command": "npx",
-      "args": ["-y", "dart-mcp-server"],
-      "description": "Dart AI integration for smart code assistance and development",
-      "env": {
-        "DART_TOKEN": "${DART_TOKEN}"
-      }
-    },
-    "github-mcp": {
+    "github": {
       "command": "npx",
       "args": ["-y", "@modelcontextprotocol/server-github"],
       "description": "GitHub API integration for repository management, issues, and pull requests",
-      "env": {
-        "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_PERSONAL_ACCESS_TOKEN}"
-      }
-    },
-    "jupyter-mcp": {
-      "command": "python",
-      "args": ["-m", "jupyter_mcp.server"],
-      "description": "Jupyter notebook execution and management"
-    },
-    "magic-mcp": {
-      "command": "python",
-      "args": ["-m", "magic_mcp.server"],
-      "description": "Magic utilities and helper functions"
+      "repository": "https://github.com/github/github-mcp-server"
     },
     "inspector": {
       "command": "npx",
       "args": ["-y", "@modelcontextprotocol/inspector"],
-      "description": "Debug MCP server connections (optional)"
+      "description": "Debug MCP server connections (optional)",
+      "repository": ""
     },
-    "ptolemies-mcp": {
+    "bayes-mcp": {
       "command": "python",
-      "args": ["-m", "ptolemies_mcp.server"],
-      "description": "Custom knowledge base integration with SurrealDB",
-      "env": {
-        "SURREALDB_URL": "${SURREALDB_URL:-ws://localhost:8000/rpc}",
-        "SURREALDB_USERNAME": "${SURREALDB_USERNAME:-root}",
-        "SURREALDB_PASSWORD": "${SURREALDB_PASSWORD:-root}",
-        "SURREALDB_NAMESPACE": "${SURREALDB_NAMESPACE:-devq}",
-        "SURREALDB_DATABASE": "${SURREALDB_DATABASE:-ptolemies}"
-      }
+      "args": ["bayes_mcp.py"],
+      "cwd": "mcp-servers/bayes-mcp",
+      "description": "Bayesian statistical analysis and inference",
+      "repository": ""
+    },
+    "jupyter-mcp": {
+      "command": "python",
+      "args": ["jupyter_mcp.py"],
+      "cwd": "mcp-servers/jupyter-mcp",
+      "description": "Jupyter notebook execution and management",
+      "repository": "https://github.com/datalayer/jupyter-mcp-server"
+    },
+    "magic-mcp": {
+      "command": "python",
+      "args": ["magic_mcp.py"],
+      "cwd": "mcp-servers/magic-mcp",
+      "description": "Magic utilities and helper functions",
+      "repository": "https://github.com/21st-dev/magic-mcp"
+    },
+    "crawl4ai-mcp": {
+      "command": "python",
+      "args": ["crawl4ai_mcp.py"],
+      "cwd": "mcp-servers/crawl4ai-mcp",
+      "description": "Web scraping and content extraction capabilities",
+      "repository": "https://github.com/wyattowalsh/crawl4ai-mcp"
+    },
+    "calendar-mcp": {
+      "command": "python",
+      "args": ["calendar_mcp.py"],
+      "cwd": "mcp-servers/calendar-mcp",
+      "description": "Google Calendar integration for event management and scheduling",
+      "repository": "https://github.com/Zawad99/Google-Calendar-MCP-Server"
     },
     "registry-mcp": {
       "command": "python",
-      "args": ["-m", "registry_mcp.server"],
-      "description": "MCP server registry management and discovery"
-    },
-    "shadcn-ui-mcp-server": {
-      "command": "python",
-      "args": ["-m", "shadcn_ui_mcp.server"],
-      "description": "Shadcn/UI component library integration"
-    },
-    "solver-mzn-mcp": {
-      "command": "python",
-      "args": ["-m", "solver_mzn_mcp.server"],
-      "description": "MiniZinc constraint solver integration"
-    },
-    "solver-pysat-mcp": {
-      "command": "python",
-      "args": ["-m", "solver_pysat_mcp.server"],
-      "description": "PySAT boolean satisfiability solver"
-    },
-    "solver-z3-mcp": {
-      "command": "python",
-      "args": ["-m", "solver_z3_mcp.server"],
-      "description": "Z3 theorem prover and SMT solver"
-    },
-    "stripe-mcp": {
-      "command": "python",
-      "args": ["-m", "stripe_mcp.server"],
-      "description": "Stripe payment processing integration",
-      "env": {
-        "STRIPE_API_KEY": "${STRIPE_API_KEY}"
-      }
-    },
-    "surrealdb-mcp": {
-      "command": "python",
-      "args": ["-m", "surrealdb_mcp.server"],
-      "description": "SurrealDB database operations and queries",
-      "env": {
-        "SURREALDB_URL": "${SURREALDB_URL:-ws://localhost:8000/rpc}",
-        "SURREALDB_USERNAME": "${SURREALDB_USERNAME:-root}",
-        "SURREALDB_PASSWORD": "${SURREALDB_PASSWORD:-root}",
-        "SURREALDB_NAMESPACE": "${SURREALDB_NAMESPACE:-devq}",
-        "SURREALDB_DATABASE": "${SURREALDB_DATABASE:-main}"
-      }
-    },
-    "logfire-mcp": {
-      "command": "python",
-      "args": ["-m", "logfire_mcp.src.logfire-fastapi"],
-      "description": "Pydantic Logfire observability and monitoring integration",
-      "cwd": "./mcp-servers/logfire-mcp",
-      "env": {
-        "LOGFIRE_TOKEN": "${LOGFIRE_TOKEN}",
-        "LOGFIRE_PROJECT_NAME": "${LOGFIRE_PROJECT_NAME:-mcp-server}",
-        "LOGFIRE_SERVICE_NAME": "${LOGFIRE_SERVICE_NAME:-mcp-logfire}",
-        "LOGFIRE_ENVIRONMENT": "${LOGFIRE_ENVIRONMENT:-development}"
-      }
-    },
-    "darwin-mcp": {
-      "command": "python",
-      "args": ["-m", "darwin_mcp.mcp.server"],
-      "description": "Darwin genetic algorithm optimization server for AI-driven optimization",
-      "cwd": "./mcp-servers/darwin-mcp",
-      "env": {
-        "DARWIN_MCP_LOG_LEVEL": "${DARWIN_MCP_LOG_LEVEL:-INFO}",
-        "DARWIN_DEFAULT_POPULATION_SIZE": "${DARWIN_DEFAULT_POPULATION_SIZE:-100}",
-        "DARWIN_DEFAULT_MAX_GENERATIONS": "${DARWIN_DEFAULT_MAX_GENERATIONS:-200}",
-        "DARWIN_ENABLE_PARALLEL": "${DARWIN_ENABLE_PARALLEL:-true}",
-        "DARWIN_MAX_CONCURRENT_OPTIMIZATIONS": "${DARWIN_MAX_CONCURRENT_OPTIMIZATIONS:-5}"
-      }
+      "args": ["registry_mcp.py"],
+      "cwd": "mcp-servers/registry-mcp",
+      "description": "MCP server registry management and discovery",
+      "repository": "https://github.com/modelcontextprotocol/registry"
     }
   }
 }
