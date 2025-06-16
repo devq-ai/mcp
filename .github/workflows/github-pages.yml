@@ -1,11 +1,14 @@
-
-name: Deploy to GitHub Pages
+name: GitHub Pages
 
 on:
   push:
     branches: [main]
     paths:
       - 'mcp-status-site/**'
+  workflow_run:
+    workflows: ["Update MCP Status"]
+    types:
+      - completed
   workflow_dispatch:
 
 permissions:
