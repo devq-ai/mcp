@@ -5,216 +5,216 @@
       "description": "File operations",
       "repository": "https://github.com/modelcontextprotocol/server-filesystem",
       "status": "offline",
-      "last_checked": "2025-06-16T12:52:35.842918"
+      "last_checked": "2025-06-16T12:55:59.297326"
     },
     {
       "name": "git",
       "description": "Version control",
       "repository": "https://github.com/modelcontextprotocol/server-git",
       "status": "offline",
-      "last_checked": "2025-06-16T12:52:36.047824"
+      "last_checked": "2025-06-16T12:55:59.502970"
     },
     {
       "name": "github",
       "description": "Repository management",
       "repository": "https://github.com/github/github-mcp-server",
       "status": "offline",
-      "last_checked": "2025-06-16T12:52:36.260311"
+      "last_checked": "2025-06-16T12:55:59.707987"
     },
     {
       "name": "fetch",
       "description": "Web content access",
       "repository": "https://github.com/modelcontextprotocol/server-fetch",
       "status": "offline",
-      "last_checked": "2025-06-16T12:52:36.463879"
+      "last_checked": "2025-06-16T12:55:59.913076"
     },
     {
       "name": "memory",
       "description": "Persistent storage",
       "repository": "https://github.com/modelcontextprotocol/server-memory",
       "status": "offline",
-      "last_checked": "2025-06-16T12:52:36.669812"
+      "last_checked": "2025-06-16T12:56:00.118405"
     },
     {
       "name": "inspector",
       "description": "Debug tool",
       "repository": "https://github.com/modelcontextprotocol/inspector",
       "status": "offline",
-      "last_checked": "2025-06-16T12:52:36.873860"
+      "last_checked": "2025-06-16T12:56:00.328970"
     },
     {
       "name": "darwin-mcp",
       "description": "Darwin Mcp",
       "repository": "",
       "status": "offline",
-      "last_checked": "2025-06-16T12:52:37.077162"
+      "last_checked": "2025-06-16T12:56:00.537845"
     },
     {
       "name": "dart-mcp",
       "description": "Dart/Flutter development tools with package management and testing",
       "repository": "https://github.com/its-dart/dart-mcp-server",
       "status": "offline",
-      "last_checked": "2025-06-16T12:52:37.286911"
+      "last_checked": "2025-06-16T12:56:00.744594"
     },
     {
       "name": "magic-mcp",
       "description": "AI-powered code generation and transformation utilities",
       "repository": "https://github.com/21st-dev/magic-mcp",
       "status": "offline",
-      "last_checked": "2025-06-16T12:52:37.490560"
+      "last_checked": "2025-06-16T12:56:00.955252"
     },
     {
       "name": "solver-mzn-mcp",
       "description": "MiniZinc constraint satisfaction and optimization solver",
       "repository": "https://github.com/szeider/mcp-solver",
       "status": "offline",
-      "last_checked": "2025-06-16T12:52:37.692861"
+      "last_checked": "2025-06-16T12:56:01.172328"
     },
     {
       "name": "solver-pysat-mcp",
       "description": "PySAT Boolean satisfiability problem solver with advanced algorithms",
       "repository": "https://github.com/szeider/mcp-solver",
       "status": "offline",
-      "last_checked": "2025-06-16T12:52:37.893820"
+      "last_checked": "2025-06-16T12:56:01.383441"
     },
     {
       "name": "stripe-mcp",
       "description": "Stripe payment processing integration with transaction management",
       "repository": "https://github.com/stripe/agent-toolkit",
       "status": "offline",
-      "last_checked": "2025-06-16T12:52:38.096937"
+      "last_checked": "2025-06-16T12:56:01.589437"
     },
     {
       "name": "memory-mcp",
       "description": "Persistent memory management with contextual recall and learning",
       "repository": "https://github.com/mem0ai/mem0-mcp",
       "status": "offline",
-      "last_checked": "2025-06-16T12:52:38.302589"
+      "last_checked": "2025-06-16T12:56:01.794486"
     },
     {
       "name": "logfire-mcp",
       "description": "Logfire Mcp",
       "repository": "",
       "status": "offline",
-      "last_checked": "2025-06-16T12:52:38.504895"
+      "last_checked": "2025-06-16T12:56:01.996801"
     },
     {
       "name": "docker-mcp-new",
       "description": "Docker Mcp New",
       "repository": "",
       "status": "offline",
-      "last_checked": "2025-06-16T12:52:38.706354"
+      "last_checked": "2025-06-16T12:56:02.207632"
     },
     {
       "name": "surrealdb-mcp",
       "description": "SurrealDB multi-model database integration with graph capabilities",
       "repository": "https://github.com/nsxdavid/surrealdb-mcp-server",
       "status": "offline",
-      "last_checked": "2025-06-16T12:52:38.908881"
+      "last_checked": "2025-06-16T12:56:02.418557"
     },
     {
       "name": "calendar-mcp",
       "description": "Google Calendar integration for event management and scheduling",
       "repository": "https://github.com/Zawad99/Google-Calendar-MCP-Server",
       "status": "offline",
-      "last_checked": "2025-06-16T12:52:39.111536"
+      "last_checked": "2025-06-16T12:56:02.623026"
     },
     {
       "name": "shadcn-ui-mcp-server",
       "description": "shadcn/ui component library integration for React development",
       "repository": "https://github.com/ymadd/shadcn-ui-mcp-server",
       "status": "offline",
-      "last_checked": "2025-06-16T12:52:39.313377"
+      "last_checked": "2025-06-16T12:56:02.825326"
     },
     {
       "name": "crawl4ai-mcp-new",
       "description": "Crawl4Ai Mcp New",
       "repository": "",
       "status": "offline",
-      "last_checked": "2025-06-16T12:52:39.517019"
+      "last_checked": "2025-06-16T12:56:03.028529"
     },
     {
       "name": "context7-mcp",
       "description": "Advanced context management and semantic search with vector embeddings",
       "repository": "https://github.com/upstash/context7",
       "status": "offline",
-      "last_checked": "2025-06-16T12:52:39.719850"
+      "last_checked": "2025-06-16T12:56:03.234308"
     },
     {
       "name": "agentql-mcp",
       "description": "Web scraping and browser automation using natural language queries",
       "repository": "https://github.com/tinyfish-io/agentql-mcp",
       "status": "offline",
-      "last_checked": "2025-06-16T12:52:39.921753"
+      "last_checked": "2025-06-16T12:56:03.438191"
     },
     {
       "name": "web-search-mcp",
       "description": "Web Search Mcp",
       "repository": "",
       "status": "offline",
-      "last_checked": "2025-06-16T12:52:40.128230"
+      "last_checked": "2025-06-16T12:56:03.642261"
     },
     {
       "name": "jupyter-mcp",
       "description": "Jupyter notebook execution and data science workflow management",
       "repository": "https://github.com/datalayer/jupyter-mcp-server",
       "status": "offline",
-      "last_checked": "2025-06-16T12:52:40.329923"
+      "last_checked": "2025-06-16T12:56:03.846141"
     },
     {
       "name": "github-mcp",
       "description": "GitHub API integration for repository management, issues, and pull requests",
       "repository": "https://github.com/github/github-mcp-server",
       "status": "offline",
-      "last_checked": "2025-06-16T12:52:40.532223"
+      "last_checked": "2025-06-16T12:56:04.048599"
     },
     {
       "name": "registry-mcp",
       "description": "Official MCP server registry with discovery and installation tools",
       "repository": "https://github.com/modelcontextprotocol/registry",
       "status": "offline",
-      "last_checked": "2025-06-16T12:52:40.740047"
+      "last_checked": "2025-06-16T12:56:04.255001"
     },
     {
       "name": "agentql-mcp-new",
       "description": "Agentql Mcp New",
       "repository": "",
       "status": "offline",
-      "last_checked": "2025-06-16T12:52:40.957222"
+      "last_checked": "2025-06-16T12:56:04.466918"
     },
     {
       "name": "solver-z3-mcp",
       "description": "Z3 theorem prover for formal verification and constraint solving",
       "repository": "https://github.com/szeider/mcp-solver",
       "status": "offline",
-      "last_checked": "2025-06-16T12:52:41.173166"
+      "last_checked": "2025-06-16T12:56:04.669739"
     },
     {
       "name": "context7-mcp-new",
       "description": "Context7 Mcp New",
       "repository": "",
       "status": "offline",
-      "last_checked": "2025-06-16T12:52:41.403425"
+      "last_checked": "2025-06-16T12:56:04.877183"
     },
     {
       "name": "browser-tools-mcp",
       "description": "Complete browser automation toolkit with screenshot and interaction capabilities",
       "repository": "https://github.com/AgentDeskAI/browser-tools-mcp",
       "status": "offline",
-      "last_checked": "2025-06-16T12:52:41.609536"
+      "last_checked": "2025-06-16T12:56:05.080350"
     },
     {
       "name": "crawl4ai-mcp",
       "description": "Intelligent web crawling with AI-powered content extraction and analysis",
       "repository": "https://github.com/wyattowalsh/crawl4ai-mcp",
       "status": "offline",
-      "last_checked": "2025-06-16T12:52:41.814366"
+      "last_checked": "2025-06-16T12:56:05.282385"
     }
   ],
   "metadata": {
     "total_servers": 30,
     "online_servers": 0,
-    "generated_at": "2025-06-16T12:52:41.814390",
+    "generated_at": "2025-06-16T12:56:05.282406",
     "hostname": "Dions-Mac-Studio.local"
   }
 }
