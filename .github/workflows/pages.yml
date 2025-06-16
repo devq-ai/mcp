@@ -1,3 +1,4 @@
+
 name: Deploy to GitHub Pages
 
 on:
@@ -29,8 +30,13 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v4
         
+      - name: Debug - List files
+        run: |
+          echo "Files in mcp-status-site directory:"
+          ls -la mcp-status-site/
+          
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           path: './mcp-status-site'
           
