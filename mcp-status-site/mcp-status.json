@@ -5,181 +5,181 @@
       "description": "Version control operations, commits, and branch management",
       "repository": "",
       "status": "offline",
-      "last_checked": "2025-06-17T13:55:19.229781"
+      "last_checked": "2025-06-17T14:14:31.853107"
     },
     {
       "name": "fetch",
       "description": "API calls and external resource access",
       "repository": "",
       "status": "offline",
-      "last_checked": "2025-06-17T13:55:19.271758"
+      "last_checked": "2025-06-17T14:14:31.902040"
     },
     {
       "name": "filesystem",
       "description": "File read/write operations for the current project directory",
       "repository": "",
       "status": "offline",
-      "last_checked": "2025-06-17T13:55:19.312928"
+      "last_checked": "2025-06-17T14:14:31.946080"
     },
     {
       "name": "memory",
       "description": "Persistent memory across Claude Code sessions",
       "repository": "",
       "status": "offline",
-      "last_checked": "2025-06-17T13:55:19.353397"
+      "last_checked": "2025-06-17T14:14:31.990498"
     },
     {
       "name": "github",
       "description": "GitHub API integration for repository management, issues, and pull requests",
       "repository": "https://github.com/github/github-mcp-server",
       "status": "offline",
-      "last_checked": "2025-06-17T13:55:19.394457"
+      "last_checked": "2025-06-17T14:14:32.034938"
     },
     {
       "name": "inspector",
       "description": "Debug MCP server connections (optional)",
       "repository": "",
       "status": "offline",
-      "last_checked": "2025-06-17T13:55:19.435302"
+      "last_checked": "2025-06-17T14:14:32.076937"
     },
     {
       "name": "bayes-mcp",
       "description": "Bayesian statistical analysis and inference",
       "repository": "",
       "status": "offline",
-      "last_checked": "2025-06-17T13:55:19.476420"
+      "last_checked": "2025-06-17T14:14:32.118335"
     },
     {
       "name": "jupyter-mcp",
       "description": "Jupyter notebook execution and data science workflow management",
       "repository": "https://github.com/datalayer/jupyter-mcp-server",
       "status": "offline",
-      "last_checked": "2025-06-17T13:55:19.517109"
+      "last_checked": "2025-06-17T14:14:32.159529"
     },
     {
       "name": "magic-mcp",
       "description": "AI-powered code generation and transformation utilities",
       "repository": "https://github.com/21st-dev/magic-mcp",
       "status": "offline",
-      "last_checked": "2025-06-17T13:55:19.559862"
+      "last_checked": "2025-06-17T14:14:32.202557"
     },
     {
       "name": "crawl4ai-mcp",
       "description": "Intelligent web crawling with AI-powered content extraction and analysis",
       "repository": "https://github.com/wyattowalsh/crawl4ai-mcp",
       "status": "offline",
-      "last_checked": "2025-06-17T13:55:19.601529"
+      "last_checked": "2025-06-17T14:14:32.245003"
     },
     {
       "name": "calendar-mcp",
       "description": "Google Calendar integration for event management and scheduling",
       "repository": "https://github.com/Zawad99/Google-Calendar-MCP-Server",
       "status": "offline",
-      "last_checked": "2025-06-17T13:55:19.642314"
+      "last_checked": "2025-06-17T14:14:32.286021"
     },
     {
       "name": "registry-mcp",
       "description": "Official MCP server registry with discovery and installation tools",
       "repository": "https://github.com/modelcontextprotocol/registry",
       "status": "offline",
-      "last_checked": "2025-06-17T13:55:19.683467"
+      "last_checked": "2025-06-17T14:14:32.328256"
     },
     {
       "name": "dart-mcp",
       "description": "Dart/Flutter development tools with package management and testing",
       "repository": "https://github.com/its-dart/dart-mcp-server",
       "status": "offline",
-      "last_checked": "2025-06-17T13:55:19.726034"
+      "last_checked": "2025-06-17T14:14:32.370122"
     },
     {
       "name": "surrealdb-mcp",
       "description": "SurrealDB multi-model database integration with graph capabilities",
       "repository": "https://github.com/nsxdavid/surrealdb-mcp-server",
       "status": "offline",
-      "last_checked": "2025-06-17T13:55:19.767841"
+      "last_checked": "2025-06-17T14:14:32.413070"
     },
     {
       "name": "context7-mcp",
       "description": "Advanced context management and semantic search with vector embeddings",
       "repository": "https://github.com/upstash/context7",
       "status": "offline",
-      "last_checked": "2025-06-17T13:55:19.808975"
+      "last_checked": "2025-06-17T14:14:32.456859"
     },
     {
       "name": "stripe-mcp",
       "description": "Stripe payment processing integration with transaction management",
       "repository": "https://github.com/stripe/agent-toolkit",
       "status": "offline",
-      "last_checked": "2025-06-17T13:55:19.849115"
+      "last_checked": "2025-06-17T14:14:32.499521"
     },
     {
       "name": "solver-pysat-mcp",
       "description": "PySAT Boolean satisfiability problem solver with advanced algorithms",
       "repository": "https://github.com/szeider/mcp-solver",
       "status": "offline",
-      "last_checked": "2025-06-17T13:55:19.889510"
+      "last_checked": "2025-06-17T14:14:32.543252"
     },
     {
       "name": "solver-z3-mcp",
       "description": "Z3 theorem prover for formal verification and constraint solving",
       "repository": "https://github.com/szeider/mcp-solver",
       "status": "offline",
-      "last_checked": "2025-06-17T13:55:19.929613"
+      "last_checked": "2025-06-17T14:14:32.585305"
     },
     {
       "name": "solver-mzn-mcp",
       "description": "MiniZinc constraint satisfaction and optimization solver",
       "repository": "https://github.com/szeider/mcp-solver",
       "status": "offline",
-      "last_checked": "2025-06-17T13:55:19.969921"
+      "last_checked": "2025-06-17T14:14:32.626894"
     },
     {
       "name": "memory-mcp",
       "description": "Persistent memory management with contextual recall and learning",
       "repository": "https://github.com/mem0ai/mem0-mcp",
       "status": "offline",
-      "last_checked": "2025-06-17T13:55:20.010147"
+      "last_checked": "2025-06-17T14:14:32.676545"
     },
     {
       "name": "browser-tools-mcp",
       "description": "Complete browser automation toolkit with screenshot and interaction capabilities",
       "repository": "https://github.com/AgentDeskAI/browser-tools-mcp",
       "status": "offline",
-      "last_checked": "2025-06-17T13:55:20.050745"
+      "last_checked": "2025-06-17T14:14:32.719750"
     },
     {
       "name": "logfire-mcp",
       "description": "MCP server for Pydantic Logfire observability and monitoring",
       "repository": "",
       "status": "offline",
-      "last_checked": "2025-06-17T13:55:20.091089"
+      "last_checked": "2025-06-17T14:14:32.761791"
     },
     {
       "name": "agentql-mcp",
       "description": "Web scraping and browser automation using natural language queries",
       "repository": "https://github.com/tinyfish-io/agentql-mcp",
       "status": "offline",
-      "last_checked": "2025-06-17T13:55:20.131252"
+      "last_checked": "2025-06-17T14:14:32.803917"
     },
     {
       "name": "shadcn-ui-mcp-server",
       "description": "shadcn/ui component library integration for React development",
       "repository": "https://github.com/ymadd/shadcn-ui-mcp-server",
       "status": "offline",
-      "last_checked": "2025-06-17T13:55:20.171616"
+      "last_checked": "2025-06-17T14:14:32.845741"
     },
     {
       "name": "github-mcp",
       "description": "GitHub API integration for repository management, issues, and pull requests",
       "repository": "https://github.com/github/github-mcp-server",
       "status": "offline",
-      "last_checked": "2025-06-17T13:55:20.212483"
+      "last_checked": "2025-06-17T14:14:32.886564"
     }
   ],
   "metadata": {
     "total_servers": 25,
     "online_servers": 0,
-    "generated_at": "2025-06-17T13:55:20.212495",
-    "hostname": "fv-az1624-254"
+    "generated_at": "2025-06-17T14:14:32.886582",
+    "hostname": "fv-az1983-11"
   }
 }
