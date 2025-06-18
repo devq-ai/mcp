@@ -106,6 +106,19 @@
       "last_checked": "2025-06-18T18:04:34.142425"
     },
     {
+      "name": "surrealdb-mcp",
+      "description": "SurrealDB multi-model database integration with graph capabilities",
+      "repository": "https://github.com/nsxdavid/surrealdb-mcp-server",
+      "status": "offline",
+      "last_checked": "2025-06-18T02:54:22.023918"
+    },
+    {
+      "name": "context7-mcp",
+      "description": "Advanced context management and semantic search with vector embeddings",
+      "repository": "https://github.com/upstash/context7",
+      "status": "offline",
+    },
+    {
       "name": "stripe-mcp",
       "description": "Stripe payment processing integration with transaction management",
       "repository": "https://github.com/stripe/agent-toolkit",
@@ -173,7 +186,70 @@
       "description": "Complete browser automation toolkit with screenshot and interaction capabilities",
       "repository": "https://github.com/AgentDeskAI/browser-tools-mcp",
       "status": "offline",
-      "last_checked": "2025-06-18T18:04:36.542481"
+      "last_checked": "2025-06-18T17:49:59.954270"
+    },
+    {
+      "name": "solver-pysat-mcp",
+      "description": "PySAT Boolean satisfiability problem solver with advanced algorithms",
+      "repository": "https://github.com/szeider/mcp-solver",
+      "status": "offline",
+      "last_checked": "2025-06-18T02:54:22.156862"
+    },
+    {
+      "name": "solver-z3-mcp",
+      "description": "Z3 theorem prover for formal verification and constraint solving",
+      "repository": "https://github.com/szeider/mcp-solver",
+      "status": "offline",
+      "last_checked": "2025-06-18T02:54:22.206914"
+    },
+    {
+      "name": "solver-mzn-mcp",
+      "description": "MiniZinc constraint satisfaction and optimization solver",
+      "repository": "https://github.com/szeider/mcp-solver",
+      "status": "offline",
+      "last_checked": "2025-06-18T02:54:22.250399"
+    },
+    {
+      "name": "memory-mcp",
+      "description": "Persistent memory management with contextual recall and learning",
+      "repository": "https://github.com/mem0ai/mem0-mcp",
+      "status": "offline",
+      "last_checked": "2025-06-18T02:54:22.295295"
+    },
+    {
+      "name": "browser-tools-mcp",
+      "description": "Complete browser automation toolkit with screenshot and interaction capabilities",
+      "repository": "https://github.com/AgentDeskAI/browser-tools-mcp",
+      "status": "offline",
+      "last_checked": "2025-06-18T02:54:22.338825"
+    },
+    {
+      "name": "logfire-mcp",
+      "description": "MCP server for Pydantic Logfire observability and monitoring",
+      "repository": "",
+      "status": "offline",
+      "last_checked": "2025-06-18T02:54:22.381736"
+    },
+    {
+      "name": "agentql-mcp",
+      "description": "Web scraping and browser automation using natural language queries",
+      "repository": "https://github.com/tinyfish-io/agentql-mcp",
+      "status": "offline",
+      "last_checked": "2025-06-18T02:54:22.425476"
+    },
+    {
+      "name": "shadcn-ui-mcp-server",
+      "description": "shadcn/ui component library integration for React development",
+      "repository": "https://github.com/ymadd/shadcn-ui-mcp-server",
+      "status": "offline",
+      "last_checked": "2025-06-18T02:54:22.468635"
+    },
+    {
+      "name": "github-mcp",
+      "description": "GitHub API integration for repository management, issues, and pull requests",
+      "repository": "https://github.com/github/github-mcp-server",
+      "status": "offline",
+      "last_checked": "2025-06-18T02:54:22.512583"
     }
   ],
   "metadata": {
@@ -181,5 +257,6 @@
     "online_servers": 0,
     "generated_at": "2025-06-18T18:04:36.542513",
     "hostname": "Dions-Mac-Studio.local"
+    "hostname": "fv-az1755-875"
   }
 }
