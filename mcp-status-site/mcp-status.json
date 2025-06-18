@@ -1,217 +1,185 @@
 {
-  "metadata": {
-    "generated_at": "2025-06-16T13:28:34.198667",
-    "total_servers": 26,
-    "online_servers": 0
-  },
   "servers": [
     {
-      "name": "agentql-mcp",
-      "status": "offline",
-      "description": "Web automation and query tool using AgentQL",
+      "name": "git",
+      "description": "Version control operations, commits, and branch management",
       "repository": "",
-      "is_local": true,
-      "last_checked": "2025-06-16T13:28:29.023350"
-    },
-    {
-      "name": "bayes-mcp",
       "status": "offline",
-      "description": "Bayesian inference and probabilistic modeling tools",
-      "repository": "",
-      "is_local": false,
-      "last_checked": "2025-06-16T13:28:29.292451"
-    },
-    {
-      "name": "browser-tools-mcp",
-      "status": "offline",
-      "description": "Browser automation and web interaction tools",
-      "repository": "",
-      "is_local": true,
-      "last_checked": "2025-06-16T13:28:29.560939"
-    },
-    {
-      "name": "calendar-mcp",
-      "status": "offline",
-      "description": "Google Calendar integration for event management and scheduling",
-      "repository": "",
-      "is_local": true,
-      "last_checked": "2025-06-16T13:28:29.819319"
-    },
-    {
-      "name": "context7-mcp",
-      "status": "offline",
-      "description": "Advanced contextual reasoning with Redis-backed memory",
-      "repository": "",
-      "is_local": true,
-      "last_checked": "2025-06-16T13:28:30.076255"
-    },
-    {
-      "name": "crawl4ai-mcp",
-      "status": "offline",
-      "description": "Web scraping and content extraction capabilities",
-      "repository": "",
-      "is_local": true,
-      "last_checked": "2025-06-16T13:28:30.332868"
-    },
-    {
-      "name": "dart-mcp",
-      "status": "offline",
-      "description": "Dart AI integration for smart code assistance and development",
-      "repository": "",
-      "is_local": true,
-      "last_checked": "2025-06-16T13:28:30.588359"
-    },
-    {
-      "name": "darwin-mcp",
-      "status": "offline",
-      "description": "Darwin genetic algorithm optimization server for AI-driven optimization",
-      "repository": "",
-      "is_local": true,
-      "last_checked": "2025-06-16T13:28:34.198642"
+      "last_checked": "2025-06-18T17:46:06.302995"
     },
     {
       "name": "fetch",
-      "status": "offline",
       "description": "API calls and external resource access",
       "repository": "",
-      "is_local": false,
-      "last_checked": "2025-06-16T13:28:28.215504"
+      "status": "offline",
+      "last_checked": "2025-06-18T17:46:06.546448"
     },
     {
       "name": "filesystem",
-      "status": "offline",
       "description": "File read/write operations for the current project directory",
       "repository": "",
-      "is_local": false,
-      "last_checked": "2025-06-16T13:28:27.702216"
-    },
-    {
-      "name": "git",
       "status": "offline",
-      "description": "Version control operations, commits, and branch management",
-      "repository": "",
-      "is_local": false,
-      "last_checked": "2025-06-16T13:28:27.957938"
-    },
-    {
-      "name": "github-mcp",
-      "status": "offline",
-      "description": "GitHub API integration for repository management, issues, and pull requests",
-      "repository": "",
-      "is_local": true,
-      "last_checked": "2025-06-16T13:28:30.843927"
-    },
-    {
-      "name": "inspector",
-      "status": "offline",
-      "description": "Debug MCP server connections (optional)",
-      "repository": "",
-      "is_local": false,
-      "last_checked": "2025-06-16T13:28:31.609249"
-    },
-    {
-      "name": "jupyter-mcp",
-      "status": "offline",
-      "description": "Jupyter notebook execution and management",
-      "repository": "",
-      "is_local": true,
-      "last_checked": "2025-06-16T13:28:31.099922"
-    },
-    {
-      "name": "logfire-mcp",
-      "status": "offline",
-      "description": "Pydantic Logfire observability and monitoring integration",
-      "repository": "",
-      "is_local": true,
-      "last_checked": "2025-06-16T13:28:33.943381"
-    },
-    {
-      "name": "magic-mcp",
-      "status": "offline",
-      "description": "Magic utilities and helper functions",
-      "repository": "",
-      "is_local": true,
-      "last_checked": "2025-06-16T13:28:31.356096"
+      "last_checked": "2025-06-18T17:46:06.788688"
     },
     {
       "name": "memory",
-      "status": "offline",
       "description": "Persistent memory across Claude Code sessions",
       "repository": "",
-      "is_local": false,
-      "last_checked": "2025-06-16T13:28:28.485907"
+      "status": "offline",
+      "last_checked": "2025-06-18T17:46:07.026280"
     },
     {
-      "name": "ptolemies-mcp",
+      "name": "github",
+      "description": "GitHub API integration for repository management, issues, and pull requests",
+      "repository": "https://github.com/github/github-mcp-server",
       "status": "offline",
-      "description": "Custom knowledge base integration with SurrealDB",
+      "last_checked": "2025-06-18T17:46:07.267129"
+    },
+    {
+      "name": "inspector",
+      "description": "Debug MCP server connections (optional)",
       "repository": "",
-      "is_local": false,
-      "last_checked": "2025-06-16T13:28:31.869242"
+      "status": "offline",
+      "last_checked": "2025-06-18T17:46:07.510898"
+    },
+    {
+      "name": "bayes-mcp",
+      "description": "Bayesian statistical analysis and inference",
+      "repository": "",
+      "status": "offline",
+      "last_checked": "2025-06-18T17:46:07.761060"
+    },
+    {
+      "name": "jupyter-mcp",
+      "description": "Jupyter notebook execution and data science workflow management",
+      "repository": "https://github.com/datalayer/jupyter-mcp-server",
+      "status": "offline",
+      "last_checked": "2025-06-18T17:46:08.007518"
+    },
+    {
+      "name": "magic-mcp",
+      "description": "AI-powered code generation and transformation utilities",
+      "repository": "https://github.com/21st-dev/magic-mcp",
+      "status": "offline",
+      "last_checked": "2025-06-18T17:46:08.248378"
+    },
+    {
+      "name": "crawl4ai-mcp",
+      "description": "Intelligent web crawling with AI-powered content extraction and analysis",
+      "repository": "https://github.com/wyattowalsh/crawl4ai-mcp",
+      "status": "offline",
+      "last_checked": "2025-06-18T17:46:08.490485"
+    },
+    {
+      "name": "calendar-mcp",
+      "description": "Google Calendar integration for event management and scheduling",
+      "repository": "https://github.com/Zawad99/Google-Calendar-MCP-Server",
+      "status": "offline",
+      "last_checked": "2025-06-18T17:46:08.723775"
     },
     {
       "name": "registry-mcp",
+      "description": "Official MCP server registry with discovery and installation tools",
+      "repository": "https://github.com/modelcontextprotocol/registry",
       "status": "offline",
-      "description": "MCP server registry management and discovery",
-      "repository": "",
-      "is_local": true,
-      "last_checked": "2025-06-16T13:28:32.128477"
+      "last_checked": "2025-06-18T17:46:08.958309"
     },
     {
-      "name": "sequentialthinking",
+      "name": "dart-mcp",
+      "description": "Dart/Flutter development tools with package management and testing",
+      "repository": "https://github.com/its-dart/dart-mcp-server",
       "status": "offline",
-      "description": "Enhanced step-by-step problem solving",
-      "repository": "",
-      "is_local": false,
-      "last_checked": "2025-06-16T13:28:28.745645"
-    },
-    {
-      "name": "shadcn-ui-mcp-server",
-      "status": "offline",
-      "description": "Shadcn/UI component library integration",
-      "repository": "",
-      "is_local": true,
-      "last_checked": "2025-06-16T13:28:32.392067"
+      "last_checked": "2025-06-18T17:46:09.198628"
     },
     {
       "name": "solver-mzn-mcp",
+      "description": "MiniZinc constraint satisfaction and optimization solver",
+      "repository": "https://github.com/szeider/mcp-solver",
       "status": "offline",
-      "description": "MiniZinc constraint solver integration",
-      "repository": "",
-      "is_local": true,
-      "last_checked": "2025-06-16T13:28:32.652645"
+      "last_checked": "2025-06-18T17:46:09.434225"
     },
     {
       "name": "solver-pysat-mcp",
+      "description": "PySAT Boolean satisfiability problem solver with advanced algorithms",
+      "repository": "https://github.com/szeider/mcp-solver",
       "status": "offline",
-      "description": "PySAT boolean satisfiability solver",
-      "repository": "",
-      "is_local": true,
-      "last_checked": "2025-06-16T13:28:32.920743"
-    },
-    {
-      "name": "solver-z3-mcp",
-      "status": "offline",
-      "description": "Z3 theorem prover and SMT solver",
-      "repository": "",
-      "is_local": true,
-      "last_checked": "2025-06-16T13:28:33.181475"
+      "last_checked": "2025-06-18T17:46:09.669717"
     },
     {
       "name": "stripe-mcp",
+      "description": "Stripe payment processing integration with transaction management",
+      "repository": "https://github.com/stripe/agent-toolkit",
       "status": "offline",
-      "description": "Stripe payment processing integration",
+      "last_checked": "2025-06-18T17:46:09.902922"
+    },
+    {
+      "name": "memory-mcp",
+      "description": "Persistent memory management with contextual recall and learning",
+      "repository": "https://github.com/mem0ai/mem0-mcp",
+      "status": "offline",
+      "last_checked": "2025-06-18T17:46:10.136942"
+    },
+    {
+      "name": "logfire-mcp",
+      "description": "MCP server for Pydantic Logfire observability and monitoring",
       "repository": "",
-      "is_local": true,
-      "last_checked": "2025-06-16T13:28:33.437246"
+      "status": "offline",
+      "last_checked": "2025-06-18T17:46:10.377199"
     },
     {
       "name": "surrealdb-mcp",
+      "description": "SurrealDB multi-model database integration with graph capabilities",
+      "repository": "https://github.com/nsxdavid/surrealdb-mcp-server",
       "status": "offline",
-      "description": "SurrealDB database operations and queries",
-      "repository": "",
-      "is_local": true,
-      "last_checked": "2025-06-16T13:28:33.690892"
+      "last_checked": "2025-06-18T17:46:10.622853"
+    },
+    {
+      "name": "shadcn-ui-mcp-server",
+      "description": "shadcn/ui component library integration for React development",
+      "repository": "https://github.com/ymadd/shadcn-ui-mcp-server",
+      "status": "offline",
+      "last_checked": "2025-06-18T17:46:10.876736"
+    },
+    {
+      "name": "context7-mcp",
+      "description": "Advanced context management and semantic search with vector embeddings",
+      "repository": "https://github.com/upstash/context7",
+      "status": "offline",
+      "last_checked": "2025-06-18T17:46:11.130812"
+    },
+    {
+      "name": "agentql-mcp",
+      "description": "Web scraping and browser automation using natural language queries",
+      "repository": "https://github.com/tinyfish-io/agentql-mcp",
+      "status": "offline",
+      "last_checked": "2025-06-18T17:46:11.400209"
+    },
+    {
+      "name": "github-mcp",
+      "description": "GitHub API integration for repository management, issues, and pull requests",
+      "repository": "https://github.com/github/github-mcp-server",
+      "status": "offline",
+      "last_checked": "2025-06-18T17:46:11.672609"
+    },
+    {
+      "name": "solver-z3-mcp",
+      "description": "Z3 theorem prover for formal verification and constraint solving",
+      "repository": "https://github.com/szeider/mcp-solver",
+      "status": "offline",
+      "last_checked": "2025-06-18T17:46:11.934301"
+    },
+    {
+      "name": "browser-tools-mcp",
+      "description": "Complete browser automation toolkit with screenshot and interaction capabilities",
+      "repository": "https://github.com/AgentDeskAI/browser-tools-mcp",
+      "status": "offline",
+      "last_checked": "2025-06-18T17:46:12.225075"
     }
-  ]
+  ],
+  "metadata": {
+    "total_servers": 25,
+    "online_servers": 0,
+    "generated_at": "2025-06-18T17:46:12.225122",
+    "hostname": "Dions-Mac-Studio.local"
+  }
 }
